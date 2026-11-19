@@ -61,7 +61,7 @@
 #part-macula.is-selected .organ-core{fill:#f02f92;stroke:#fff;stroke-width:3;filter:drop-shadow(0 0 8px #f93c99)}
 .page{min-height:39px;font-size:12px;touch-action:manipulation}
 
-/* V2.2: more room for readable text, without covering the whole camera. */
+/* V2.3: more room for readable text, without covering the whole camera. */
 #portal .shell{min-height:0;max-height:100%;height:min(710px,100%)}
 #portal .visual{height:clamp(155px,24dvh,225px);flex-shrink:1;min-height:140px}
 #portal .info{min-height:155px;flex:1 1 220px;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y}
@@ -75,7 +75,7 @@
  #portal .title{font-size:21px}
 }
 
-/* V2.2: anatomy-first compact floating atlas */
+/* V2.3: anatomy-first compact floating atlas */
 #portal{padding:calc(var(--safe-top) + 66px) 14px calc(var(--safe-bottom) + 90px)}
 #portal .shell{
  height:auto!important;max-height:min(73dvh,620px)!important;
@@ -110,11 +110,21 @@
  #portal .info{max-height:clamp(112px,19dvh,150px)!important}
 }
 
-/* V2.2 stable touch-first reading: anatomy remains the main visual */
+/* V2.3 stable touch-first reading: anatomy remains the main visual */
 #portal .close{width:38px;height:38px;min-width:38px;min-height:38px;touch-action:manipulation;z-index:10}
 #portal .lang{min-height:36px;min-width:44px;font-size:11px;touch-action:manipulation}
 #portal .tag{touch-action:manipulation}
 #portal .page{min-height:38px;touch-action:manipulation}
+
+/* V2.3 Palm to Vanish — original label hover sensitivity is untouched. */
+#portal .shell{position:relative}
+#portal .shell:after{content:'✧  ♡  ✦  ✧  ✦';position:absolute;inset:0;display:grid;place-items:center;z-index:20;pointer-events:none;font-size:28px;letter-spacing:14px;color:#ed77b6;text-shadow:0 0 16px #fff,0 0 28px #d994ee;opacity:0;transform:scale(.7)}
+#portal.vanishing .shell{animation:palm-vanish .68s cubic-bezier(.32,.02,.72,.99) both!important;pointer-events:none}
+#portal.vanishing .shell:after{animation:palm-stars .68s ease-out both}
+@keyframes palm-vanish{0%{opacity:1;filter:blur(0);transform:scale(1) rotate(0)}35%{opacity:1;filter:blur(1px) brightness(1.12);transform:scale(.96) rotate(-1deg)}100%{opacity:0;filter:blur(15px) brightness(1.6);transform:scale(.12) rotate(8deg)}}
+@keyframes palm-stars{0%{opacity:0;transform:scale(.65)}35%{opacity:1;transform:scale(1.1)}100%{opacity:0;transform:scale(2.8)}}
+#status{transition:color .15s}
+@media(prefers-reduced-motion:reduce){#portal.vanishing .shell{animation:none!important;opacity:0}#portal.vanishing .shell:after{animation:none!important}}
 </style>
 </head>
 <body>
@@ -190,6 +200,7 @@ const placements={
 const labelDest={front:{cornea:[61,81],iris:[61,221],pupil:[300,77],lens:[300,147],ciliary:[298,221]},back:{retina:[61,80],vitreous:[61,221],macula:[300,77],optic:[300,147],sclera:[300,221]}};
 let section='front',lang='en',chosen=null,activeTags=[],hoverables=[];
 let hands=null,faceMesh=null,stream=null,running=false,busy=false,analysisTimer=0,watchdog=0,opened=false,manuallyOpened=false,faceEyes=[],lastHand=0,eyeSince=0,lastEyeNear=0,hoverSince=0,hoverTarget=null,hoverCommitted=null,armed=true,openAt=0,seenHand=false,exitSince=0,fistSince=0,smoothed=null,lastFaceScan=0,faceLoaded=false;
+let palmSince=0,palmLastSeen=0,palmClosing=false,palmProgress=0,selectProtectionUntil=0;
 let rearmAt=0,bookFlipping=false,flipTimer=0,lastFlip=-5000,handHistory=[],fingerTarget=null,fingerDraw=null,hadCursor=false,retreatStartY=null;
 // Milliseconds; grace prevents the opening hand from immediately triggering closure.
 // Dwell is deliberately short; palm-swipe and close have their own stronger safeguards.
@@ -243,15 +254,15 @@ function reset(){chosen=null;setPage('front');updateHighlights();translate()}
 function openPortal(manualMode=false){
  if(opened)return;
  manuallyOpened=manualMode;opened=true;retreatStartY=null;openAt=performance.now();seenHand=!manualMode&&performance.now()-lastHand<700;handHistory=[];lastFlip=-5000;
- exitSince=0;fistSince=0;eyeSince=0;lastEyeNear=0;clearHover();reset();
- portal.classList.add('open');portal.setAttribute('aria-hidden','false');manual.textContent='关闭任意门 ×';
- hint.innerHTML='<b>♡ LITTLE ANATOMY BOOK</b><br>食指悬停选词／语言 · 握拳保持关闭 👊';
+ exitSince=0;fistSince=0;palmSince=0;palmLastSeen=0;eyeSince=0;lastEyeNear=0;clearHover();reset();
+ portal.classList.remove('vanishing');palmClosing=false;palmProgress=0;document.documentElement.style.setProperty('--palm-progress','0%');portal.classList.add('open');portal.setAttribute('aria-hidden','false');manual.textContent='关闭任意门 ×';
+ hint.innerHTML='<b>♡ LITTLE ANATOMY BOOK</b><br>食指选词 · 张开五指保持关闭 🖐️';
  setStatus('READING MODE ✿');marker.style.display='none';
 }
 function closePortal(){
  if(!opened)return;
- opened=false;armed=false;rearmAt=performance.now()+320;retreatStartY=null;manuallyOpened=false;seenHand=false;exitSince=0;fistSince=0;handHistory=[];fingerTarget=null;finger.style.opacity='0';
- portal.classList.remove('open');portal.setAttribute('aria-hidden','true');
+ opened=false;armed=false;rearmAt=performance.now()+320;retreatStartY=null;manuallyOpened=false;seenHand=false;exitSince=0;fistSince=0;palmSince=0;palmLastSeen=0;handHistory=[];fingerTarget=null;finger.style.opacity='0';
+ portal.classList.remove('open','vanishing');portal.setAttribute('aria-hidden','true');palmClosing=false;palmProgress=0;document.documentElement.style.setProperty('--palm-progress','0%');
  manual.textContent='触屏打开 ♡';
  hint.innerHTML='<b>✦ POINT TO YOUR EYE</b><br>伸出食指指向眼睛并保持约 0.7 秒';
  setStatus('READY TO EXPLORE ✧');clearHover();eyeSince=0;smoothed=null;refreshMarker();
@@ -310,7 +321,7 @@ function hover(now,pt){
  const bar=hit.querySelector?.('.dwell-bar');if(bar)bar.setAttribute('width',String(Math.min(86,86*elapsed/HOLD_LABEL)));
  if(elapsed<HOLD_LABEL)return;
  // Latch per target: do not repeatedly mutate the DOM or flash while a finger remains still.
- hoverCommitted=hit;finger.style.setProperty('--progress','100');
+ hoverCommitted=hit;selectProtectionUntil=now+850;finger.style.setProperty('--progress','100');
  if(hit.dataset.organ){if(chosen!==hit.dataset.organ)select(hit.dataset.organ)}
  else if(hit.dataset.page)setPage(hit.dataset.page);
  else if(hit.dataset.lang)setLang(hit.dataset.lang);
@@ -318,7 +329,7 @@ function hover(now,pt){
 function onHand(r){
  const now=performance.now(),hand=r.multiHandLandmarks?.[0];
  if(!hand){
-  eyeSince=0;clearHover();smoothed=null;fistSince=0;exitSince=0;handHistory=[];
+  eyeSince=0;clearHover();smoothed=null;fistSince=0;palmSince=0;palmLastSeen=0;exitSince=0;handHistory=[];
   moveFinger(null,false);
   if(!opened&&faceEyes.length&&now-openAt>2500)setStatus('SHOW YOUR HAND ✧');
   // Keep the book open during brief tracking loss.
@@ -342,34 +353,48 @@ function onHand(r){
   if(retreatStartY===null)retreatStartY=wrist.y;
   // Swipe detection removed; page changes use the FRONT/BACK buttons.
   handHistory=[];
-  // Gesture mode: point at a word to select; a fist is considered ONLY
-  // when there is no pointing index finger and no active label target.
+  // Palm to Vanish: a separate gesture state, never mistaken for index pointing.
+  // Require all four non-thumb fingers extended AND a spread thumb.
+  // Hand proportions are normalized to palm size, independent of camera distance.
+  const palmWidth=Math.max(.001,d(5,17));
+  const palmLength=Math.max(.001,d(0,9));
+  const extendedFour=[8,12,16,20].every((tipId,j)=>{
+    const pipId=[6,10,14,18][j],mcpId=[5,9,13,17][j];
+    return d(tipId,0)>d(pipId,0)*1.16 && d(tipId,mcpId)>d(pipId,mcpId)*1.32;
+  });
+  const spreadFingers=d(8,20)>palmWidth*1.23 && d(8,12)>palmWidth*.25;
+  const thumbOut=d(4,17)>palmWidth*1.20 && d(4,5)>palmWidth*.58;
+  const palmPose=extendedFour && spreadFingers && thumbOut;
+  const eligible=now-openAt>1450 && now>selectProtectionUntil && !bookFlipping;
+  if(palmPose && eligible){
+    clearHover();moveFinger(null,false);
+    if(!palmSince)palmSince=now;
+    palmLastSeen=now;
+    palmProgress=Math.min(100,Math.round((now-palmSince)/1050*100));
+    document.documentElement.style.setProperty('--palm-progress',palmProgress+'%');
+    setStatus('🖐️ PALM TO VANISH '+palmProgress+'%');
+    if(palmProgress>=100 && !palmClosing){
+      palmClosing=true;
+      portal.classList.add('vanishing');
+      setStatus('MAGIC VANISH ✨');
+      setTimeout(()=>{if(palmClosing&&opened)closePortal()},690);
+    }
+    return;
+  }
+  // A short landmark flicker is tolerated; a genuinely changed pose cancels progress.
+  if(palmSince && now-palmLastSeen>120){
+    palmSince=0;palmProgress=0;
+    document.documentElement.style.setProperty('--palm-progress','0%');
+  }
   const indexPointing=isExtended[0] && d(8,0)>d(5,0)*1.23;
-  const target=indexPointing?findHover(pt):null;
-  if(indexPointing){
-    fistSince=0;
+  if(indexPointing && !palmPose && !palmClosing){
     moveFinger(pt,true);
     hover(now,pt);
+    const target=findHover(pt);
     setStatus(target?'♡ HOLD TO SELECT':'POINT TO A LABEL ♡');
   }else{
-    clearHover();
-    moveFinger(null,false);
-    const palmScale=Math.max(.01,d(0,9));
-    const palmCenter={x:(hand[0].x+hand[5].x+hand[9].x+hand[13].x+hand[17].x)/5,
-                      y:(hand[0].y+hand[5].y+hand[9].y+hand[13].y+hand[17].y)/5};
-    const curlCount=[8,12,16,20].filter(i=>
-      Math.hypot(hand[i].x-palmCenter.x,hand[i].y-palmCenter.y)<palmScale*1.03).length;
-    const fistPose=curlCount===4 && countExtended===0;
-    if(now-openAt<1250){fistSince=0;return}
-    if(fistPose){
-      if(!fistSince)fistSince=now;
-      const pct=Math.min(100,Math.round((now-fistSince)/1050*100));
-      setStatus('👊 HOLD FIST TO CLOSE '+pct+'%');
-      if(pct>=100){closePortal();return}
-    }else{
-      fistSince=0;
-      setStatus('POINT TO A LABEL ♡');
-    }
+    clearHover();moveFinger(null,false);
+    if(!palmClosing)setStatus('READING MODE ✿');
   }
   return;
  }
