@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#f8e6f2">
 <meta name="description" content="The Eye Portal: A pastel, gesture-controlled interactive anatomy with English, Japanese and Chinese explanations.">
-<title>THE EYE PORTAL · Little Anatomy Magic V1.3</title>
+<title>THE EYE PORTAL · Heartbeat Book V1.4</title>
 <style>
 :root{--ink:#574967;--soft:#896f91;--berry:#c85c9f;--pink:#f7c7de;--lilac:#c9b6ef;--white:#fffafc;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans CJK JP",Arial,sans-serif;color:#fff;background:linear-gradient(145deg,#e5d3ee,#f5d7e6 50%,#cce9f4);-webkit-tap-highlight-color:transparent}button{font-family:inherit;cursor:pointer;touch-action:manipulation}button:focus-visible,[role=button]:focus-visible{outline:3px solid #d174b8;outline-offset:3px}
@@ -33,18 +33,33 @@
 @media(max-height:790px){#portal{padding-top:calc(var(--safe-top) + 53px);padding-bottom:calc(var(--safe-bottom) + 61px)}.shell{padding:10px 11px 9px;border-radius:24px}.title{font-size:21px}.sticker{margin-top:3px}.pages{margin-top:6px}.visual{height:clamp(190px,28vh,235px)}.info{padding:8px 11px}.organ-title{font-size:22px}.description{font-size:11.5px;line-height:1.43}.langbar{margin:6px 0 5px}.tiny{margin-top:5px}.footer{padding-top:4px}}
 @media(max-height:620px){.sticker{display:none}.visual{height:180px}.footer{display:none}.organ-title{font-size:20px}.lang{min-height:27px;padding:3px 7px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+
+/* V1.4 · quiet heart orbit. Only the heart rotates around its OWN ring. */
+#finger{position:fixed;z-index:12;left:0;top:0;width:38px;height:38px;opacity:0;transform:translate3d(-100px,-100px,0);pointer-events:none;will-change:transform;transition:opacity .13s ease;filter:drop-shadow(0 1px 5px #c572b54a)}
+.finger-ring{position:absolute;inset:2px;border-radius:50%;background:conic-gradient(#db79b9 calc(var(--progress,0)*1%),#fff9fbdd 0);box-shadow:0 0 0 4px #ffeaf4b0,0 0 13px #fff;mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px))}
+.finger-center{position:absolute;inset:8px;display:grid;place-items:center;background:#fff8fdf5;border-radius:50%;color:#b875ae;font-size:15px}
+.heart-orbit{position:absolute;inset:-2px;animation:heart-circle 2.5s linear infinite}.heart-orbit span{position:absolute;top:-6px;left:calc(50% - 8px);height:16px;width:16px;border-radius:100%;background:#fffafd;color:#df5ca4;font-size:14px;font-weight:800;text-align:center;line-height:16px;box-shadow:0 1px 5px #e09bc4a6}
+@keyframes heart-circle{to{transform:rotate(360deg)}}
+/* The diagram becomes a tiny storybook leaf with a colored spine and turning corner. */
+.visual{border:1px solid #fff8;overflow:hidden;border-left:9px solid #e7c5e3;border-radius:17px 19px 19px 17px;background:linear-gradient(130deg,#f8ecfdcd 0%,#faf6ffac 52%,#f4edfce2 100%);box-shadow:inset 6px 0 12px #d4b4d03b,5px 7px 14px #a17fae16;transform-style:preserve-3d;backface-visibility:hidden;transform-origin:8px center;will-change:transform}
+.paper-corner{position:absolute;top:0;right:0;width:31px;height:30px;border-radius:0 0 0 18px;background:linear-gradient(135deg,#fff3 0%,#e4c6f0b5 100%);z-index:1;color:#c48fb6;text-align:center;line-height:28px;font-size:12px;pointer-events:none}
+.visual.flip-left{animation:book-to-back .54s ease-in-out both}.visual.flip-right{animation:book-to-front .54s ease-in-out both}
+@keyframes book-to-back{0%{transform:perspective(950px) rotateY(0);filter:brightness(1)}48%{transform:perspective(950px) rotateY(-86deg);filter:brightness(.86)}52%{transform:perspective(950px) rotateY(75deg);filter:brightness(.89)}100%{transform:perspective(950px) rotateY(0);filter:brightness(1)}}
+@keyframes book-to-front{0%{transform:perspective(950px) rotateY(0);filter:brightness(1)}48%{transform:perspective(950px) rotateY(86deg);filter:brightness(.86)}52%{transform:perspective(950px) rotateY(-75deg);filter:brightness(.89)}100%{transform:perspective(950px) rotateY(0);filter:brightness(1)}}
+.pages{background:linear-gradient(90deg,#f6e9f5,#e8e0f6);padding:5px;box-shadow:inset 0 1px 3px #a78ca11c}.page.active{background:linear-gradient(145deg,#fffefa,#fff5fb);box-shadow:0 2px 9px #b97daf39}
+@media(prefers-reduced-motion:reduce){.heart-orbit,.visual.flip-left,.visual.flip-right{animation:none!important}}
 </style>
 </head>
 <body>
 <video id="camera" autoplay muted playsinline webkit-playsinline></video>
 <div id="atmo"></div><div id="sparkles" aria-hidden="true"><span class="spark">✦</span><span class="spark">✧</span><span class="spark">✧</span><span class="spark">✦</span></div>
-<div class="head"><div class="brand">THE EYE PORTAL ♡<small>LITTLE ANATOMY MAGIC · V1.3</small></div><div class="status" id="status">READY TO EXPLORE ✧</div></div>
-<div id="eyeMarker" aria-hidden="true"></div>
+<div class="head"><div class="brand">THE EYE PORTAL ♡<small>LITTLE ANATOMY MAGIC · V1.4</small></div><div class="status" id="status">READY TO EXPLORE ✧</div></div>
+<div id="eyeMarker" aria-hidden="true"></div><div id="finger" aria-hidden="true"><div class="finger-ring"></div><div class="heart-orbit"><span>♡</span></div><div class="finger-center">✧</div></div>
 <main id="portal" aria-hidden="true"><section class="shell" id="shell" aria-label="Interactive anatomy of the eye">
  <div class="top"><div><div class="eyebrow">✿ CHAPTER 01 · OCULAR ANATOMY</div><h2 class="title">Peek inside the eye <span class="heart">♡</span></h2></div><button class="close" type="button" id="close" aria-label="Close portal">×</button></div>
  <div class="sticker">✧ discover the little wonders of vision</div>
  <div class="pages" aria-label="Choose anatomy area"><button type="button" class="page active" data-page="front" data-hoverable="1">♡ FRONT · 5</button><button type="button" class="page" data-page="back" data-hoverable="1">✦ BACK · 5</button></div>
- <div class="visual" id="visual"><div class="orbit" aria-hidden="true"></div>
+ <div class="visual" id="visual" aria-label="Flip your anatomy book"><div class="paper-corner" aria-hidden="true">✿</div><div class="orbit" aria-hidden="true"></div>
   <svg id="diagram" class="diagram" viewBox="0 0 360 290" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="Simplified eye cross-section; tap a label to highlight the anatomical location.">
    <defs>
     <radialGradient id="scleraG" cx="31%" cy="26%"><stop stop-color="#fff"/><stop offset=".57" stop-color="#eff8ff"/><stop offset="1" stop-color="#c9b4ea"/></radialGradient>
@@ -76,16 +91,16 @@
  <div class="langbar"><span class="lang-title">EXPLANATION</span><button type="button" class="lang active" data-lang="en" data-hoverable="1">EN</button><button type="button" class="lang" data-lang="ja" data-hoverable="1">日本語</button><button type="button" class="lang" data-lang="zh" data-hoverable="1">中文</button></div>
  <p class="description" id="description">Touch a label to explore the eye. Its location will glow in the diagram!</p>
  <p class="tiny" id="tinyFact">✿ Point and hold briefly, or just tap the screen.</p></div>
- <div class="footer"><b>✧ MAGIC TIP</b> · hover to select · lower or hide your hand to close</div>
+ <div class="footer"><b>✧ PAGE MAGIC</b> · wave your open palm ← BACK / FRONT → · lower hand to close</div>
  </section></main>
-<div class="bottom"><div class="hint" id="hint"><b>✦ POINT TO YOUR EYE</b><br>用食指指向眼睛，打开医学任意门</div><button type="button" class="manual" id="manual">触屏打开 ♡</button></div>
-<div id="splash"><div class="splash-inner"><div class="orb">♡</div><h1>THE EYE PORTAL</h1><div class="sub">✿ LITTLE ANATOMY MAGIC · V1.3 ✿</div><p>Ten tiny wonders behind your eyes.<br>无漂浮光标 · 收手更快关闭 · 10 个结构 · 日英中切换 🫧</p><button type="button" class="mainbtn" id="start">开启摄像头 · OPEN THE MAGIC ✧</button><button type="button" class="mainbtn secondary" id="demo">先用触屏体验 · TRY DEMO</button><small class="note">需要 HTTPS（GitHub Pages）及摄像头授权。<br>摄像头视频在设备上处理，网页没有上传视频的功能。<br>解剖图为简化示意，并非按比例绘制。</small><div id="error" role="alert"></div></div></div>
+<div class="bottom"><div class="hint" id="hint"><b>✦ POINT TO YOUR EYE</b><br>食指靠近眼睛打开 · 张开手掌左右挥动翻页</div><button type="button" class="manual" id="manual">触屏打开 ♡</button></div>
+<div id="splash"><div class="splash-inner"><div class="orb">♡</div><h1>THE EYE PORTAL</h1><div class="sub">✿ LITTLE ANATOMY MAGIC · V1.4 ✿</div><p>Ten tiny wonders behind your eyes.<br>平滑小爱心光环 · 左右挥手翻页 · 更灵敏开门 🫧</p><button type="button" class="mainbtn" id="start">开启摄像头 · OPEN THE MAGIC ✧</button><button type="button" class="mainbtn secondary" id="demo">先用触屏体验 · TRY DEMO</button><small class="note">需要 HTTPS（GitHub Pages）及摄像头授权。<br>摄像头视频在设备上处理，网页没有上传视频的功能。<br>解剖图为简化示意，并非按比例绘制。</small><div id="error" role="alert"></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/hands.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4/face_mesh.js" crossorigin="anonymous"></script>
 <script>
 (()=>{'use strict';
 const $=id=>document.getElementById(id);
-const video=$('camera'),portal=$('portal'),diagram=$('diagram'),labels=$('labels'),leaders=$('leaders'),marker=$('eyeMarker'),manual=$('manual'),status=$('status'),hint=$('hint');
+const video=$('camera'),portal=$('portal'),diagram=$('diagram'),labels=$('labels'),leaders=$('leaders'),finger=$('finger'),visual=$('visual'),marker=$('eyeMarker'),manual=$('manual'),status=$('status'),hint=$('hint');
 const NS='http://www.w3.org/2000/svg';
 // Explanation paragraphs and little facts change language; anatomical names ALWAYS stay bilingual beside English.
 const anatomy={
@@ -107,10 +122,12 @@ const placements={
 };
 const labelDest={front:{cornea:[61,81],iris:[61,221],pupil:[300,77],lens:[300,147],ciliary:[298,221]},back:{retina:[61,80],vitreous:[61,221],macula:[300,77],optic:[300,147],sclera:[300,221]}};
 let section='front',lang='en',chosen=null,activeTags=[],hoverables=[];
-let hands=null,faceMesh=null,stream=null,running=false,busy=false,analysisTimer=0,watchdog=0,opened=false,manuallyOpened=false,faceEyes=[],lastHand=0,eyeSince=0,hoverSince=0,hoverTarget=null,hoverCommitted=null,armed=true,openAt=0,seenHand=false,exitSince=0,fistSince=0,smoothed=null,lastFaceScan=0,faceLoaded=false;
+let hands=null,faceMesh=null,stream=null,running=false,busy=false,analysisTimer=0,watchdog=0,opened=false,manuallyOpened=false,faceEyes=[],lastHand=0,eyeSince=0,lastEyeNear=0,hoverSince=0,hoverTarget=null,hoverCommitted=null,armed=true,openAt=0,seenHand=false,exitSince=0,fistSince=0,smoothed=null,lastFaceScan=0,faceLoaded=false;
+let bookFlipping=false,flipTimer=0,lastFlip=-5000,handHistory=[],fingerTarget=null,fingerDraw=null,hadCursor=false;
 // Milliseconds; grace prevents the opening hand from immediately triggering closure.
-const HOLD_EYE=290,HOLD_LABEL=180,CLOSE_MISSING=400,EXIT_HOLD=260,FIST_HOLD=180,GRACE=420;
-const capture=document.createElement('canvas'),ctx=capture.getContext('2d',{alpha:false,willReadFrequently:false});capture.width=480;capture.height=360;
+// Dwell is deliberately short; palm-swipe and close have their own stronger safeguards.
+const HOLD_EYE=145,HOLD_LABEL=170,CLOSE_MISSING=660,EXIT_HOLD=330,FIST_HOLD=350,GRACE=700;
+const capture=document.createElement('canvas'),ctx=capture.getContext('2d',{alpha:false,willReadFrequently:false});capture.width=384;capture.height=288;
 const setStatus=s=>{if(status.textContent!==s)status.textContent=s};
 const makeSvg=(tag,attrs={})=>{const el=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))el.setAttribute(k,v);return el};
 function renderLabels(){labels.replaceChildren();leaders.replaceChildren();activeTags=[];for(const [key,xy] of Object.entries(placements[section])){
@@ -142,22 +159,34 @@ function translate(){const a=anatomy[chosen];if(!a){$('miniLabel').textContent='
  $('description').textContent=a.blurb[lang];$('tinyFact').textContent=a.fact[lang]}
 function select(key){if(!anatomy[key])return;chosen=key;updateHighlights();translate()}
 function setPage(next){if(!placements[next]||next===section)return;section=next;chosen=null;for(const b of document.querySelectorAll('.page')){const yes=b.dataset.page===next;b.classList.toggle('active',yes);b.setAttribute('aria-pressed',yes?'true':'false')}renderLabels();translate()}
+// Flip an illustrated paper leaf, swap its labels midway and keep buttons as a fallback.
+function flipBook(next){
+ if(!placements[next]||next===section||bookFlipping||!opened)return false;
+ bookFlipping=true;lastFlip=performance.now();clearHover();
+ visual.classList.remove('flip-left','flip-right');void visual.offsetWidth;
+ visual.classList.add(next==='back'?'flip-left':'flip-right');
+ clearTimeout(flipTimer);
+ flipTimer=setTimeout(()=>setPage(next),255);
+ setTimeout(()=>{visual.classList.remove('flip-left','flip-right');bookFlipping=false;handHistory=[]},555);
+ setStatus(next==='back'?'BACK PAGE ✦':'FRONT PAGE ♡');
+ return true;
+}
 function setLang(next){if(!['en','ja','zh'].includes(next))return;lang=next;for(const b of document.querySelectorAll('.lang')){const yes=b.dataset.lang===next;b.classList.toggle('active',yes);b.setAttribute('aria-pressed',yes?'true':'false')}translate()}
 function reset(){chosen=null;setPage('front');updateHighlights();translate()}
 function openPortal(manualMode=false){
  if(opened)return;
- manuallyOpened=manualMode;opened=true;openAt=performance.now();seenHand=!manualMode&&performance.now()-lastHand<450;
- exitSince=0;fistSince=0;eyeSince=0;clearHover();reset();
+ manuallyOpened=manualMode;opened=true;openAt=performance.now();seenHand=!manualMode&&performance.now()-lastHand<700;handHistory=[];lastFlip=-5000;
+ exitSince=0;fistSince=0;eyeSince=0;lastEyeNear=0;clearHover();reset();
  portal.classList.add('open');portal.setAttribute('aria-hidden','false');manual.textContent='关闭任意门 ×';
- hint.innerHTML='<b>♡ EXPLORE WITH YOUR FINGER</b><br>指向标签选择 · 收手 / 握拳即可关闭';
+ hint.innerHTML='<b>♡ WAVE TO FLIP THE BOOK</b><br>张开手掌 ← BACK · FRONT → · 收手关闭';
  setStatus('PORTAL OPEN ✿');marker.style.display='none';
 }
 function closePortal(){
  if(!opened)return;
- opened=false;armed=false;manuallyOpened=false;seenHand=false;exitSince=0;fistSince=0;
+ opened=false;armed=false;manuallyOpened=false;seenHand=false;exitSince=0;fistSince=0;handHistory=[];fingerTarget=null;finger.style.opacity='0';
  portal.classList.remove('open');portal.setAttribute('aria-hidden','true');
  manual.textContent='触屏打开 ♡';
- hint.innerHTML='<b>✦ POINT TO YOUR EYE</b><br>用食指指向眼睛，打开医学任意门';
+ hint.innerHTML='<b>✦ POINT TO YOUR EYE</b><br>食指靠近眼睛打开 · 张开手掌左右挥动翻页';
  setStatus('READY TO EXPLORE ✧');clearHover();eyeSince=0;smoothed=null;refreshMarker();
 }
 function videoPoint(p){const vw=video.videoWidth||640,vh=video.videoHeight||480;const scale=Math.max(innerWidth/vw,innerHeight/vh);return{x:(innerWidth-vw*scale)/2+(1-p.x)*vw*scale,y:(innerHeight-vh*scale)/2+p.y*vh*scale}}
@@ -169,17 +198,37 @@ function smoothFinger(pt){
  smoothed.y=smoothed.y*.34+pt.y*.66;
  return smoothed;
 }
+// The original orbiting-heart cursor is back, with dead-zone + frame-rate-independent easing.
+function cursorLoop(t){
+ if(fingerTarget){
+  if(!fingerDraw){fingerDraw={...fingerTarget}}
+  const dx=fingerTarget.x-fingerDraw.x,dy=fingerTarget.y-fingerDraw.y;
+  const dist=Math.hypot(dx,dy);
+  if(dist>3.3){
+   const weight=Math.min(.38,dist>110?.32:.19);
+   fingerDraw.x+=dx*weight;fingerDraw.y+=dy*weight;
+  }
+  finger.style.transform=`translate3d(${fingerDraw.x.toFixed(1)}px,${fingerDraw.y.toFixed(1)}px,0) translate(-50%,-50%)`;
+ }
+ requestAnimationFrame(cursorLoop);
+}
+requestAnimationFrame(cursorLoop);
+function moveFinger(point,visible=true){
+ if(!visible){fingerTarget=null;fingerDraw=null;finger.style.opacity='0';return}
+ if(!fingerTarget){fingerDraw={...point}}
+ fingerTarget={...point};finger.style.opacity='1';
+}
 function inTarget(pt,el,extra=0){
  const r=el.getBoundingClientRect();return !!r.width&&!!r.height&&pt.x>=r.left-extra&&pt.x<=r.right+extra&&pt.y>=r.top-extra&&pt.y<=r.bottom+extra;
 }
 function findHover(pt){
  if(!pt)return null;
  // Hysteresis: keep the current target when the tracked finger jitters a few pixels.
- if(hoverTarget&&inTarget(pt,hoverTarget,16))return hoverTarget;
+ if(hoverTarget&&inTarget(pt,hoverTarget,9))return hoverTarget;
  let best=null,min=Infinity;
  for(const el of hoverables){
   const r=el.getBoundingClientRect();if(!r.width||!r.height)continue;
-  const extra=el.classList.contains('tag')?11:6;
+  const extra=el.classList.contains('tag')?20:12;
   if(!inTarget(pt,el,extra))continue;
   const dist=Math.hypot(pt.x-(r.left+r.right)/2,pt.y-(r.top+r.bottom)/2);
   if(dist<min){min=dist;best=el}
@@ -188,13 +237,13 @@ function findHover(pt){
 }
 function hover(now,pt){
  const hit=findHover(pt);
- if(hit!==hoverTarget){clearHover();hoverTarget=hit;hoverSince=now;if(hit)hit.classList.add('is-hover');return}
- if(!hit||hoverCommitted===hit)return;
- const elapsed=Math.max(0,now-hoverSince);
+ if(hit!==hoverTarget){clearHover();hoverTarget=hit;hoverSince=now;finger.style.setProperty('--progress','0');if(hit)hit.classList.add('is-hover');return}
+ if(!hit){finger.style.setProperty('--progress','0');return}if(hoverCommitted===hit)return;
+ const elapsed=Math.max(0,now-hoverSince);finger.style.setProperty('--progress',String(Math.min(100,100*elapsed/HOLD_LABEL)));
  const bar=hit.querySelector?.('.dwell-bar');if(bar)bar.setAttribute('width',String(Math.min(86,86*elapsed/HOLD_LABEL)));
  if(elapsed<HOLD_LABEL)return;
  // Latch per target: do not repeatedly mutate the DOM or flash while a finger remains still.
- hoverCommitted=hit;
+ hoverCommitted=hit;finger.style.setProperty('--progress','100');
  if(hit.dataset.organ){if(chosen!==hit.dataset.organ)select(hit.dataset.organ)}
  else if(hit.dataset.page)setPage(hit.dataset.page);
  else if(hit.dataset.lang)setLang(hit.dataset.lang);
@@ -202,62 +251,98 @@ function hover(now,pt){
 function onHand(r){
  const now=performance.now(),hand=r.multiHandLandmarks?.[0];
  if(!hand){
-  eyeSince=0;clearHover();smoothed=null;fistSince=0;exitSince=0;
-  // Missing landmarks need to persist briefly; a single dropped frame won't close the portal.
-  if(opened&&seenHand&&now-openAt>GRACE&&now-lastHand>CLOSE_MISSING)closePortal();
+  eyeSince=0;clearHover();smoothed=null;fistSince=0;exitSince=0;handHistory=[];
+  moveFinger(null,false);
+  if(opened&&!manuallyOpened&&seenHand&&now-openAt>GRACE&&now-lastHand>CLOSE_MISSING)closePortal();
   return;
  }
  lastHand=now;
- const tip=videoPoint(hand[8]),wrist=videoPoint(hand[0]),base=videoPoint(hand[5]),pinky=videoPoint(hand[20]);
+ const tip=videoPoint(hand[8]),wrist=videoPoint(hand[0]),knuckle=videoPoint(hand[5]);
  const pt=smoothFinger(tip);
  const len=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
- const extended=len(tip,wrist)>len(base,wrist)*1.16;
- // Count fingers actually folded toward the wrist, instead of relying on just pinky + index.
  const d=(a,b)=>Math.hypot(hand[a].x-hand[b].x,hand[a].y-hand[b].y);
- const folded=[[8,6],[12,10],[16,14],[20,18]].filter(([tipId,pip])=>d(tipId,0)<d(pip,0)*1.17).length;
- const fist=folded>=3||(folded>=2&&len(tip,wrist)<len(base,wrist)*1.06&&len(pinky,wrist)<len(base,wrist)*1.27);
+ // Finger extension from 2D landmark distances is approximate; no strict index pose gate for opening.
+ const extendedIds=[[8,6],[12,10],[16,14],[20,18]];
+ const isExtended=extendedIds.map(([t,p])=>d(t,0)>d(p,0)*1.11);
+ const countExtended=isExtended.filter(Boolean).length;
+ const openPalm=countExtended>=3;
+ const fist=countExtended===0&&d(8,0)<d(5,0)*1.25;
+ const palmPoints=[0,5,9,13,17].map(i=>videoPoint(hand[i]));
+ const palm={x:palmPoints.reduce((s,p)=>s+p.x,0)/5,y:palmPoints.reduce((s,p)=>s+p.y,0)/5};
  if(opened){
   seenHand=true;
-  if(now-openAt<=GRACE){hover(now,pt);return}
-  // Fist / hand-closing gesture has its own short debounce.
+  // A palm wave gets priority over every closing gesture; no accidental page/door collision.
+  if(openPalm&&now-openAt>520&&!bookFlipping){
+   handHistory.push({x:palm.x,y:palm.y,time:now});
+   handHistory=handHistory.filter(p=>now-p.time<680);
+   const first=handHistory[0];
+   if(first&&handHistory.length>=2&&now-lastFlip>820){
+    const dx=palm.x-first.x,dy=palm.y-first.y;
+    if(Math.abs(dx)>Math.max(67,innerWidth*.19)&&Math.abs(dy)<Math.max(105,Math.abs(dx)*.84)){
+     const flipped=flipBook(dx<0?'back':'front');
+     handHistory=[];
+     if(flipped){moveFinger(null,false);fistSince=0;exitSince=0;return}
+    }
+   }
+  }else if(!openPalm){handHistory=[]}
+  moveFinger(pt,!openPalm);
+  if(bookFlipping){return}
+  if(now-openAt<=GRACE){if(!openPalm)hover(now,pt);return}
   if(fist){if(!fistSince)fistSince=now;if(now-fistSince>=FIST_HOLD){closePortal();return}}
   else fistSince=0;
-  // Lowered, retracted hand: don't compare with the enormous portal shell bounding box.
-  // Only count a deliberate exit when no button/label is being pointed at.
-  const leavingLow=(wrist.y>innerHeight*.74&&tip.y>innerHeight*.86)||(wrist.y>innerHeight*.72&&tip.y>innerHeight*.79&&!extended);
-  const leavingEdge=(wrist.x<innerWidth*.055||wrist.x>innerWidth*.945)&&tip.y>innerHeight*.7&&!extended;
-  const retreat=(leavingLow||leavingEdge)&&!findHover(pt);
+  // Lower/retract hand to close; sideways palm movement never triggers this pathway.
+  const leavingLow=(wrist.y>innerHeight*.77&&tip.y>innerHeight*.81)||(wrist.y>innerHeight*.84);
+  const retreat=leavingLow&&!findHover(pt)&&!openPalm;
   if(retreat){if(!exitSince)exitSince=now;if(now-exitSince>=EXIT_HOLD){closePortal();return}}
   else exitSince=0;
-  hover(now,pt);return;
+  if(!openPalm)hover(now,pt);else {clearHover();finger.style.setProperty('--progress','0')}
+  return;
  }
- let distance=Infinity;for(const e of faceEyes)distance=Math.min(distance,len(tip,e));
- const nearEye=faceEyes.length&&extended&&distance<Math.max(42,Math.min(innerWidth*.15,67));
- if(!nearEye){eyeSince=0;if(distance>90)armed=true;return}
- if(!armed)return;if(!eyeSince)eyeSince=now;
- if(now-eyeSince>=HOLD_EYE)openPortal(false);
+ let distance=Infinity,eyePos=null;
+ for(const e of faceEyes){const val=len(tip,e);if(val<distance){distance=val;eyePos=e}}
+ // The marker used to show the correct eye while the extension test silently failed.
+ // Now accept a finger near that marker, with a basic wrist-vs-tip proximity check.
+ const radius=Math.max(76,Math.min(innerWidth*.25,110));
+ const pointing=eyePos&&len(wrist,eyePos)>distance+22;
+ const nearEye=pointing&&distance<radius+(eyeSince?17:0);
+ moveFinger(pt,!!nearEye);
+ if(nearEye){
+  lastEyeNear=now;
+  if(!eyeSince)eyeSince=now;
+  const dwell=now-eyeSince;
+  finger.style.setProperty('--progress',String(Math.min(100,100*dwell/HOLD_EYE)));
+  if(armed&&dwell>=HOLD_EYE)openPortal(false);
+ }else{
+  finger.style.setProperty('--progress','0');
+  if(now-lastEyeNear>280)eyeSince=0;
+  if(distance>radius+38)armed=true;
+ }
 }
 function onFace(r){const lm=r.multiFaceLandmarks?.[0];if(!lm){faceEyes=[];refreshMarker();return}faceEyes=[[33,133,159,145],[362,263,386,374]].map(ids=>{const p=ids.map(i=>videoPoint(lm[i]));return{x:p.reduce((n,x)=>n+x.x,0)/4,y:p.reduce((n,x)=>n+x.y,0)/4}});refreshMarker()}
-async function analyze(){if(!running||busy||document.hidden)return;busy=true;try{if(video.readyState>=2&&hands){ctx.drawImage(video,0,0,capture.width,capture.height);await hands.send({image:capture});const now=performance.now();if(!opened&&faceMesh&&(!faceLoaded||now-lastFaceScan>580)){lastFaceScan=now;await faceMesh.send({image:capture});faceLoaded=true}}}catch(err){console.warn('Gesture tracking:',err);setStatus('TOUCH MODE AVAILABLE ♡')}finally{busy=false;if(running&&!document.hidden)analysisTimer=setTimeout(analyze,28)}}
+async function analyze(){if(!running||busy||document.hidden)return;busy=true;try{if(video.readyState>=2&&hands){ctx.drawImage(video,0,0,capture.width,capture.height);await hands.send({image:capture});const now=performance.now();if(!opened&&faceMesh&&(!faceLoaded||now-lastFaceScan>480)){lastFaceScan=now;await faceMesh.send({image:capture});faceLoaded=true}}}catch(err){console.warn('Gesture tracking:',err);setStatus('TOUCH MODE AVAILABLE ♡')}finally{busy=false;if(running&&!document.hidden)analysisTimer=setTimeout(analyze,28)}}
 function hideSplash(){const el=$('splash');el.style.opacity='0';el.style.pointerEvents='none';setTimeout(()=>{el.style.display='none'},260)}
 async function start(){if(running)return;const startButton=$('start');$('error').textContent='';startButton.disabled=true;startButton.textContent='A little camera magic is loading…';try{
  if(!window.isSecureContext)throw Error('Please open the HTTPS GitHub Pages website.');if(!navigator.mediaDevices?.getUserMedia)throw Error('Camera access is unavailable in this browser.');
  stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:480},height:{ideal:360},frameRate:{ideal:24,max:30}},audio:false});video.srcObject=stream;await video.play();video.classList.add('live');running=true;hideSplash();setStatus('LOADING TRACKING ✧');
  if(typeof Hands!=='function'||typeof FaceMesh!=='function')throw Error('Gesture libraries could not load; touch mode is still available.');
- hands=new Hands({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/${f}`});hands.setOptions({maxNumHands:1,modelComplexity:0,minDetectionConfidence:.57,minTrackingConfidence:.51});hands.onResults(onHand);
+ hands=new Hands({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/${f}`});hands.setOptions({maxNumHands:1,modelComplexity:0,minDetectionConfidence:.46,minTrackingConfidence:.45});hands.onResults(onHand);
  faceMesh=new FaceMesh({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4/${f}`});faceMesh.setOptions({maxNumFaces:1,refineLandmarks:false,minDetectionConfidence:.52,minTrackingConfidence:.53});faceMesh.onResults(onFace);
  setStatus('POINT TO YOUR EYE ✧');analyze();
  }catch(err){console.warn(err);$('error').textContent=(err.name==='NotAllowedError'?'Camera permission denied. Enable Camera in Safari website settings.':err.name==='NotFoundError'?'No camera found.':(err.message||'Camera unavailable.'))+'\nYou can try the touch demo instead.';startButton.disabled=false;startButton.textContent='Retry camera ✧';setStatus('TOUCH MODE AVAILABLE ♡');if(running)$('splash').style.display='none'}}
 function demo(){hideSplash();setStatus('TOUCH DEMO ♡');openPortal(true)}
-for(const b of document.querySelectorAll('.page'))b.addEventListener('click',()=>setPage(b.dataset.page));
+for(const b of document.querySelectorAll('.page'))b.addEventListener('click',()=>opened?flipBook(b.dataset.page):setPage(b.dataset.page));
 for(const b of document.querySelectorAll('.lang'))b.addEventListener('click',()=>setLang(b.dataset.lang));
 for(const p of diagram.querySelectorAll('.part')){p.addEventListener('click',()=>{if(anatomy[p.dataset.organ].p!==section)setPage(anatomy[p.dataset.organ].p);select(p.dataset.organ)});p.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();if(anatomy[p.dataset.organ].p!==section)setPage(anatomy[p.dataset.organ].p);select(p.dataset.organ)}})}
+// A short drag across the paper also turns the page when gesture tracking is unavailable.
+let touchStart=null;
+visual.addEventListener('touchstart',e=>{if(e.touches.length===1)touchStart={x:e.touches[0].clientX,y:e.touches[0].clientY}},{passive:true});
+visual.addEventListener('touchend',e=>{if(!touchStart||!opened)return;const x=e.changedTouches[0].clientX-touchStart.x,y=e.changedTouches[0].clientY-touchStart.y;touchStart=null;if(Math.abs(x)>60&&Math.abs(y)<95)flipBook(x<0?'back':'front')},{passive:true});
 $('start').addEventListener('click',start);$('demo').addEventListener('click',demo);manual.addEventListener('click',()=>opened?closePortal():openPortal(true));$('close').addEventListener('click',closePortal);
 // Independent safety check: even if inference stalls when a hand exits, the door closes.
 watchdog=setInterval(()=>{
- if(!document.hidden&&opened&&seenHand&&performance.now()-openAt>GRACE&&performance.now()-lastHand>850)closePortal();
+ if(!document.hidden&&opened&&!manuallyOpened&&seenHand&&performance.now()-openAt>GRACE&&performance.now()-lastHand>CLOSE_MISSING+170)closePortal();
 },120);
-document.addEventListener('visibilitychange',()=>{if(document.hidden){clearTimeout(analysisTimer);clearHover()}else if(running&&!busy)analyze()});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){clearTimeout(analysisTimer);clearHover();moveFinger(null,false)}else if(running&&!busy)analyze()});
 renderLabels();translate();
 })();
 </script>
