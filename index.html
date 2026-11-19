@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#f8e6f2">
 <meta name="description" content="The Eye Portal: A pastel, gesture-controlled interactive anatomy with English, Japanese and Chinese explanations.">
-<title>THE EYE PORTAL · Heartbeat Book V1.4</title>
+<title>THE HUMAN PORTAL · Heartbeat Book V3.0</title>
 <style>
 :root{--ink:#574967;--soft:#896f91;--berry:#c85c9f;--pink:#f7c7de;--lilac:#c9b6ef;--white:#fffafc;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans CJK JP",Arial,sans-serif;color:#fff;background:linear-gradient(145deg,#e5d3ee,#f5d7e6 50%,#cce9f4);-webkit-tap-highlight-color:transparent}button{font-family:inherit;cursor:pointer;touch-action:manipulation}button:focus-visible,[role=button]:focus-visible{outline:3px solid #d174b8;outline-offset:3px}
@@ -34,7 +34,7 @@
 @media(max-height:620px){.sticker{display:none}.visual{height:180px}.footer{display:none}.organ-title{font-size:20px}.lang{min-height:27px;padding:3px 7px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
 
-/* V1.4 · quiet heart orbit. Only the heart rotates around its OWN ring. */
+/* V3.0 · quiet heart orbit. Only the heart rotates around its OWN ring. */
 #finger{position:fixed;z-index:12;left:0;top:0;width:38px;height:38px;opacity:0;transform:translate3d(-100px,-100px,0);pointer-events:none;will-change:transform;transition:opacity .13s ease;filter:drop-shadow(0 1px 5px #c572b54a)}
 .finger-ring{position:absolute;inset:2px;border-radius:50%;background:conic-gradient(#db79b9 calc(var(--progress,0)*1%),#fff9fbdd 0);box-shadow:0 0 0 4px #ffeaf4b0,0 0 13px #fff;mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px))}
 .finger-center{position:absolute;inset:8px;display:grid;place-items:center;background:#fff8fdf5;border-radius:50%;color:#b875ae;font-size:15px}
@@ -61,7 +61,7 @@
 #part-macula.is-selected .organ-core{fill:#f02f92;stroke:#fff;stroke-width:3;filter:drop-shadow(0 0 8px #f93c99)}
 .page{min-height:39px;font-size:12px;touch-action:manipulation}
 
-/* V2.3: more room for readable text, without covering the whole camera. */
+/* V3.0: more room for readable text, without covering the whole camera. */
 #portal .shell{min-height:0;max-height:100%;height:min(710px,100%)}
 #portal .visual{height:clamp(155px,24dvh,225px);flex-shrink:1;min-height:140px}
 #portal .info{min-height:155px;flex:1 1 220px;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y}
@@ -75,7 +75,7 @@
  #portal .title{font-size:21px}
 }
 
-/* V2.3: anatomy-first compact floating atlas */
+/* V3.0: anatomy-first compact floating atlas */
 #portal{padding:calc(var(--safe-top) + 66px) 14px calc(var(--safe-bottom) + 90px)}
 #portal .shell{
  height:auto!important;max-height:min(73dvh,620px)!important;
@@ -110,13 +110,13 @@
  #portal .info{max-height:clamp(112px,19dvh,150px)!important}
 }
 
-/* V2.3 stable touch-first reading: anatomy remains the main visual */
+/* V3.0 stable touch-first reading: anatomy remains the main visual */
 #portal .close{width:38px;height:38px;min-width:38px;min-height:38px;touch-action:manipulation;z-index:10}
 #portal .lang{min-height:36px;min-width:44px;font-size:11px;touch-action:manipulation}
 #portal .tag{touch-action:manipulation}
 #portal .page{min-height:38px;touch-action:manipulation}
 
-/* V2.3 Palm to Vanish — original label hover sensitivity is untouched. */
+/* V3.0 Palm to Vanish — original label hover sensitivity is untouched. */
 #portal .shell{position:relative}
 #portal .shell:after{content:'✧  ♡  ✦  ✧  ✦';position:absolute;inset:0;display:grid;place-items:center;z-index:20;pointer-events:none;font-size:28px;letter-spacing:14px;color:#ed77b6;text-shadow:0 0 16px #fff,0 0 28px #d994ee;opacity:0;transform:scale(.7)}
 #portal.vanishing .shell{animation:palm-vanish .68s cubic-bezier(.32,.02,.72,.99) both!important;pointer-events:none}
@@ -125,19 +125,30 @@
 @keyframes palm-stars{0%{opacity:0;transform:scale(.65)}35%{opacity:1;transform:scale(1.1)}100%{opacity:0;transform:scale(2.8)}}
 #status{transition:color .15s}
 @media(prefers-reduced-motion:reduce){#portal.vanishing .shell{animation:none!important;opacity:0}#portal.vanishing .shell:after{animation:none!important}}
+
+/* V3.0: compact portal chooser, keep the anatomy diagram dominant. */
+.portals{display:flex;gap:4px;margin:3px 0 5px;justify-content:center;position:relative;z-index:4}
+.portal-tab{border:1px solid #e7cce8;background:#fff9ffb9;border-radius:11px;padding:7px 6px;font-size:10px;color:#715b84;font-weight:700;flex:1;min-width:0;touch-action:manipulation}
+.portal-tab.active{background:#f6d6f1e8;border-color:#d7a6d9;color:#8b4e8f;box-shadow:0 2px 8px #bb8acb2e}
+#portal .visual{height:clamp(205px,32dvh,300px)!important}
+#portal .organ-art .part{cursor:pointer;transition:filter .2s,opacity .2s}
+#portal .organ-art .part.is-selected{filter:drop-shadow(0 0 5px #f52b9b) drop-shadow(0 0 9px #e652c8);stroke:#f52b9b;stroke-width:5}
+#portal .organ-art.has-selection .part:not(.is-selected){opacity:.58}
+#portal .shell{max-height:min(78dvh,660px)!important}
+@media(max-height:700px){.portal-tab{padding:5px 3px;font-size:9px}#portal .visual{height:clamp(185px,29dvh,235px)!important}}
 </style>
 </head>
 <body>
 <video id="camera" autoplay muted playsinline webkit-playsinline></video>
 <div id="atmo"></div><div id="sparkles" aria-hidden="true"><span class="spark">✦</span><span class="spark">✧</span><span class="spark">✧</span><span class="spark">✦</span></div>
-<div class="head"><div class="brand">THE EYE PORTAL ♡<small>LITTLE ANATOMY MAGIC · V1.4</small></div><div class="status" id="status">READY TO EXPLORE ✧</div></div>
+<div class="head"><div class="brand">THE HUMAN PORTAL ♡<small>LITTLE ANATOMY MAGIC · V3.0</small></div><div class="status" id="status">READY TO EXPLORE ✧</div></div>
 <div id="eyeMarker" aria-hidden="true"></div><div id="finger" aria-hidden="true"><div class="finger-ring"></div><div class="heart-orbit"><span>♡</span></div><div class="finger-center">✧</div></div>
-<main id="portal" aria-hidden="true"><section class="shell" id="shell" aria-label="Interactive anatomy of the eye">
+<main id="portal" aria-hidden="true"><section class="shell" id="shell" aria-label="Interactive human anatomy">
  <div class="top"><div><div class="eyebrow">✿ CHAPTER 01 · OCULAR ANATOMY</div><h2 class="title">Peek inside the eye <span class="heart">♡</span></h2></div><button class="close" type="button" id="close" aria-label="Close portal">×</button></div>
  <div class="sticker">✧ discover the little wonders of vision</div>
- <div class="pages" aria-label="Choose anatomy area"><button type="button" class="page active" data-page="front" data-hoverable="1">♡ FRONT · 5</button><button type="button" class="page" data-page="back" data-hoverable="1">✦ BACK · 5</button></div>
+ <div class="portals" id="portals" aria-label="Choose body portal"><button class="portal-tab active" data-portal="eye">👁 EYE</button><button class="portal-tab" data-portal="nose">👃 NOSE</button><button class="portal-tab" data-portal="mouth">👄 MOUTH</button><button class="portal-tab" data-portal="chest">🫀 CHEST</button></div><div class="pages" aria-label="Choose anatomy area"><button type="button" class="page active" data-page="front" data-hoverable="1">♡ FRONT · 5</button><button type="button" class="page" data-page="back" data-hoverable="1">✦ BACK · 5</button></div>
  <div class="visual" id="visual" aria-label="Flip your anatomy book"><div class="paper-corner" aria-hidden="true">✿</div><div class="orbit" aria-hidden="true"></div>
-  <svg id="diagram" class="diagram" viewBox="0 0 360 290" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="Simplified eye cross-section; tap a label to highlight the anatomical location.">
+  <svg id="diagram" class="diagram" viewBox="0 0 360 290" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="Simplified anatomy diagram; tap a label to highlight the anatomical location.">
    <defs>
     <radialGradient id="scleraG" cx="31%" cy="26%"><stop stop-color="#fff"/><stop offset=".57" stop-color="#eff8ff"/><stop offset="1" stop-color="#c9b4ea"/></radialGradient>
     <radialGradient id="vitreousG" cx="36%" cy="28%"><stop stop-color="#fcffff" stop-opacity=".92"/><stop offset="1" stop-color="#b5a9e4" stop-opacity=".72"/></radialGradient>
@@ -166,21 +177,23 @@
  <div class="organ-title" id="organTitle">Choose a little label ♡</div>
  <div class="translations" id="translations"><span class="translation">EN · 日本語 · 中文</span></div>
  <div class="langbar"><span class="lang-title">EXPLANATION</span><button type="button" class="lang active" data-lang="en" data-hoverable="1">EN</button><button type="button" class="lang" data-lang="ja" data-hoverable="1">日本語</button><button type="button" class="lang" data-lang="zh" data-hoverable="1">中文</button></div>
- <p class="description" id="description">Touch a label to explore the eye. Its location will glow in the diagram!</p>
+ <p class="description" id="description">Point to a label to explore anatomy. The matching structure will glow!</p>
  <p class="tiny" id="tinyFact">✿ Point and hold briefly, or just tap the screen.</p></div>
- <div class="footer"><b>✧ PAGE MAGIC</b> · wave your open palm ← BACK / FRONT → · lower hand to close</div>
+ <div class="footer"><b>✧ PAGE MAGIC</b> · touch FRONT / BACK · open palm to vanish</div>
  </section></main>
 <div class="bottom"><div class="hint" id="hint"><b>✦ POINT TO YOUR EYE</b><br>食指在眼睛附近稍停即可打开</div><button type="button" class="manual" id="manual">触屏打开 ♡</button></div>
-<div id="splash"><div class="splash-inner"><div class="orb">♡</div><h1>THE EYE PORTAL</h1><div class="sub">✿ LITTLE ANATOMY MAGIC · V1.4 ✿</div><p>Ten tiny wonders behind your eyes.<br>平滑小爱心光环 · 左右挥手翻页 · 更灵敏开门 🫧</p><button type="button" class="mainbtn" id="start">开启摄像头 · OPEN THE MAGIC ✧</button><button type="button" class="mainbtn secondary" id="demo">先用触屏体验 · TRY DEMO</button><small class="note">需要 HTTPS（GitHub Pages）及摄像头授权。<br>摄像头视频在设备上处理，网页没有上传视频的功能。<br>解剖图为简化示意，并非按比例绘制。</small><div id="error" role="alert"></div></div></div>
+<div id="splash"><div class="splash-inner"><div class="orb">♡</div><h1>THE HUMAN PORTAL</h1><div class="sub">✿ LITTLE ANATOMY MAGIC · V3.0 ✿</div><p>Four little doors to the human body.<br>眼睛 · 鼻子 · 嘴巴 · 胸腔 · 小爱心魔法 🫧</p><button type="button" class="mainbtn" id="start">开启摄像头 · OPEN THE MAGIC ✧</button><button type="button" class="mainbtn secondary" id="demo">先用触屏体验 · TRY DEMO</button><small class="note">需要 HTTPS（GitHub Pages）及摄像头授权。<br>摄像头视频在设备上处理，网页没有上传视频的功能。<br>解剖图为简化示意，并非按比例绘制。</small><div id="error" role="alert"></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/hands.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4/face_mesh.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5/pose.js" crossorigin="anonymous"></script>
 <script>
 (()=>{'use strict';
 const $=id=>document.getElementById(id);
-const video=$('camera'),portal=$('portal'),diagram=$('diagram'),labels=$('labels'),leaders=$('leaders'),finger=$('finger'),visual=$('visual'),marker=$('eyeMarker'),manual=$('manual'),status=$('status'),hint=$('hint');
+const video=$('camera'),portal=$('portal'),diagram=$('diagram'),finger=$('finger'),visual=$('visual'),marker=$('eyeMarker'),manual=$('manual'),status=$('status'),hint=$('hint');
+let labels=$('labels'),leaders=$('leaders');
 const NS='http://www.w3.org/2000/svg';
 // Explanation paragraphs and little facts change language; anatomical names ALWAYS stay bilingual beside English.
-const anatomy={
+let anatomy={
  cornea:{en:'Cornea',ja:'角膜',zh:'角膜',p:'front',at:[64,145],order:1,blurb:{en:'The cornea is the clear, curved front surface of the eye. It protects the eye and provides much of the focusing power for incoming light.',ja:'角膜は眼球の最前面にある透明な曲面です。眼を保護し、入ってくる光を屈折させてピント合わせの大部分を担います。',zh:'角膜是眼球最前方透明、弯曲的组织。它保护眼球，并承担眼睛大部分的光线折射作用。'},fact:{en:'✿ A healthy cornea has no blood vessels.',ja:'✿ 健康な角膜には血管がありません。',zh:'✿ 健康的角膜没有血管。'}},
  iris:{en:'Iris',ja:'虹彩',zh:'虹膜',p:'front',at:[108,123],order:2,blurb:{en:'The iris is the colored ring around the pupil. Its muscles change the pupil size to regulate how much light enters the eye.',ja:'虹彩は瞳孔を囲む色のついた組織です。筋肉の働きで瞳孔の大きさを変え、眼に入る光の量を調節します。',zh:'虹膜是环绕瞳孔的有色组织。虹膜中的肌肉通过改变瞳孔大小，调节进入眼内的光量。'},fact:{en:'✿ The iris works a little like a camera aperture.',ja:'✿ 虹彩はカメラの絞りに似た働きをします。',zh:'✿ 虹膜的作用有点像相机光圈。'}},
  pupil:{en:'Pupil',ja:'瞳孔',zh:'瞳孔',p:'front',at:[108,145],order:3,blurb:{en:'The pupil is the opening in the center of the iris—not a separate tissue. Light passes through it on the way to the lens and retina.',ja:'瞳孔は虹彩の中央にある「開口部」で、独立した組織ではありません。光はここを通って水晶体や網膜へ進みます。',zh:'瞳孔是虹膜中央的开口，并不是独立的组织。光线从这里通过，再经晶状体到达视网膜。'},fact:{en:'✿ Your pupils usually shrink in bright light.',ja:'✿ 明るい場所では通常、瞳孔は小さくなります。',zh:'✿ 在强光下，瞳孔通常会缩小。'}},
@@ -193,13 +206,81 @@ const anatomy={
  sclera:{en:'Sclera',ja:'強膜',zh:'巩膜',p:'back',at:[220,56],order:10,blurb:{en:'The sclera is the tough, white outer coat of the eyeball. It protects the inner eye and provides attachment points for the muscles that move the eye.',ja:'強膜は眼球の外側を覆う丈夫な白い膜です。眼の内部を保護し、眼球を動かす筋肉の付着部にもなります。',zh:'巩膜是眼球外层坚韧的白色组织，保护眼内结构，也是带动眼球转动的眼外肌附着的位置。'},fact:{en:'✿ The visible “white of the eye” is mostly sclera.',ja:'✿ いわゆる「白目」は主に強膜です。',zh:'✿ 我们看到的“眼白”主要就是巩膜。'}}
 };
 // Two compact groups are far easier to aim at than ten tiny labels on an iPhone.
-const placements={
+let placements={
  front:{cornea:[5,32],iris:[5,221],pupil:[248,29],lens:[248,99],ciliary:[244,221]},
  back:{retina:[5,32],vitreous:[5,221],macula:[248,29],optic:[248,99],sclera:[248,221]}
 };
-const labelDest={front:{cornea:[61,81],iris:[61,221],pupil:[300,77],lens:[300,147],ciliary:[298,221]},back:{retina:[61,80],vitreous:[61,221],macula:[300,77],optic:[300,147],sclera:[300,221]}};
+let labelDest={front:{cornea:[61,81],iris:[61,221],pupil:[300,77],lens:[300,147],ciliary:[298,221]},back:{retina:[61,80],vitreous:[61,221],macula:[300,77],optic:[300,147],sclera:[300,221]}};
+let currentPortal='eye',poseModel=null,bodyChest=null,lastPoseScan=0,bodyTarget=null;
+
+const eyeDataset={anatomy,placements,labelDest,svg:diagram.innerHTML};
+const otherData={
+ nose:{title:'A little breath of magic',chapter:'CHAPTER 02 · NASAL ANATOMY',
+  parts:[
+ ['nasal','Nasal Cavity','鼻腔','鼻腔','The nasal cavity warms, humidifies and filters inhaled air.','鼻腔は吸い込んだ空気を温め、加湿し、異物を取り除きます。','鼻腔帮助加温、湿润并过滤吸入的空气。'],
+ ['septum','Nasal Septum','鼻中隔','鼻中隔','The nasal septum separates the left and right nasal passages.','鼻中隔は鼻腔を左右に分ける壁です。','鼻中隔将左右鼻腔分隔开。'],
+ ['turbinate','Nasal Conchae','鼻甲介','鼻甲','The nasal conchae increase surface area and help direct airflow.','鼻甲介は表面積を増やし、鼻腔内の空気の流れを整えます。','鼻甲增加鼻腔表面积，并帮助引导气流。'],
+ ['olfactory','Olfactory Bulb','嗅球','嗅球','The olfactory bulb processes smell signals arriving from the nose.','嗅球は鼻から届くにおいの信号を処理します。','嗅球负责处理来自鼻部的嗅觉信号。'],
+ ['sinus','Paranasal Sinuses','副鼻腔','鼻旁窦','Paranasal sinuses are air-filled spaces around the nasal cavity.','副鼻腔は鼻腔の周囲にある空気で満たされた空間です。','鼻旁窦是鼻腔周围含有空气的腔隙。'],
+ ['nostril','Nostril','外鼻孔','鼻孔','The nostrils are the external openings through which air enters the nose.','外鼻孔は空気が鼻に入る外側の開口部です。','鼻孔是空气进入鼻部的外部开口。']],
+  xy:{nasal:[178,155],septum:[143,150],turbinate:[178,183],olfactory:[187,72],sinus:[110,85],nostril:[88,219]}},
+ mouth:{title:'A tiny world of taste',chapter:'CHAPTER 03 · ORAL ANATOMY',
+  parts:[
+ ['tongue','Tongue','舌','舌','The tongue moves food, supports swallowing and speech, and contains taste buds.','舌は食物を動かし、嚥下や発音を助け、味蕾を含みます。','舌帮助移动食物、吞咽和发音，表面分布有味蕾。'],
+ ['teeth','Teeth','歯','牙齿','Teeth cut and grind food during chewing.','歯は食べ物を噛み切り、すりつぶします。','牙齿在咀嚼时切断和磨碎食物。'],
+ ['hardpalate','Hard Palate','硬口蓋','硬腭','The hard palate forms the bony front portion of the roof of the mouth.','硬口蓋は口腔の天井の前方にある骨性部分です。','硬腭构成口腔顶部前方的骨性部分。'],
+ ['softpalate','Soft Palate','軟口蓋','软腭','The soft palate helps close off the nasal passage during swallowing.','軟口蓋は飲み込むときに鼻咽腔を閉じる働きをします。','软腭在吞咽时帮助封闭通往鼻腔的通道。'],
+ ['uvula','Uvula','口蓋垂','悬雍垂','The uvula hangs from the soft palate and contributes to swallowing and speech.','口蓋垂は軟口蓋から垂れ下がり、嚥下や発音に関わります。','悬雍垂悬于软腭后缘，参与吞咽与发音。'],
+ ['salivary','Salivary Glands','唾液腺','唾液腺','Salivary glands produce saliva to lubricate food and begin digestion.','唾液腺は食物を湿らせ、消化を助ける唾液を分泌します。','唾液腺分泌唾液，帮助润滑食物并启动消化。']],
+  xy:{tongue:[184,191],teeth:[94,175],hardpalate:[158,102],softpalate:[236,110],uvula:[256,150],salivary:[245,217]}},
+ chest:{title:'Where every heartbeat begins',chapter:'CHAPTER 04 · THORACIC ANATOMY',
+  parts:[
+ ['heart','Heart','心臓','心脏','The heart pumps blood through the lungs and the rest of the body.','心臓は血液を肺と全身へ送り出すポンプです。','心脏将血液泵送至肺部和全身。'],
+ ['lungs','Lungs','肺','肺','The lungs exchange oxygen and carbon dioxide between air and blood.','肺は空気と血液の間で酸素と二酸化炭素を交換します。','肺负责空气与血液之间的氧气和二氧化碳交换。'],
+ ['trachea','Trachea','気管','气管','The trachea carries air from the larynx toward the bronchi.','気管は喉頭から気管支へ空気を運びます。','气管将空气从喉部输送到支气管。'],
+ ['bronchi','Bronchi','気管支','支气管','The bronchi branch from the trachea and carry air into each lung.','気管支は気管から枝分かれし、左右の肺へ空気を運びます。','支气管由气管分支，将空气送入左右肺。'],
+ ['diaphragm','Diaphragm','横隔膜','膈肌','The diaphragm is the main breathing muscle; contraction draws air into the lungs.','横隔膜は主な呼吸筋で、収縮すると肺に空気が入ります。','膈肌是主要呼吸肌，收缩时帮助吸气。'],
+ ['aorta','Aorta','大動脈','主动脉','The aorta carries oxygen-rich blood from the left ventricle to the body.','大動脈は左心室から酸素を多く含む血液を全身へ運びます。','主动脉将富含氧气的血液从左心室输送至全身。']],
+  xy:{heart:[198,165],lungs:[173,149],trachea:[177,67],bronchi:[177,115],diaphragm:[179,235],aorta:[207,97]}}
+};
+const svgArt={
+ nose:`<path d="M93 225 Q74 180 97 132 Q105 97 144 66 Q167 46 210 58 Q238 75 235 112 L248 156 Q259 180 238 193 L210 196 Q202 229 172 236Z" fill="#f5e5f3" stroke="#b99dd5" stroke-width="3"/><path data-organ="sinus" class="part" d="M113 77 Q141 52 164 74 Q171 99 142 111 Q115 107 113 77" fill="#c3e9fa" stroke="#8ec4dd" stroke-width="3"/><path data-organ="olfactory" class="part" d="M150 77 Q186 54 213 83 Q199 92 181 88 L165 103Z" fill="#e7c3f2" stroke="#a780cf" stroke-width="3"/><path data-organ="nasal" class="part" d="M125 120 Q161 96 208 114 Q218 144 205 180 Q180 207 121 210 Q144 183 130 156Z" fill="#b8e7f5" stroke="#79c6e4" stroke-width="3"/><path data-organ="septum" class="part" d="M146 115 Q159 160 142 211" fill="none" stroke="#b786cb" stroke-width="9" stroke-linecap="round"/><path data-organ="turbinate" class="part" d="M174 142 Q212 126 203 150 Q178 168 170 160 M171 179 Q213 165 202 190 Q178 199 165 190" fill="none" stroke="#df86b9" stroke-width="8" stroke-linecap="round"/><path data-organ="nostril" class="part" d="M111 208 Q129 200 149 210 Q131 230 108 222Z" fill="#ad8dbd" stroke="#f8f0fa" stroke-width="3"/>`,
+ mouth:`<path d="M63 157 Q95 106 180 102 Q269 105 299 159 Q267 220 180 233 Q92 221 63 157Z" fill="#f9d9e7" stroke="#b987b2" stroke-width="4"/><path d="M83 157 Q112 131 180 132 Q251 133 278 157 Q255 198 180 210 Q110 199 83 157" fill="#9d648e"/><path data-organ="hardpalate" class="part" d="M111 139 Q180 106 235 138 Q182 153 111 139" fill="#f6bcd9" stroke="#d78fb5" stroke-width="3"/><path data-organ="softpalate" class="part" d="M235 139 Q262 139 274 153 L247 162Z" fill="#ed9dc5" stroke="#cf79a9" stroke-width="3"/><path data-organ="uvula" class="part" d="M247 153 Q263 163 255 181 Q243 183 247 153" fill="#e68fb7" stroke="#c76c9c" stroke-width="2"/><path data-organ="tongue" class="part" d="M119 189 Q173 158 230 183 Q249 202 180 209 Q137 208 119 189" fill="#ec91b1" stroke="#c76494" stroke-width="3"/><g data-organ="teeth" class="part" fill="#fffefa" stroke="#d4b7cf" stroke-width="2"><path d="M94 153 Q122 143 146 146 L146 160 Q118 165 94 159Z"/><path d="M150 145 L181 143 L181 161 L150 160Z"/><path d="M185 143 L217 147 L216 161 L185 161Z"/><path d="M220 147 Q246 145 268 158 L265 165 L220 161Z"/></g><g data-organ="salivary" class="part" fill="#e7b6eb" stroke="#b786c9" stroke-width="2"><ellipse cx="107" cy="211" rx="15" ry="12"/><ellipse cx="254" cy="210" rx="15" ry="12"/></g>`,
+ chest:`<path d="M133 42 Q102 53 88 91 L71 235 Q180 269 288 235 L272 91 Q255 53 225 42Z" fill="#f5e7f6" fill-opacity=".65" stroke="#c7acd8" stroke-width="3"/><g data-organ="lungs" class="part" fill="#d6b9ef" fill-opacity=".8" stroke="#b38dd5" stroke-width="3"><path d="M164 97 Q138 77 113 112 Q95 157 103 219 Q130 237 165 211 L169 124Z"/><path d="M197 96 Q231 77 248 116 Q266 161 252 218 Q224 238 196 210 L190 126Z"/></g><path data-organ="trachea" class="part" d="M180 44 L180 112" stroke="#a6d9e7" stroke-width="16" stroke-linecap="round"/><path data-organ="bronchi" class="part" d="M180 112 L144 147 M180 112 L215 147" stroke="#89c3d9" stroke-width="12" stroke-linecap="round" fill="none"/><path data-organ="aorta" class="part" d="M198 166 Q218 151 215 116 Q211 81 186 84 Q164 84 165 104" fill="none" stroke="#e77eac" stroke-width="11" stroke-linecap="round"/><path data-organ="heart" class="part" d="M186 148 C165 127 147 153 159 174 L187 210 L215 175 C231 148 206 130 186 148Z" fill="#e88bb4" stroke="#c65b91" stroke-width="3"/><path data-organ="diaphragm" class="part" d="M94 225 Q180 187 265 225" fill="none" stroke="#ab83cf" stroke-width="10" stroke-linecap="round"/>`
+};
+function buildDataset(which){
+ if(which==='eye')return eyeDataset;
+ const data=otherData[which],a={},pl={front:{},back:{}},ld={front:{},back:{}};
+ data.parts.forEach((v,i)=>{const [key,en,ja,zh,english,japanese,chinese]=v;
+  a[key]={en,ja,zh,p:i<3?'front':'back',at:data.xy[key],order:i+1,
+   blurb:{en:english,ja:japanese,zh:chinese},fact:{en:'✿ Tap the highlighted structure to explore.',ja:'✿ 光る部位をタップして学びましょう。',zh:'✿ 点击发光的解剖结构继续探索。'}};
+  const page=i<3?'front':'back',j=i%3;
+  const xy=[[5,26],[5,217],[248,26]][j];pl[page][key]=xy;
+  ld[page][key]=[[60,76],[60,240],[302,76]][j];
+ });
+ const art=`<defs><filter id="glow"><feGaussianBlur stdDeviation="5"/></filter></defs><g class="organ-art">${svgArt[which]}</g><g id="leaders" aria-hidden="true"></g><g id="focusHalo" aria-hidden="true"><circle r="16"/><circle r="21"/></g><g id="labels"></g>`;
+ return {anatomy:a,placements:pl,labelDest:ld,svg:art};
+}
+function changePortal(which){
+ if(!['eye','nose','mouth','chest'].includes(which))return;
+ currentPortal=which;const data=buildDataset(which);
+ anatomy=data.anatomy;placements=data.placements;labelDest=data.labelDest;
+ diagram.innerHTML=data.svg;labels=$('labels');leaders=$('leaders');
+ document.querySelectorAll('.portal-tab').forEach(b=>b.classList.toggle('active',b.dataset.portal===which));
+ const title=which==='eye'?'Peek inside the eye':otherData[which].title;
+ document.querySelector('.title').innerHTML=title+' <span class="heart">♡</span>';
+ document.querySelector('.eyebrow').textContent=which==='eye'?'✿ CHAPTER 01 · OCULAR ANATOMY':'✿ '+otherData[which].chapter;
+ document.querySelectorAll('.page').forEach((b,i)=>b.textContent=(i?'✦ BACK · ':'♡ FRONT · ')+(which==='eye'?5:3));
+ section='front';chosen=null;
+ document.querySelectorAll('.page').forEach(b=>b.classList.toggle('active',b.dataset.page==='front'));
+ renderLabels();translate();bindParts();
+}
+function bindParts(){diagram.querySelectorAll('.part').forEach(p=>{
+ p.addEventListener('click',()=>{const key=p.dataset.organ;if(!anatomy[key])return;if(anatomy[key].p!==section)setPage(anatomy[key].p);select(key)});
+ p.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();p.dispatchEvent(new Event('click'))}})
+ })}
 let section='front',lang='en',chosen=null,activeTags=[],hoverables=[];
-let hands=null,faceMesh=null,stream=null,running=false,busy=false,analysisTimer=0,watchdog=0,opened=false,manuallyOpened=false,faceEyes=[],lastHand=0,eyeSince=0,lastEyeNear=0,hoverSince=0,hoverTarget=null,hoverCommitted=null,armed=true,openAt=0,seenHand=false,exitSince=0,fistSince=0,smoothed=null,lastFaceScan=0,faceLoaded=false;
+let hands=null,faceMesh=null,stream=null,running=false,busy=false,analysisTimer=0,watchdog=0,opened=false,manuallyOpened=false,faceEyes=[],faceNose=null,faceMouth=null,lastHand=0,eyeSince=0,lastEyeNear=0,hoverSince=0,hoverTarget=null,hoverCommitted=null,armed=true,openAt=0,seenHand=false,exitSince=0,fistSince=0,smoothed=null,lastFaceScan=0,faceLoaded=false;
 let palmSince=0,palmLastSeen=0,palmClosing=false,palmProgress=0,selectProtectionUntil=0;
 let rearmAt=0,bookFlipping=false,flipTimer=0,lastFlip=-5000,handHistory=[],fingerTarget=null,fingerDraw=null,hadCursor=false,retreatStartY=null;
 // Milliseconds; grace prevents the opening hand from immediately triggering closure.
@@ -231,8 +312,8 @@ function updateHighlights(){const all=diagram.querySelectorAll('.part');diagram.
  for(const el of activeTags){const is=el.dataset.organ===chosen;el.classList.toggle('is-selected',is);el.setAttribute('aria-pressed',is?'true':'false')}
  for(const el of leaders.querySelectorAll('.connector'))el.classList.toggle('is-selected',el.dataset.link===chosen);
  const halo=$('focusHalo');if(chosen){halo.setAttribute('transform',`translate(${anatomy[chosen].at.join(' ')})`);halo.classList.add('show')}else halo.classList.remove('show')}
-function translate(){const a=anatomy[chosen];if(!a){$('miniLabel').textContent='✦ YOUR LITTLE ANATOMY BOOK';$('count').textContent='0 / 10';$('organTitle').textContent='Choose a little label ♡';$('translations').innerHTML='<span class="translation">EN · 日本語 · 中文</span>';const hints={en:['Touch a label to explore the eye. Its location will glow in the diagram!','✿ Point and hold briefly, or just tap the screen.'],ja:['ラベルを選ぶと、その部位の位置が図の中で光ります。','✿ 指で少し指し続けるか、画面をタップしてね。'],zh:['选择一个医学标签，对应的眼部结构就会在解剖图中发光。','✿ 用手指短暂停留，或直接点击屏幕。']};[$('description').textContent,$('tinyFact').textContent]=hints[lang];return}
- $('miniLabel').textContent='✦ NOW EXPLORING';$('count').textContent=`${a.order} / 10`;$('organTitle').textContent=a.en;
+function translate(){const a=anatomy[chosen];if(!a){$('miniLabel').textContent='✦ YOUR LITTLE ANATOMY BOOK';$('count').textContent='0 / '+Object.keys(anatomy).length;$('organTitle').textContent='Choose a little label ♡';$('translations').innerHTML='<span class="translation">EN · 日本語 · 中文</span>';const hints={en:['Point to a label to explore anatomy. The matching structure will glow!','✿ Point and hold briefly, or just tap the screen.'],ja:['ラベルを選ぶと、対応する解剖構造が図の中で光ります。','✿ 指で少し指し続けるか、画面をタップしてね。'],zh:['选择医学标签，对应的人体结构就会在解剖图中发光。','✿ 用手指短暂停留，或直接点击屏幕。']};[$('description').textContent,$('tinyFact').textContent]=hints[lang];return}
+ $('miniLabel').textContent='✦ NOW EXPLORING';$('count').textContent=`${a.order} / ${Object.keys(anatomy).length}`;$('organTitle').textContent=a.en;
  $('translations').replaceChildren();for(const [prefix,value] of [['JP',a.ja],['中文',a.zh]]){const e=document.createElement('span');e.className='translation';const b=document.createElement('strong');b.textContent=prefix+'  ';e.append(b,document.createTextNode(value));$('translations').append(e)}
  $('description').textContent=a.blurb[lang];$('tinyFact').textContent=a.fact[lang]}
 function select(key){if(!anatomy[key])return;chosen=key;updateHighlights();translate()}
@@ -251,7 +332,8 @@ function flipBook(next){
 }
 function setLang(next){if(!['en','ja','zh'].includes(next))return;lang=next;for(const b of document.querySelectorAll('.lang')){const yes=b.dataset.lang===next;b.classList.toggle('active',yes);b.setAttribute('aria-pressed',yes?'true':'false')}translate()}
 function reset(){chosen=null;setPage('front');updateHighlights();translate()}
-function openPortal(manualMode=false){
+function openPortal(manualMode=false,which=currentPortal){
+ if(which!==currentPortal)changePortal(which);
  if(opened)return;
  manuallyOpened=manualMode;opened=true;retreatStartY=null;openAt=performance.now();seenHand=!manualMode&&performance.now()-lastHand<700;handHistory=[];lastFlip=-5000;
  exitSince=0;fistSince=0;palmSince=0;palmLastSeen=0;eyeSince=0;lastEyeNear=0;clearHover();reset();
@@ -264,7 +346,7 @@ function closePortal(){
  opened=false;armed=false;rearmAt=performance.now()+320;retreatStartY=null;manuallyOpened=false;seenHand=false;exitSince=0;fistSince=0;palmSince=0;palmLastSeen=0;handHistory=[];fingerTarget=null;finger.style.opacity='0';
  portal.classList.remove('open','vanishing');portal.setAttribute('aria-hidden','true');palmClosing=false;palmProgress=0;document.documentElement.style.setProperty('--palm-progress','0%');
  manual.textContent='触屏打开 ♡';
- hint.innerHTML='<b>✦ POINT TO YOUR EYE</b><br>伸出食指指向眼睛并保持约 0.7 秒';
+ hint.innerHTML='<b>✦ POINT TO A BODY PART</b><br>指向眼睛、鼻子、嘴巴或胸口 · 或触屏选择';
  setStatus('READY TO EXPLORE ✧');clearHover();eyeSince=0;smoothed=null;refreshMarker();
 }
 function videoPoint(p){const vw=video.videoWidth||640,vh=video.videoHeight||480;const scale=Math.max(innerWidth/vw,innerHeight/vh);return{x:(innerWidth-vw*scale)/2+(1-p.x)*vw*scale,y:(innerHeight-vh*scale)/2+p.y*vh*scale}}
@@ -399,30 +481,40 @@ function onHand(r){
   return;
  }
  if(!armed&&now>=rearmAt)armed=true;
- let distance=Infinity,eyePos=null;
- for(const e of faceEyes){const val=len(tip,e);if(val<distance){distance=val;eyePos=e}}
- // The marker used to show the correct eye while the extension test silently failed.
- // Now accept a finger near that marker, with a basic wrist-vs-tip proximity check.
- const radius=Math.max(48,Math.min(innerWidth*.145,66));
- const pointing=!!eyePos && isExtended[0] && countExtended<=2 && d(8,0)>d(5,0)*1.45;
- const nearEye=pointing&&distance<radius;
+ let distance=Infinity,target=null;
+ const candidates=[...faceEyes.map(p=>({p,kind:'eye',r:Math.max(48,Math.min(innerWidth*.145,66))})),
+ ...(faceNose?[{p:faceNose,kind:'nose',r:Math.max(42,innerWidth*.115)}]:[]),
+ ...(faceMouth?[{p:faceMouth,kind:'mouth',r:Math.max(43,innerWidth*.12)}]:[]),
+ ...(bodyChest?[{p:bodyChest,kind:'chest',r:Math.max(65,innerWidth*.19)}]:[])];
+ const pointing=isExtended[0] && countExtended<=2 && d(8,0)>d(5,0)*1.45;
+ for(const c of candidates){const val=len(tip,c.p)/c.r;if(val<distance){distance=val;target=c}}
+ const nearEye=pointing&&target&&distance<1;
  moveFinger(pt,!!nearEye);
  if(nearEye){
-  setStatus('HOLD AT YOUR EYE ♡');
+  setStatus('HOLD AT '+target.kind.toUpperCase()+' ♡');
   lastEyeNear=now;
   if(!eyeSince)eyeSince=now;
   const dwell=now-eyeSince;
   finger.style.setProperty('--progress',String(Math.min(100,100*dwell/HOLD_EYE)));
-  if(armed&&dwell>=HOLD_EYE)openPortal(false);
+  if(armed&&dwell>=HOLD_EYE)openPortal(false,target.kind);
  }else{
   setStatus('HAND DETECTED ✧');
   finger.style.setProperty('--progress','0');
   if(now-lastEyeNear>110)eyeSince=0;
-  if(distance>radius+38)armed=true;
+  if(distance>1.65)armed=true;
  }
 }
-function onFace(r){const lm=r.multiFaceLandmarks?.[0];if(!lm){faceEyes=[];refreshMarker();return}faceEyes=[[33,133,159,145],[362,263,386,374]].map(ids=>{const p=ids.map(i=>videoPoint(lm[i]));return{x:p.reduce((n,x)=>n+x.x,0)/4,y:p.reduce((n,x)=>n+x.y,0)/4}});refreshMarker()}
-async function analyze(){if(!running||busy||document.hidden)return;busy=true;try{if(video.readyState>=2&&hands){ctx.drawImage(video,0,0,capture.width,capture.height);await hands.send({image:capture});const now=performance.now();if(!opened&&faceMesh&&(!faceLoaded||now-lastFaceScan>480)){lastFaceScan=now;await faceMesh.send({image:capture});faceLoaded=true}}}catch(err){console.warn('Gesture tracking:',err);setStatus('TOUCH MODE AVAILABLE ♡')}finally{busy=false;if(running&&!document.hidden)analysisTimer=setTimeout(analyze,28)}}
+function onFace(r){const lm=r.multiFaceLandmarks?.[0];if(!lm){faceEyes=[];faceNose=null;faceMouth=null;refreshMarker();return}
+ faceEyes=[[33,133,159,145],[362,263,386,374]].map(ids=>{const p=ids.map(i=>videoPoint(lm[i]));return{x:p.reduce((n,x)=>n+x.x,0)/4,y:p.reduce((n,x)=>n+x.y,0)/4}});
+ faceNose=videoPoint(lm[1]);faceMouth=videoPoint(lm[13]);refreshMarker();}
+function onPose(r){const lm=r.poseLandmarks;if(!lm){bodyChest=null;return}
+ const a=lm[11],b=lm[12];if(a.visibility<.45||b.visibility<.45){bodyChest=null;return}
+ const center={x:(a.x+b.x)/2,y:(a.y+b.y)/2+Math.abs(a.x-b.x)*.46};
+ bodyChest=videoPoint(center);
+}
+
+async function analyze(){if(!running||busy||document.hidden)return;busy=true;try{if(video.readyState>=2&&hands){ctx.drawImage(video,0,0,capture.width,capture.height);await hands.send({image:capture});const now=performance.now();if(!opened&&faceMesh&&(!faceLoaded||now-lastFaceScan>350)){lastFaceScan=now;await faceMesh.send({image:capture});faceLoaded=true}
+ if(!opened&&poseModel&&now-lastPoseScan>650){lastPoseScan=now;await poseModel.send({image:capture})}}}catch(err){console.warn('Gesture tracking:',err);setStatus('TOUCH MODE AVAILABLE ♡')}finally{busy=false;if(running&&!document.hidden)analysisTimer=setTimeout(analyze,28)}}
 function hideSplash(){const el=$('splash');el.style.opacity='0';el.style.pointerEvents='none';setTimeout(()=>{el.style.display='none'},260)}
 async function start(){if(running)return;const startButton=$('start');$('error').textContent='';startButton.disabled=true;startButton.textContent='A little camera magic is loading…';try{
  if(!window.isSecureContext)throw Error('Please open the HTTPS GitHub Pages website.');if(!navigator.mediaDevices?.getUserMedia)throw Error('Camera access is unavailable in this browser.');
@@ -430,12 +522,14 @@ async function start(){if(running)return;const startButton=$('start');$('error')
  if(typeof Hands!=='function'||typeof FaceMesh!=='function')throw Error('Gesture libraries could not load; touch mode is still available.');
  hands=new Hands({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/${f}`});hands.setOptions({maxNumHands:1,modelComplexity:0,minDetectionConfidence:.46,minTrackingConfidence:.45});hands.onResults(onHand);
  faceMesh=new FaceMesh({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4/${f}`});faceMesh.setOptions({maxNumFaces:1,refineLandmarks:false,minDetectionConfidence:.52,minTrackingConfidence:.53});faceMesh.onResults(onFace);
+ if(typeof Pose==='function')try{poseModel=new Pose({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5/${f}`});poseModel.setOptions({modelComplexity:0,smoothLandmarks:true,minDetectionConfidence:.52,minTrackingConfidence:.50});poseModel.onResults(onPose)}catch(e){console.warn('Pose unavailable, chest touch mode still works',e)}
  setStatus('POINT TO YOUR EYE ✧');analyze();
  }catch(err){console.warn(err);$('error').textContent=(err.name==='NotAllowedError'?'Camera permission denied. Enable Camera in Safari website settings.':err.name==='NotFoundError'?'No camera found.':(err.message||'Camera unavailable.'))+'\nYou can try the touch demo instead.';startButton.disabled=false;startButton.textContent='Retry camera ✧';setStatus('TOUCH MODE AVAILABLE ♡');if(running)$('splash').style.display='none'}}
 function demo(){hideSplash();setStatus('TOUCH DEMO ♡');openPortal(true)}
 for(const b of document.querySelectorAll('.page'))b.addEventListener('click',()=>opened?flipBook(b.dataset.page):setPage(b.dataset.page));
 for(const b of document.querySelectorAll('.lang'))b.addEventListener('click',()=>setLang(b.dataset.lang));
-for(const p of diagram.querySelectorAll('.part')){p.addEventListener('click',()=>{if(anatomy[p.dataset.organ].p!==section)setPage(anatomy[p.dataset.organ].p);select(p.dataset.organ)});p.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();if(anatomy[p.dataset.organ].p!==section)setPage(anatomy[p.dataset.organ].p);select(p.dataset.organ)}})}
+bindParts();
+for(const b of document.querySelectorAll('.portal-tab'))b.addEventListener('click',()=>{changePortal(b.dataset.portal);if(!opened)openPortal(true,b.dataset.portal)});
 // Eye-marker taps do not auto-open. Use the explicit touch-open button instead.
 $('start').addEventListener('click',start);$('demo').addEventListener('click',demo);manual.addEventListener('click',()=>opened?closePortal():openPortal(true));$('close').addEventListener('click',closePortal);
 // Independent safety check: even if inference stalls when a hand exits, the door closes.
