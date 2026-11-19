@@ -17,16 +17,16 @@
 #eyeMarker{display:none;position:fixed;z-index:3;width:62px;height:62px;border:1.5px solid #fffb;border-radius:50%;box-shadow:0 0 0 7px #fff4,0 0 28px #ffe1fa,inset 0 0 15px #fff9;pointer-events:none;transform:translate(-50%,-50%);animation:eye-pulse 2.6s ease-in-out infinite}#eyeMarker:before{content:'✦';position:absolute;top:-12px;left:-8px;color:#fff}@keyframes eye-pulse{50%{box-shadow:0 0 0 11px #fff2,0 0 33px #fff,inset 0 0 22px #fffb}}
 
 #portal{position:fixed;inset:0;z-index:5;display:grid;place-items:center;padding:calc(var(--safe-top) + 64px) 12px calc(var(--safe-bottom) + 74px);pointer-events:none;visibility:hidden;transition:visibility 0s linear .28s}#portal.open{pointer-events:auto;visibility:visible;transition:visibility 0s}
-.shell{position:relative;display:flex;flex-direction:column;width:min(100%,445px);max-height:100%;overflow:hidden;border:1.5px solid #fff;border-radius:30px;padding:13px 13px 11px;background:linear-gradient(155deg,#fff9fcf0 2%,#f9e9f6ec 58%,#dceff9ed 100%);color:var(--ink);box-shadow:0 16px 43px #5f416e42,inset 0 1px #fff;transform:scaleX(.025) scaleY(.85);opacity:0;transform-origin:center;transition:transform .28s cubic-bezier(.22,.9,.28,1),opacity .19s ease;will-change:transform,opacity}#portal.open .shell{transform:scale(1);opacity:1}.shell:before{content:'✦';position:absolute;top:47px;right:41px;font-size:11px;color:#e5a5c8;pointer-events:none}
+.shell{position:relative;display:flex;flex-direction:column;width:min(100%,445px);max-height:100%;overflow:hidden;border:1.5px solid #fff;border-radius:30px;padding:13px 13px 11px;background:linear-gradient(155deg,#fff9fcac 2%,#f9e9f69a 58%,#dceff9a3 100%);color:var(--ink);box-shadow:0 16px 43px #5f416e42,inset 0 1px #fff;transform:scaleX(.025) scaleY(.85);opacity:0;transform-origin:center;transition:transform .28s cubic-bezier(.22,.9,.28,1),opacity .19s ease;will-change:transform,opacity}#portal.open .shell{transform:scale(1);opacity:1}.shell:before{content:'✦';position:absolute;top:47px;right:41px;font-size:11px;color:#e5a5c8;pointer-events:none}
 .top{position:relative;display:flex;align-items:center;justify-content:space-between;gap:7px}.eyebrow{font-size:9px;font-weight:750;letter-spacing:.14em;color:#a381b5}.title{font:400 24px/1.14 Georgia,"Times New Roman",serif;margin:4px 0 0;color:#654d76}.title .heart{color:#d884bb}.close{flex-shrink:0;background:#ffffffda;border:1px solid #fff;width:35px;height:35px;border-radius:50%;color:#a47aa5;font-size:23px}
 .sticker{align-self:flex-start;margin-top:7px;padding:4px 9px;background:#fff7f6;border-radius:100px;border:1px solid #fff;font-size:9px;letter-spacing:.06em;color:#bd81a6;transform:rotate(-2deg)}
 .pages{margin:10px auto 2px;display:flex;align-items:center;justify-content:center;gap:5px;background:#efe4f5b8;border:1px solid #fff;border-radius:100px;padding:4px;min-height:39px;width:min(100%,330px)}.page{flex:1;min-height:31px;border:0;border-radius:100px;background:transparent;color:#997fa6;font-size:11px;font-weight:700;padding:6px 5px;white-space:nowrap}.page.active{background:#fff;color:#b95c9c;box-shadow:0 2px 7px #a881b52b}.page.is-hover{outline:2px solid #e1a3cd}
 .visual{position:relative;width:100%;height:clamp(215px,30vh,275px);flex:none;margin-top:-1px}.orbit{position:absolute;pointer-events:none;width:53%;aspect-ratio:1;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1px dashed #d8b9ef9c;box-shadow:0 0 0 23px #fff2}.diagram{position:absolute;inset:0;width:100%;height:100%;overflow:visible}.eye-base{transform-origin:180px 145px}@keyframes float{50%{transform:translateY(-2px)}}
 .part{cursor:pointer;transition:opacity .15s}.part .organ-core{transition:stroke .16s,stroke-width .16s,fill .16s,opacity .16s,filter .2s}.diagram.has-selection .part:not(.is-selected){opacity:.72}.part.is-selected .organ-core{stroke:#e653a0;stroke-width:8px;filter:drop-shadow(0 0 5px #ed78b9);opacity:1}.part[data-organ=retina].is-selected .organ-core{stroke-width:11px}.part[data-organ=sclera].is-selected .organ-core{stroke-width:10px}.part[data-organ=optic].is-selected .organ-core{stroke-width:5px;fill:#ffbada}.part[data-organ=vitreous].is-selected .organ-core{fill:#e3cef7aa;stroke:#d58dbd;stroke-width:3px}.part[data-organ=pupil].is-selected .organ-core{stroke-width:5px;fill:#e376ac}.part[data-organ=macula].is-selected .organ-core{fill:#ffabd2;stroke-width:4px}.part[data-organ=cornea].is-selected .organ-core{fill:#d8fbff;stroke-width:6px}.part[data-organ=lens].is-selected .organ-core{fill:#fff4cf;stroke-width:6px}
 .connector{fill:none;stroke:#cb6fad;stroke-width:2.2;stroke-dasharray:4 3;stroke-linecap:round;opacity:0;transition:opacity .14s}.connector.is-selected{opacity:1;stroke-dasharray:none;stroke-width:2.7}.node{fill:#fff;stroke:#d990bd;stroke-width:2.1;opacity:.4}.node.is-selected{fill:#f4a2ca;stroke:#fff;stroke-width:2.5;opacity:1}
-.tag{cursor:pointer;outline:none}.tag rect{fill:#fff9fdeb;stroke:#fff;stroke-width:1.7;filter:drop-shadow(0 3px 4px #9475ae25)}.tag .en{fill:#765781;font:600 13px Georgia,serif}.tag .langs{fill:#a7819e;font-size:9px;font-weight:550}.tag.is-hover rect:not(.dwell-bar){stroke:#df8ec2;stroke-width:2}.tag .dwell-bar{fill:#d978ba;stroke:none!important;opacity:0;transition:opacity .1s}.tag.is-hover .dwell-bar{opacity:.92}.tag.is-selected rect{fill:#fff0f9;stroke:#d269ab;stroke-width:2.6}.tag.is-selected .en{fill:#bc468c}.tag.is-selected .langs{fill:#a4639c}
+.tag{cursor:pointer;outline:none}.tag rect{fill:#fff9fdc9;stroke:#fff;stroke-width:1.7;filter:drop-shadow(0 3px 4px #9475ae25)}.tag .en{fill:#765781;font:600 13px Georgia,serif}.tag .langs{fill:#a7819e;font-size:9px;font-weight:550}.tag.is-hover rect:not(.dwell-bar){stroke:#df8ec2;stroke-width:2}.tag .dwell-bar{fill:#d978ba;stroke:none!important;opacity:0;transition:opacity .1s}.tag.is-hover .dwell-bar{opacity:.92}.tag.is-selected rect{fill:#fff0f9;stroke:#d269ab;stroke-width:2.6}.tag.is-selected .en{fill:#bc468c}.tag.is-selected .langs{fill:#a4639c}
 #focusHalo{opacity:0;pointer-events:none;transition:opacity .15s}#focusHalo.show{opacity:1}#focusHalo circle{stroke:#ec77b6;stroke-width:1.7;fill:none;opacity:.52}#focusHalo circle:last-child{opacity:.3;stroke-dasharray:3 4}@keyframes ring{0%{transform:scale(.5);opacity:0}33%{opacity:1}100%{transform:scale(1.85);opacity:0}}
-.info{position:relative;background:#fffefaed;border:1px solid #fff;border-radius:21px;padding:11px 13px 12px;flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;box-shadow:0 5px 15px #a889b514;scrollbar-width:thin}.info-head{display:flex;justify-content:space-between;align-items:center;gap:5px}.mini-label{font-size:9px;font-weight:800;letter-spacing:.12em;color:#b987b0}.count{font-size:10px;color:#b088b2;border-radius:30px;background:#faf0f9;padding:3px 8px;white-space:nowrap}.organ-title{color:#664e70;font:400 24px/1.08 Georgia,serif;margin:5px 0 5px}.translations{display:flex;gap:5px;flex-wrap:wrap}.translation{font-size:10px;line-height:1.4;color:#8e6a91;border-radius:999px;padding:4px 8px;background:#faedf8}.translation strong{color:#b582a7;font-size:9px}
+.info{position:relative;background:#fffefac4;border:1px solid #fff;border-radius:21px;padding:11px 13px 12px;flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;box-shadow:0 5px 15px #a889b514;scrollbar-width:thin}.info-head{display:flex;justify-content:space-between;align-items:center;gap:5px}.mini-label{font-size:9px;font-weight:800;letter-spacing:.12em;color:#b987b0}.count{font-size:10px;color:#b088b2;border-radius:30px;background:#faf0f9;padding:3px 8px;white-space:nowrap}.organ-title{color:#664e70;font:400 24px/1.08 Georgia,serif;margin:5px 0 5px}.translations{display:flex;gap:5px;flex-wrap:wrap}.translation{font-size:10px;line-height:1.4;color:#8e6a91;border-radius:999px;padding:4px 8px;background:#faedf8}.translation strong{color:#b582a7;font-size:9px}
 .langbar{display:flex;align-items:center;gap:5px;margin:10px 0 7px;flex-wrap:wrap}.lang-title{font-size:9px;color:#b48aac;font-weight:750;letter-spacing:.07em;margin-right:3px}.lang{background:#f7f0f8;color:#956b9b;border:1px solid #ead8ee;border-radius:999px;padding:5px 10px;min-height:30px;font-size:10px;font-weight:700}.lang.active{background:#dfa9ce;color:#fff;border-color:#d998c3}.lang.is-hover{outline:2px solid #d77bb4}
 .description{font-size:12.2px;line-height:1.55;color:#584c65;margin:0}.tiny{font-size:10px;line-height:1.5;color:#a16d9d;margin:8px 0 0}.footer{font-size:9px;color:#a27eab;text-align:center;padding-top:7px;line-height:1.2}.footer b{color:#be73a6}
 #splash{position:fixed;inset:0;z-index:30;display:flex;justify-content:center;align-items:center;text-align:center;padding:22px;color:#5d4a70;background:radial-gradient(ellipse at 18% 11%,#fff8,transparent 43%),linear-gradient(140deg,#e6d5f3,#f9deec 57%,#c9e7f4);transition:opacity .23s}.splash-inner{width:min(100%,380px)}.orb{margin:0 auto 24px;width:144px;height:144px;display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle at 37% 30%,#fff 0%,#fff6fb 18%,#f5d2e8 51%,#a9cbed 100%);box-shadow:0 17px 35px #ab82b65c,inset 8px 9px 20px #fffd;font-size:51px;color:#fff;text-shadow:0 0 14px #fff}.splash-inner h1{font:400 31px/1.2 Georgia,serif;margin:0}.sub{margin:9px 0 20px;font-size:10px;letter-spacing:.18em;color:#a87eae}.splash-inner p{font-size:13px;line-height:1.85;margin:0 auto 24px}.mainbtn{width:100%;min-height:50px;border:1px solid white;border-radius:100px;background:#fff9fd;color:#71557d;font-size:14px;font-weight:750;box-shadow:0 8px 21px #ad86b43a}.mainbtn.secondary{margin-top:10px;font-size:12px;background:#ffffff66;box-shadow:none}.note{display:block;font-size:10px;color:#97809e;line-height:1.65;margin-top:16px}#error{font-size:12px;color:#a74371;line-height:1.5;margin-top:12px;white-space:pre-line}
@@ -41,13 +41,20 @@
 .heart-orbit{position:absolute;inset:-2px;animation:heart-circle 2.5s linear infinite}.heart-orbit span{position:absolute;top:-6px;left:calc(50% - 8px);height:16px;width:16px;border-radius:100%;background:#fffafd;color:#df5ca4;font-size:14px;font-weight:800;text-align:center;line-height:16px;box-shadow:0 1px 5px #e09bc4a6}
 @keyframes heart-circle{to{transform:rotate(360deg)}}
 /* The diagram becomes a tiny storybook leaf with a colored spine and turning corner. */
-.visual{border:1px solid #fff8;overflow:hidden;border-left:9px solid #e7c5e3;border-radius:17px 19px 19px 17px;background:linear-gradient(130deg,#f8ecfdcd 0%,#faf6ffac 52%,#f4edfce2 100%);box-shadow:inset 6px 0 12px #d4b4d03b,5px 7px 14px #a17fae16;transform-style:preserve-3d;backface-visibility:hidden;transform-origin:8px center;will-change:transform}
+.visual{border:1px solid #fff8;overflow:hidden;border-left:9px solid #e7c5e3;border-radius:17px 19px 19px 17px;background:linear-gradient(130deg,#f8ecfd91 0%,#faf6ff75 52%,#f4edfc9c 100%);box-shadow:inset 6px 0 12px #d4b4d03b,5px 7px 14px #a17fae16;transform-style:preserve-3d;backface-visibility:hidden;transform-origin:8px center;will-change:transform}
 .paper-corner{position:absolute;top:0;right:0;width:31px;height:30px;border-radius:0 0 0 18px;background:linear-gradient(135deg,#fff3 0%,#e4c6f0b5 100%);z-index:1;color:#c48fb6;text-align:center;line-height:28px;font-size:12px;pointer-events:none}
 .visual.flip-left{animation:book-to-back .54s ease-in-out both}.visual.flip-right{animation:book-to-front .54s ease-in-out both}
 @keyframes book-to-back{0%{transform:perspective(950px) rotateY(0);filter:brightness(1)}48%{transform:perspective(950px) rotateY(-86deg);filter:brightness(.86)}52%{transform:perspective(950px) rotateY(75deg);filter:brightness(.89)}100%{transform:perspective(950px) rotateY(0);filter:brightness(1)}}
 @keyframes book-to-front{0%{transform:perspective(950px) rotateY(0);filter:brightness(1)}48%{transform:perspective(950px) rotateY(86deg);filter:brightness(.86)}52%{transform:perspective(950px) rotateY(-75deg);filter:brightness(.89)}100%{transform:perspective(950px) rotateY(0);filter:brightness(1)}}
 .pages{background:linear-gradient(90deg,#f6e9f5,#e8e0f6);padding:5px;box-shadow:inset 0 1px 3px #a78ca11c}.page.active{background:linear-gradient(145deg,#fffefa,#fff5fb);box-shadow:0 2px 9px #b97daf39}
 @media(prefers-reduced-motion:reduce){.heart-orbit,.visual.flip-left,.visual.flip-right{animation:none!important}}
+
+/* V1.5: translucent, camera-first presentation and stable selection feedback */
+.shell{box-shadow:0 10px 28px #5f416e29,inset 0 1px #fff}
+#portal.open .shell{backdrop-filter:none;-webkit-backdrop-filter:none}
+.visual{box-shadow:inset 5px 0 9px #d4b4d020,3px 4px 10px #a17fae10}
+.info{box-shadow:0 4px 12px #a889b50e}
+@media(max-height:730px){.visual{height:clamp(190px,28vh,245px)}.shell{padding:10px}.info{padding:8px 11px}}
 </style>
 </head>
 <body>
@@ -77,7 +84,7 @@
    <g id="part-cornea" class="part" data-organ="cornea" tabindex="0" role="button" aria-label="Cornea"><path class="organ-core" d="M88 80 C52 84 41 115 41 145 C41 175 52 205 88 210 C70 181 68 163 68 145 C68 126 75 98 88 80 Z" fill="#e3faff" fill-opacity=".93" stroke="#9de0e8" stroke-width="3.8"/></g>
    <path d="M97 87 Q82 116 83 145 Q82 174 97 202" fill="none" stroke="#a9aad7" stroke-width="3.5" opacity=".7" pointer-events="none"/>
    <g id="part-ciliary" class="part" data-organ="ciliary" tabindex="0" role="button" aria-label="Ciliary body"><path class="organ-core" d="M101 98 Q110 87 123 92 Q121 104 113 116 M101 192 Q110 202 123 198 Q121 186 113 175" fill="none" stroke="#bda4d2" stroke-width="7" stroke-linecap="round"/></g>
-   <g id="part-iris" class="part" data-organ="iris" tabindex="0" role="button" aria-label="Iris"><path class="organ-core" d="M100 103 Q109 113 110 128 M110 162 Q109 179 100 189" fill="none" stroke="#9c7ac2" stroke-width="9" stroke-linecap="round"/></g>
+   <g id="part-iris" class="part" data-organ="iris" tabindex="0" role="button" aria-label="Iris"><path class="organ-core" d="M101 103 Q105 115 106 128 M106 162 Q105 176 101 189" fill="none" stroke="#9c7ac2" stroke-width="9" stroke-linecap="round"/></g>
    <!-- Pupil is an OPENING in the iris, not an independent tissue. -->
    <g id="part-pupil" class="part" data-organ="pupil" tabindex="0" role="button" aria-label="Pupil, opening in the iris"><ellipse class="organ-core" cx="110" cy="145" rx="4.6" ry="15" fill="#725c9b8c" stroke="#bda3d8" stroke-width="1.8"/></g>
    <g id="part-lens" class="part" data-organ="lens" tabindex="0" role="button" aria-label="Crystalline lens"><ellipse class="organ-core" cx="138" cy="145" rx="19" ry="45" fill="url(#lensG)" stroke="#fff" stroke-width="3.5"/></g>
@@ -123,10 +130,10 @@ const placements={
 const labelDest={front:{cornea:[61,81],iris:[61,221],pupil:[300,77],lens:[300,147],ciliary:[298,221]},back:{retina:[61,80],vitreous:[61,221],macula:[300,77],optic:[300,147],sclera:[300,221]}};
 let section='front',lang='en',chosen=null,activeTags=[],hoverables=[];
 let hands=null,faceMesh=null,stream=null,running=false,busy=false,analysisTimer=0,watchdog=0,opened=false,manuallyOpened=false,faceEyes=[],lastHand=0,eyeSince=0,lastEyeNear=0,hoverSince=0,hoverTarget=null,hoverCommitted=null,armed=true,openAt=0,seenHand=false,exitSince=0,fistSince=0,smoothed=null,lastFaceScan=0,faceLoaded=false;
-let bookFlipping=false,flipTimer=0,lastFlip=-5000,handHistory=[],fingerTarget=null,fingerDraw=null,hadCursor=false;
+let rearmAt=0,bookFlipping=false,flipTimer=0,lastFlip=-5000,handHistory=[],fingerTarget=null,fingerDraw=null,hadCursor=false,retreatStartY=null;
 // Milliseconds; grace prevents the opening hand from immediately triggering closure.
 // Dwell is deliberately short; palm-swipe and close have their own stronger safeguards.
-const HOLD_EYE=145,HOLD_LABEL=170,CLOSE_MISSING=660,EXIT_HOLD=330,FIST_HOLD=350,GRACE=700;
+const HOLD_EYE=105,HOLD_LABEL=110,CLOSE_MISSING=520,EXIT_HOLD=190,FIST_HOLD=240,GRACE=460;
 const capture=document.createElement('canvas'),ctx=capture.getContext('2d',{alpha:false,willReadFrequently:false});capture.width=384;capture.height=288;
 const setStatus=s=>{if(status.textContent!==s)status.textContent=s};
 const makeSvg=(tag,attrs={})=>{const el=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))el.setAttribute(k,v);return el};
@@ -175,7 +182,7 @@ function setLang(next){if(!['en','ja','zh'].includes(next))return;lang=next;for(
 function reset(){chosen=null;setPage('front');updateHighlights();translate()}
 function openPortal(manualMode=false){
  if(opened)return;
- manuallyOpened=manualMode;opened=true;openAt=performance.now();seenHand=!manualMode&&performance.now()-lastHand<700;handHistory=[];lastFlip=-5000;
+ manuallyOpened=manualMode;opened=true;retreatStartY=null;openAt=performance.now();seenHand=!manualMode&&performance.now()-lastHand<700;handHistory=[];lastFlip=-5000;
  exitSince=0;fistSince=0;eyeSince=0;lastEyeNear=0;clearHover();reset();
  portal.classList.add('open');portal.setAttribute('aria-hidden','false');manual.textContent='关闭任意门 ×';
  hint.innerHTML='<b>♡ WAVE TO FLIP THE BOOK</b><br>张开手掌 ← BACK · FRONT → · 收手关闭';
@@ -183,7 +190,7 @@ function openPortal(manualMode=false){
 }
 function closePortal(){
  if(!opened)return;
- opened=false;armed=false;manuallyOpened=false;seenHand=false;exitSince=0;fistSince=0;handHistory=[];fingerTarget=null;finger.style.opacity='0';
+ opened=false;armed=false;rearmAt=performance.now()+320;retreatStartY=null;manuallyOpened=false;seenHand=false;exitSince=0;fistSince=0;handHistory=[];fingerTarget=null;finger.style.opacity='0';
  portal.classList.remove('open');portal.setAttribute('aria-hidden','true');
  manual.textContent='触屏打开 ♡';
  hint.innerHTML='<b>✦ POINT TO YOUR EYE</b><br>食指靠近眼睛打开 · 张开手掌左右挥动翻页';
@@ -253,7 +260,8 @@ function onHand(r){
  if(!hand){
   eyeSince=0;clearHover();smoothed=null;fistSince=0;exitSince=0;handHistory=[];
   moveFinger(null,false);
-  if(opened&&!manuallyOpened&&seenHand&&now-openAt>GRACE&&now-lastHand>CLOSE_MISSING)closePortal();
+  if(!opened&&faceEyes.length&&now-openAt>2500)setStatus('SHOW YOUR HAND ✧');
+  if(opened&&!manuallyOpened&&now-openAt>GRACE&&now-lastHand>CLOSE_MISSING)closePortal();
   return;
  }
  lastHand=now;
@@ -271,6 +279,7 @@ function onHand(r){
  const palm={x:palmPoints.reduce((s,p)=>s+p.x,0)/5,y:palmPoints.reduce((s,p)=>s+p.y,0)/5};
  if(opened){
   seenHand=true;
+  if(retreatStartY===null)retreatStartY=wrist.y;
   // A palm wave gets priority over every closing gesture; no accidental page/door collision.
   if(openPalm&&now-openAt>520&&!bookFlipping){
    handHistory.push({x:palm.x,y:palm.y,time:now});
@@ -281,7 +290,7 @@ function onHand(r){
     if(Math.abs(dx)>Math.max(67,innerWidth*.19)&&Math.abs(dy)<Math.max(105,Math.abs(dx)*.84)){
      const flipped=flipBook(dx<0?'back':'front');
      handHistory=[];
-     if(flipped){moveFinger(null,false);fistSince=0;exitSince=0;return}
+     if(flipped){moveFinger(null,false);fistSince=0;exitSince=0;retreatStartY=wrist.y;return}
     }
    }
   }else if(!openPalm){handHistory=[]}
@@ -292,27 +301,30 @@ function onHand(r){
   else fistSince=0;
   // Lower/retract hand to close; sideways palm movement never triggers this pathway.
   const leavingLow=(wrist.y>innerHeight*.77&&tip.y>innerHeight*.81)||(wrist.y>innerHeight*.84);
-  const retreat=leavingLow&&!findHover(pt)&&!openPalm;
+  const retreat=(leavingLow || (wrist.y-retreatStartY>Math.max(75,innerHeight*.12)))&&!findHover(pt)&&!bookFlipping;
   if(retreat){if(!exitSince)exitSince=now;if(now-exitSince>=EXIT_HOLD){closePortal();return}}
-  else exitSince=0;
+  else {exitSince=0;if(wrist.y<retreatStartY)retreatStartY=wrist.y;}
   if(!openPalm)hover(now,pt);else {clearHover();finger.style.setProperty('--progress','0')}
   return;
  }
+ if(!armed&&now>=rearmAt)armed=true;
  let distance=Infinity,eyePos=null;
  for(const e of faceEyes){const val=len(tip,e);if(val<distance){distance=val;eyePos=e}}
  // The marker used to show the correct eye while the extension test silently failed.
  // Now accept a finger near that marker, with a basic wrist-vs-tip proximity check.
- const radius=Math.max(76,Math.min(innerWidth*.25,110));
- const pointing=eyePos&&len(wrist,eyePos)>distance+22;
+ const radius=Math.max(100,Math.min(innerWidth*.34,145));
+ const pointing=!!eyePos;
  const nearEye=pointing&&distance<radius+(eyeSince?17:0);
  moveFinger(pt,!!nearEye);
  if(nearEye){
+  setStatus('HOLD AT YOUR EYE ♡');
   lastEyeNear=now;
   if(!eyeSince)eyeSince=now;
   const dwell=now-eyeSince;
   finger.style.setProperty('--progress',String(Math.min(100,100*dwell/HOLD_EYE)));
   if(armed&&dwell>=HOLD_EYE)openPortal(false);
  }else{
+  setStatus('HAND DETECTED ✧');
   finger.style.setProperty('--progress','0');
   if(now-lastEyeNear>280)eyeSince=0;
   if(distance>radius+38)armed=true;
@@ -333,6 +345,12 @@ function demo(){hideSplash();setStatus('TOUCH DEMO ♡');openPortal(true)}
 for(const b of document.querySelectorAll('.page'))b.addEventListener('click',()=>opened?flipBook(b.dataset.page):setPage(b.dataset.page));
 for(const b of document.querySelectorAll('.lang'))b.addEventListener('click',()=>setLang(b.dataset.lang));
 for(const p of diagram.querySelectorAll('.part')){p.addEventListener('click',()=>{if(anatomy[p.dataset.organ].p!==section)setPage(anatomy[p.dataset.organ].p);select(p.dataset.organ)});p.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();if(anatomy[p.dataset.organ].p!==section)setPage(anatomy[p.dataset.organ].p);select(p.dataset.organ)}})}
+// A tap on the tiny eye marker is a recovery path if the hand is cropped out by Safari's camera.
+document.addEventListener('pointerup',e=>{
+ if(opened||!running||e.target.closest('button')||!faceEyes.length)return;
+ const target=faceEyes.some(v=>Math.hypot(e.clientX-v.x,e.clientY-v.y)<58);
+ if(target)openPortal(true);
+});
 // A short drag across the paper also turns the page when gesture tracking is unavailable.
 let touchStart=null;
 visual.addEventListener('touchstart',e=>{if(e.touches.length===1)touchStart={x:e.touches[0].clientX,y:e.touches[0].clientY}},{passive:true});
@@ -340,7 +358,7 @@ visual.addEventListener('touchend',e=>{if(!touchStart||!opened)return;const x=e.
 $('start').addEventListener('click',start);$('demo').addEventListener('click',demo);manual.addEventListener('click',()=>opened?closePortal():openPortal(true));$('close').addEventListener('click',closePortal);
 // Independent safety check: even if inference stalls when a hand exits, the door closes.
 watchdog=setInterval(()=>{
- if(!document.hidden&&opened&&!manuallyOpened&&seenHand&&performance.now()-openAt>GRACE&&performance.now()-lastHand>CLOSE_MISSING+170)closePortal();
+ if(!document.hidden&&opened&&!manuallyOpened&&performance.now()-openAt>GRACE&&performance.now()-lastHand>CLOSE_MISSING+120)closePortal();
 },120);
 document.addEventListener('visibilitychange',()=>{if(document.hidden){clearTimeout(analysisTimer);clearHover();moveFinger(null,false)}else if(running&&!busy)analyze()});
 renderLabels();translate();
