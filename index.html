@@ -55,6 +55,11 @@
 .visual{box-shadow:inset 5px 0 9px #d4b4d020,3px 4px 10px #a17fae10}
 .info{box-shadow:0 4px 12px #a889b50e}
 @media(max-height:730px){.visual{height:clamp(190px,28vh,245px)}.shell{padding:10px}.info{padding:8px 11px}}
+
+#part-macula .macula-locator{opacity:0;pointer-events:none;transition:opacity .14s;filter:drop-shadow(0 0 4px #fa5da6)}
+#part-macula.is-selected .macula-locator{opacity:1}
+#part-macula.is-selected .organ-core{fill:#f02f92;stroke:#fff;stroke-width:3;filter:drop-shadow(0 0 8px #f93c99)}
+.page{min-height:39px;font-size:12px;touch-action:manipulation}
 </style>
 </head>
 <body>
@@ -80,7 +85,7 @@
    <g id="part-vitreous" class="part" data-organ="vitreous" tabindex="0" role="button" aria-label="Vitreous body"><ellipse class="organ-core" cx="192" cy="145" rx="74" ry="80" fill="#eadcf94c" stroke="#d9bfed77" stroke-width="1"/></g>
    <g id="part-sclera" class="part" data-organ="sclera" tabindex="0" role="button" aria-label="Sclera"><path class="organ-core" d="M92 82 A106 106 0 1 1 92 208" fill="none" stroke="#c9b1da" stroke-width="5"/></g>
    <g id="part-retina" class="part" data-organ="retina" tabindex="0" role="button" aria-label="Retina"><path class="organ-core" d="M178 54 A91 91 0 0 1 178 236" fill="none" stroke="#e99bc9" stroke-width="6.5" stroke-linecap="round"/><path d="M178 54 A91 91 0 0 1 178 236" fill="none" stroke="transparent" stroke-width="23"/></g>
-   <g id="part-macula" class="part" data-organ="macula" tabindex="0" role="button" aria-label="Macula"><ellipse class="organ-core" cx="265" cy="129" rx="5" ry="9" fill="#f7bad8" stroke="#fff4fa" stroke-width="1.8"/></g>
+   <g id="part-macula" class="part" data-organ="macula" tabindex="0" role="button" aria-label="Macula"><ellipse class="organ-core" cx="265" cy="129" rx="5" ry="9" fill="#f7bad8" stroke="#fff4fa" stroke-width="1.8"/><circle class="macula-locator" cx="265" cy="129" r="16" fill="none" stroke="#f23c9a" stroke-width="3"/><circle class="macula-locator" cx="265" cy="129" r="23" fill="none" stroke="#ff8bc6" stroke-width="2" stroke-dasharray="4 3"/></g>
    <g id="part-cornea" class="part" data-organ="cornea" tabindex="0" role="button" aria-label="Cornea"><path class="organ-core" d="M88 80 C52 84 41 115 41 145 C41 175 52 205 88 210 C70 181 68 163 68 145 C68 126 75 98 88 80 Z" fill="#e3faff" fill-opacity=".93" stroke="#9de0e8" stroke-width="3.8"/></g>
    <path d="M97 87 Q82 116 83 145 Q82 174 97 202" fill="none" stroke="#a9aad7" stroke-width="3.5" opacity=".7" pointer-events="none"/>
    <g id="part-ciliary" class="part" data-organ="ciliary" tabindex="0" role="button" aria-label="Ciliary body"><path class="organ-core" d="M101 98 Q110 87 123 92 Q121 104 113 116 M101 192 Q110 202 123 198 Q121 186 113 175" fill="none" stroke="#bda4d2" stroke-width="7" stroke-linecap="round"/></g>
@@ -100,7 +105,7 @@
  <p class="tiny" id="tinyFact">✿ Point and hold briefly, or just tap the screen.</p></div>
  <div class="footer"><b>✧ PAGE MAGIC</b> · wave your open palm ← BACK / FRONT → · lower hand to close</div>
  </section></main>
-<div class="bottom"><div class="hint" id="hint"><b>✦ POINT TO YOUR EYE</b><br>食指靠近眼睛打开 · 张开手掌左右挥动翻页</div><button type="button" class="manual" id="manual">触屏打开 ♡</button></div>
+<div class="bottom"><div class="hint" id="hint"><b>✦ POINT TO YOUR EYE</b><br>食指在眼睛附近稍停即可打开</div><button type="button" class="manual" id="manual">触屏打开 ♡</button></div>
 <div id="splash"><div class="splash-inner"><div class="orb">♡</div><h1>THE EYE PORTAL</h1><div class="sub">✿ LITTLE ANATOMY MAGIC · V1.4 ✿</div><p>Ten tiny wonders behind your eyes.<br>平滑小爱心光环 · 左右挥手翻页 · 更灵敏开门 🫧</p><button type="button" class="mainbtn" id="start">开启摄像头 · OPEN THE MAGIC ✧</button><button type="button" class="mainbtn secondary" id="demo">先用触屏体验 · TRY DEMO</button><small class="note">需要 HTTPS（GitHub Pages）及摄像头授权。<br>摄像头视频在设备上处理，网页没有上传视频的功能。<br>解剖图为简化示意，并非按比例绘制。</small><div id="error" role="alert"></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/hands.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4/face_mesh.js" crossorigin="anonymous"></script>
@@ -133,7 +138,7 @@ let hands=null,faceMesh=null,stream=null,running=false,busy=false,analysisTimer=
 let rearmAt=0,bookFlipping=false,flipTimer=0,lastFlip=-5000,handHistory=[],fingerTarget=null,fingerDraw=null,hadCursor=false,retreatStartY=null;
 // Milliseconds; grace prevents the opening hand from immediately triggering closure.
 // Dwell is deliberately short; palm-swipe and close have their own stronger safeguards.
-const HOLD_EYE=105,HOLD_LABEL=110,CLOSE_MISSING=520,EXIT_HOLD=190,FIST_HOLD=240,GRACE=460;
+const HOLD_EYE=270,HOLD_LABEL=240,CLOSE_MISSING=480,EXIT_HOLD=270,FIST_HOLD=360,GRACE=750;
 const capture=document.createElement('canvas'),ctx=capture.getContext('2d',{alpha:false,willReadFrequently:false});capture.width=384;capture.height=288;
 const setStatus=s=>{if(status.textContent!==s)status.textContent=s};
 const makeSvg=(tag,attrs={})=>{const el=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))el.setAttribute(k,v);return el};
@@ -185,7 +190,7 @@ function openPortal(manualMode=false){
  manuallyOpened=manualMode;opened=true;retreatStartY=null;openAt=performance.now();seenHand=!manualMode&&performance.now()-lastHand<700;handHistory=[];lastFlip=-5000;
  exitSince=0;fistSince=0;eyeSince=0;lastEyeNear=0;clearHover();reset();
  portal.classList.add('open');portal.setAttribute('aria-hidden','false');manual.textContent='关闭任意门 ×';
- hint.innerHTML='<b>♡ WAVE TO FLIP THE BOOK</b><br>张开手掌 ← BACK · FRONT → · 收手关闭';
+ hint.innerHTML='<b>♡ WAVE TO FLIP THE BOOK</b><br>轻点 FRONT / BACK 翻页 · 收手关闭';
  setStatus('PORTAL OPEN ✿');marker.style.display='none';
 }
 function closePortal(){
@@ -193,7 +198,7 @@ function closePortal(){
  opened=false;armed=false;rearmAt=performance.now()+320;retreatStartY=null;manuallyOpened=false;seenHand=false;exitSince=0;fistSince=0;handHistory=[];fingerTarget=null;finger.style.opacity='0';
  portal.classList.remove('open');portal.setAttribute('aria-hidden','true');
  manual.textContent='触屏打开 ♡';
- hint.innerHTML='<b>✦ POINT TO YOUR EYE</b><br>食指靠近眼睛打开 · 张开手掌左右挥动翻页';
+ hint.innerHTML='<b>✦ POINT TO YOUR EYE</b><br>食指在眼睛附近稍停即可打开';
  setStatus('READY TO EXPLORE ✧');clearHover();eyeSince=0;smoothed=null;refreshMarker();
 }
 function videoPoint(p){const vw=video.videoWidth||640,vh=video.videoHeight||480;const scale=Math.max(innerWidth/vw,innerHeight/vh);return{x:(innerWidth-vw*scale)/2+(1-p.x)*vw*scale,y:(innerHeight-vh*scale)/2+p.y*vh*scale}}
@@ -280,20 +285,8 @@ function onHand(r){
  if(opened){
   seenHand=true;
   if(retreatStartY===null)retreatStartY=wrist.y;
-  // A palm wave gets priority over every closing gesture; no accidental page/door collision.
-  if(openPalm&&now-openAt>520&&!bookFlipping){
-   handHistory.push({x:palm.x,y:palm.y,time:now});
-   handHistory=handHistory.filter(p=>now-p.time<680);
-   const first=handHistory[0];
-   if(first&&handHistory.length>=2&&now-lastFlip>820){
-    const dx=palm.x-first.x,dy=palm.y-first.y;
-    if(Math.abs(dx)>Math.max(67,innerWidth*.19)&&Math.abs(dy)<Math.max(105,Math.abs(dx)*.84)){
-     const flipped=flipBook(dx<0?'back':'front');
-     handHistory=[];
-     if(flipped){moveFinger(null,false);fistSince=0;exitSince=0;retreatStartY=wrist.y;return}
-    }
-   }
-  }else if(!openPalm){handHistory=[]}
+  // Swipe detection removed; page changes use the FRONT/BACK buttons.
+  handHistory=[];
   moveFinger(pt,!openPalm);
   if(bookFlipping){return}
   if(now-openAt<=GRACE){if(!openPalm)hover(now,pt);return}
@@ -301,7 +294,7 @@ function onHand(r){
   else fistSince=0;
   // Lower/retract hand to close; sideways palm movement never triggers this pathway.
   const leavingLow=(wrist.y>innerHeight*.77&&tip.y>innerHeight*.81)||(wrist.y>innerHeight*.84);
-  const retreat=(leavingLow || (wrist.y-retreatStartY>Math.max(75,innerHeight*.12)))&&!findHover(pt)&&!bookFlipping;
+  const retreat=(leavingLow || (wrist.y-retreatStartY>Math.max(60,innerHeight*.095)))&&!bookFlipping;
   if(retreat){if(!exitSince)exitSince=now;if(now-exitSince>=EXIT_HOLD){closePortal();return}}
   else {exitSince=0;if(wrist.y<retreatStartY)retreatStartY=wrist.y;}
   if(!openPalm)hover(now,pt);else {clearHover();finger.style.setProperty('--progress','0')}
@@ -312,7 +305,7 @@ function onHand(r){
  for(const e of faceEyes){const val=len(tip,e);if(val<distance){distance=val;eyePos=e}}
  // The marker used to show the correct eye while the extension test silently failed.
  // Now accept a finger near that marker, with a basic wrist-vs-tip proximity check.
- const radius=Math.max(100,Math.min(innerWidth*.34,145));
+ const radius=Math.max(82,Math.min(innerWidth*.25,108));
  const pointing=!!eyePos;
  const nearEye=pointing&&distance<radius+(eyeSince?17:0);
  moveFinger(pt,!!nearEye);
@@ -351,10 +344,6 @@ document.addEventListener('pointerup',e=>{
  const target=faceEyes.some(v=>Math.hypot(e.clientX-v.x,e.clientY-v.y)<58);
  if(target)openPortal(true);
 });
-// A short drag across the paper also turns the page when gesture tracking is unavailable.
-let touchStart=null;
-visual.addEventListener('touchstart',e=>{if(e.touches.length===1)touchStart={x:e.touches[0].clientX,y:e.touches[0].clientY}},{passive:true});
-visual.addEventListener('touchend',e=>{if(!touchStart||!opened)return;const x=e.changedTouches[0].clientX-touchStart.x,y=e.changedTouches[0].clientY-touchStart.y;touchStart=null;if(Math.abs(x)>60&&Math.abs(y)<95)flipBook(x<0?'back':'front')},{passive:true});
 $('start').addEventListener('click',start);$('demo').addEventListener('click',demo);manual.addEventListener('click',()=>opened?closePortal():openPortal(true));$('close').addEventListener('click',closePortal);
 // Independent safety check: even if inference stalls when a hand exits, the door closes.
 watchdog=setInterval(()=>{
