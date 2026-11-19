@@ -61,7 +61,7 @@
 #part-macula.is-selected .organ-core{fill:#f02f92;stroke:#fff;stroke-width:3;filter:drop-shadow(0 0 8px #f93c99)}
 .page{min-height:39px;font-size:12px;touch-action:manipulation}
 
-/* V1.9: more room for readable text, without covering the whole camera. */
+/* V2.0: more room for readable text, without covering the whole camera. */
 #portal .shell{min-height:0;max-height:100%;height:min(710px,100%)}
 #portal .visual{height:clamp(155px,24dvh,225px);flex-shrink:1;min-height:140px}
 #portal .info{min-height:155px;flex:1 1 220px;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y}
@@ -75,7 +75,7 @@
  #portal .title{font-size:21px}
 }
 
-/* V1.9: anatomy-first compact floating atlas */
+/* V2.0: anatomy-first compact floating atlas */
 #portal{padding:calc(var(--safe-top) + 66px) 14px calc(var(--safe-bottom) + 90px)}
 #portal .shell{
  height:auto!important;max-height:min(73dvh,620px)!important;
@@ -109,6 +109,12 @@
  #portal .visual{height:clamp(185px,30dvh,235px)!important;min-height:185px!important}
  #portal .info{max-height:clamp(112px,19dvh,150px)!important}
 }
+
+/* V2.0 stable touch-first reading: anatomy remains the main visual */
+#portal .close{width:38px;height:38px;min-width:38px;min-height:38px;touch-action:manipulation;z-index:10}
+#portal .lang{min-height:36px;min-width:44px;font-size:11px;touch-action:manipulation}
+#portal .tag{touch-action:manipulation}
+#portal .page{min-height:38px;touch-action:manipulation}
 </style>
 </head>
 <body>
@@ -239,8 +245,8 @@ function openPortal(manualMode=false){
  manuallyOpened=manualMode;opened=true;retreatStartY=null;openAt=performance.now();seenHand=!manualMode&&performance.now()-lastHand<700;handHistory=[];lastFlip=-5000;
  exitSince=0;fistSince=0;eyeSince=0;lastEyeNear=0;clearHover();reset();
  portal.classList.add('open');portal.setAttribute('aria-hidden','false');manual.textContent='关闭任意门 ×';
- hint.innerHTML='<b>♡ LITTLE ANATOMY BOOK</b><br>轻点 FRONT / BACK 翻页 · 握拳关闭（或点 ×）';
- setStatus('PORTAL OPEN ✿');marker.style.display='none';
+ hint.innerHTML='<b>♡ LITTLE ANATOMY BOOK</b><br>轻点标签与语言切换 · 点击 × 关闭';
+ setStatus('READING MODE ✿');marker.style.display='none';
 }
 function closePortal(){
  if(!opened)return;
@@ -339,27 +345,10 @@ function onHand(r){
   moveFinger(pt,!openPalm);
   if(bookFlipping){return}
   if(now-openAt<=GRACE){if(!openPalm)hover(now,pt);return}
-  // Close only after a deliberate sustained fist; ignore brief tracking loss.
-  // Compare fingertips to palm center, not to individual PIP joints.
-  // This tolerates sideways and slightly tilted fists in a selfie camera.
-  const palmCenter={x:(hand[0].x+hand[5].x+hand[9].x+hand[13].x+hand[17].x)/5,
-                    y:(hand[0].y+hand[5].y+hand[9].y+hand[13].y+hand[17].y)/5};
-  const palmSpan=Math.max(.001,d(0,9));
-  const curled=[8,12,16,20].filter(i =>
-    Math.hypot(hand[i].x-palmCenter.x,hand[i].y-palmCenter.y)<palmSpan*1.14
-  ).length;
-  const closedFist=curled>=3 && countExtended<=1;
-  if(closedFist){
-    if(!fistSince)fistSince=now;
-    const progress=Math.min(1,(now-fistSince)/420);
-    setStatus('FIST TO CLOSE '+Math.round(progress*100)+'% ✊');
-    clearHover();
-    finger.style.setProperty('--progress',String(progress*100));
-    if(progress>=1){closePortal();return;}
-  }else{
-    fistSince=0;
-    if(!openPalm)hover(now,pt);else {clearHover();finger.style.setProperty('--progress','0')}
-  }
+  // Reading mode: never close from camera-inferred gestures.
+  // All anatomy and language controls are touch-first; tracking cannot dismiss the book.
+  fistSince=0;
+  moveFinger(pt,false);
   return;
  }
  if(!armed&&now>=rearmAt)armed=true;
