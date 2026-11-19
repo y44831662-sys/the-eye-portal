@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#e9e5f7">
+<title>THE EYE PORTAL — Anatomy in Motion</title>
+<style>
+:root{--ink:#35334d;--lav:#a993ef;--ice:#a9e8ef;--pink:#f0c9e9;--glass:rgba(255,255,255,.56)}
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;color:#fff;background:#d0c7e1;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#camera,#view,#luminous{position:fixed;inset:0;width:100%;height:100%}#camera{object-fit:cover;transform:scaleX(-1);opacity:0;pointer-events:none}#view{z-index:0;background:linear-gradient(145deg,#e3d7f1,#a8c7d7)}#luminous{z-index:1;pointer-events:none;background:radial-gradient(ellipse at 50% 20%,rgba(244,238,255,.22),transparent 55%),linear-gradient(180deg,rgba(47,32,80,.19),transparent 24%,transparent 65%,rgba(54,38,84,.46))}
+#noise{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.12;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 150 150' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E")}
+.header{z-index:5;position:fixed;top:calc(env(safe-area-inset-top) + 17px);left:20px;right:20px;display:flex;align-items:flex-start;justify-content:space-between;pointer-events:none}.brand{font-size:11px;font-weight:700;letter-spacing:.25em;text-shadow:0 2px 10px #625476}.brand small{display:block;margin-top:7px;letter-spacing:.16em;font-weight:400;font-size:9px;opacity:.82}.status{max-width:160px;padding:9px 11px;border:1px solid rgba(255,255,255,.45);border-radius:99px;background:rgba(255,255,255,.16);backdrop-filter:blur(14px);font-size:10px;letter-spacing:.03em;text-align:right}
+.bottom{z-index:5;position:fixed;left:20px;right:20px;bottom:calc(env(safe-area-inset-bottom) + 23px);display:flex;align-items:center;justify-content:space-between;gap:14px}.hint{min-width:0;font-size:11px;line-height:1.7;text-shadow:0 2px 12px #342f50}.hint b{font-size:12px;letter-spacing:.05em}.pill,.ghost{border:1px solid rgba(255,255,255,.63);border-radius:999px;color:white;background:rgba(255,255,255,.2);backdrop-filter:blur(16px);padding:12px 16px;font-weight:600;font-size:12px;white-space:nowrap;cursor:pointer}.ghost{padding:8px 11px;font-size:11px}
+#eyeMarker{position:fixed;z-index:3;width:76px;height:76px;display:none;transform:translate(-50%,-50%);border:1px solid rgba(255,255,255,.8);border-radius:50%;box-shadow:0 0 0 8px rgba(255,255,255,.1),inset 0 0 25px rgba(200,235,255,.34),0 0 34px rgba(195,220,255,.7);pointer-events:none;animation:halo 2.5s ease-in-out infinite}@keyframes halo{50%{box-shadow:0 0 0 15px rgba(255,255,255,.07),inset 0 0 25px rgba(200,235,255,.34),0 0 45px rgba(195,220,255,.8)}}
+#finger{position:fixed;z-index:10;width:21px;height:21px;border:2px solid white;background:rgba(187,230,255,.26);border-radius:50%;box-shadow:0 0 0 5px rgba(255,255,255,.17),0 0 20px #b9eefa;pointer-events:none;opacity:0;transform:translate(-50%,-50%);transition:opacity .2s}
+#portal{position:fixed;inset:0;z-index:4;pointer-events:none;opacity:0;transform:scale(.8) rotateY(21deg);filter:blur(14px);transition:opacity .48s,transform .65s cubic-bezier(.18,.8,.2,1),filter .56s;display:grid;place-items:center;padding:calc(env(safe-area-inset-top) + 68px) 14px calc(env(safe-area-inset-bottom) + 92px)}#portal.open{opacity:1;transform:scale(1) rotateY(0);filter:blur(0);pointer-events:auto}
+.portal-shell{position:relative;width:min(100%,440px);max-height:100%;min-height:465px;border:1px solid rgba(255,255,255,.72);border-radius:34px;background:linear-gradient(135deg,rgba(255,255,255,.65),rgba(231,223,255,.43) 50%,rgba(202,235,245,.38));box-shadow:0 18px 100px rgba(64,49,102,.23),inset 0 1px rgba(255,255,255,.8);backdrop-filter:blur(24px) saturate(1.25);-webkit-backdrop-filter:blur(24px) saturate(1.25);overflow:hidden;color:var(--ink);padding:18px 15px 16px}.portal-shell:before{content:"";position:absolute;inset:-50%;background:conic-gradient(from 70deg,transparent,rgba(255,255,255,.22),transparent,rgba(195,225,255,.22),transparent);animation:turn 19s linear infinite;pointer-events:none}@keyframes turn{to{transform:rotate(360deg)}}
+.portal-top{position:relative;display:flex;justify-content:space-between;align-items:center;gap:8px}.eyebrow{font-size:9px;font-weight:700;letter-spacing:.25em;color:#7b739a}.portal-title{font-family:Georgia,serif;font-size:25px;font-weight:400;letter-spacing:-.025em;margin:4px 0 0}.close{position:relative;width:30px;height:30px;background:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.7);border-radius:100%;font-size:19px;color:#786e96;cursor:pointer}
+.visual{position:relative;height:235px;margin:4px auto 0;display:grid;place-items:center}.orbit{position:absolute;width:215px;height:215px;border:1px solid rgba(146,134,203,.28);border-radius:50%;box-shadow:0 0 0 21px rgba(255,255,255,.1),0 0 0 43px rgba(255,255,255,.08);animation:float 6s ease-in-out infinite}@keyframes float{50%{transform:translateY(-7px) rotate(8deg)}}
+.eyeball{width:260px;height:210px;filter:drop-shadow(0 8px 22px rgba(112,115,172,.26));overflow:visible;animation:breathe 5s ease-in-out infinite}@keyframes breathe{50%{transform:translateY(-5px) scale(1.015)}}
+.hotspot{position:absolute;z-index:2;border:1px solid rgba(143,129,193,.42);border-radius:30px;padding:8px 11px;background:rgba(255,255,255,.65);color:#5b567b;font-size:11px;letter-spacing:.015em;box-shadow:0 6px 20px rgba(124,117,170,.1);backdrop-filter:blur(7px);cursor:pointer;transition:background .2s,transform .2s,box-shadow .2s;touch-action:manipulation}.hotspot.active,.hotspot.hover{background:#fff;color:#6250ae;transform:scale(1.06);box-shadow:0 0 0 5px rgba(176,162,245,.2),0 5px 20px rgba(124,117,170,.25)}.hotspot:before{content:"";position:absolute;left:50%;bottom:-11px;height:9px;border-left:1px solid #a9a0c8}.h-cornea{top:34px;left:1%}.h-iris{top:75px;left:14%}.h-lens{top:31px;right:2%}.h-retina{top:125px;right:0%}
+.info{position:relative;padding:14px 15px;background:rgba(255,255,255,.51);border:1px solid rgba(255,255,255,.62);border-radius:20px;min-height:119px;transition:opacity .24s}.info .latin{font-family:Georgia,serif;font-size:23px;line-height:1.2}.info .translations{font-size:11px;margin:4px 0 9px;color:#807698}.info .description{font-size:12px;line-height:1.65;color:#514d69;margin:0}.portal-footer{position:relative;text-align:center;font-size:10px;letter-spacing:.04em;color:#807698;margin:14px 2px 0}.portal-footer b{color:#6b5fa8}
+#splash{position:fixed;z-index:20;inset:0;background:linear-gradient(150deg,#d9cef2 0%,#f3dfe9 53%,#c7e7ed 100%);color:#554c73;display:flex;align-items:center;justify-content:center;padding:25px;transition:opacity .45s}.splash-inner{max-width:400px;width:100%;text-align:center}.splash-orb{margin:0 auto 20px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 35% 32%,#fff 0%,#f0ddf8 27%,#b7e3f0 60%,#b8a9e4 83%);box-shadow:0 18px 60px rgba(143,120,180,.27),inset -14px -17px 25px rgba(159,145,214,.38),inset 10px 10px 20px rgba(255,255,255,.95);display:grid;place-items:center;font-size:65px;color:rgba(255,255,255,.9)}.splash-inner h1{font-family:Georgia,serif;font-weight:400;letter-spacing:.07em;font-size:31px;margin:0}.splash-inner .sub{font-size:10px;letter-spacing:.27em;margin:10px 0 30px;color:#7a6b94}.splash-inner p{font-size:13px;line-height:1.95;margin:0 auto 21px;max-width:325px}.mainbtn{display:block;width:100%;border:1px solid rgba(255,255,255,.84);background:rgba(255,255,255,.74);color:#5f5186;border-radius:100px;padding:15px;font-size:14px;font-weight:700;box-shadow:0 12px 32px rgba(124,100,174,.12);cursor:pointer}.splash-inner .note{display:block;font-size:11px;margin-top:14px;line-height:1.7;color:#8a80a1}.splash-inner #error{min-height:0;color:#9b4166;font-size:12px;line-height:1.6;margin-top:15px;white-space:pre-line}
+#fps{position:fixed;right:15px;bottom:85px;color:#fff9;font-size:9px;z-index:5;pointer-events:none;display:none}
+@media(max-height:700px){#portal{padding-top:64px;padding-bottom:65px}.portal-shell{min-height:0;padding:12px}.portal-title{font-size:21px}.visual{height:187px}.eyeball{width:218px;height:180px}.orbit{width:185px;height:185px}.h-cornea{top:25px}.h-iris{top:55px}.h-lens{top:20px}.h-retina{top:93px}.info{min-height:96px;padding:10px}.portal-footer{margin-top:8px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<video id="camera" muted autoplay playsinline webkit-playsinline></video><canvas id="view"></canvas><div id="luminous"></div><div id="noise"></div>
+<div class="header"><div class="brand">THE EYE PORTAL<small>ANATOMY IN MOTION · V1.0</small></div><div id="status" class="status">准备探索 · READY</div></div>
+<div id="eyeMarker"></div><div id="finger"></div>
+<main id="portal" aria-hidden="true">
+ <section class="portal-shell" aria-label="眼睛解剖互动卡片">
+  <div class="portal-top"><div><div class="eyebrow">01 / OCULAR ANATOMY</div><h2 class="portal-title">Inside the Eye <span style="font-size:13px;color:#a99bd5">✧</span></h2></div><button class="close" id="close" aria-label="关闭">×</button></div>
+  <div class="visual" id="visual">
+   <div class="orbit"></div>
+   <svg class="eyeball" viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="眼球剖面示意图，展示角膜、虹膜、晶状体、视网膜与视神经">
+    <defs><radialGradient id="sclera" cx="37%" cy="30%"><stop stop-color="#fff"/><stop offset=".58" stop-color="#eaf6ff"/><stop offset="1" stop-color="#c5c0ed"/></radialGradient><radialGradient id="vitreous" cx="33%" cy="28%"><stop stop-color="#f5ffff" stop-opacity=".86"/><stop offset="1" stop-color="#9aabd9" stop-opacity=".55"/></radialGradient><linearGradient id="lensg" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".5" stop-color="#c9f0ed"/><stop offset="1" stop-color="#ac94d3"/></linearGradient><linearGradient id="nerveg" x2="0" y2="1"><stop stop-color="#d8d0f8"/><stop offset="1" stop-color="#a7c6e9"/></linearGradient></defs>
+    <path d="M242 113 C270 107 289 107 312 112 L312 151 C287 156 271 155 242 149Z" fill="url(#nerveg)" stroke="#aa99ce" stroke-width="2"/>
+    <path d="M245 121 L309 122 M247 129 L311 133 M247 138 L310 143" stroke="#fff" stroke-opacity=".65" stroke-width="2"/>
+    <circle cx="162" cy="131" r="103" fill="url(#sclera)" stroke="#f7fdff" stroke-width="4"/>
+    <circle cx="162" cy="131" r="91" fill="url(#vitreous)" stroke="#aca7d7" stroke-opacity=".75" stroke-width="2"/>
+    <path d="M162 41 A90 90 0 1 1 161 221" fill="none" stroke="#c79ec8" stroke-width="6" opacity=".85"/>
+    <path d="M162 48 A83 83 0 1 1 162 214" fill="none" stroke="#f8a9c9" stroke-width="3" opacity=".65"/>
+    <path d="M84 72 C46 79 34 108 34 131 C34 157 49 187 84 191 C67 169 64 151 64 131 C64 110 70 91 84 72Z" fill="#e5faff" fill-opacity=".88" stroke="#a0d7e6" stroke-width="3"/>
+    <path d="M88 80 Q71 106 72 131 Q72 155 88 183" fill="none" stroke="#9da2d5" stroke-width="5" opacity=".8"/>
+    <path d="M92 88 Q104 106 104 117 L104 145 Q101 162 91 174" fill="none" stroke="#8975b8" stroke-width="10" stroke-linecap="round"/>
+    <ellipse cx="115" cy="131" rx="17" ry="43" fill="url(#lensg)" fill-opacity=".87" stroke="#fff" stroke-width="3"/>
+    <path d="M110 92 Q89 83 83 60 M110 171 Q89 177 83 202" fill="none" stroke="#b5abd7" stroke-width="2"/>
+    <circle cx="165" cy="131" r="68" fill="#fff" fill-opacity=".075"/><path d="M135 73 Q176 55 209 90" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="81" cy="74" r="3" fill="#fff"/><circle cx="229" cy="98" r="3" fill="#fff"/>
+   </svg>
+   <button class="hotspot h-cornea" data-organ="cornea">Cornea</button><button class="hotspot h-iris" data-organ="iris">Iris</button><button class="hotspot h-lens" data-organ="lens">Lens</button><button class="hotspot h-retina" data-organ="retina">Retina</button>
+  </div>
+  <div class="info" aria-live="polite"><div class="latin" id="organTitle">Explore the eye ✦</div><div class="translations" id="translations">指尖停留在英文名称上，探索眼睛的结构</div><p class="description" id="description">Touch a name to reveal its function. / 触碰任何标签，查看它在视觉形成中的作用。</p></div>
+  <div class="portal-footer"><b>GESTURE GUIDE</b> · 指尖悬停选择 · 收回手关闭 · 也可触屏操作</div>
+ </section>
+</main>
+<div class="bottom"><div class="hint" id="hint"><b>✦ POINT TO YOUR EYE</b><br>食指指向眼睛，开启解剖空间</div><button class="pill" id="manual">触屏打开 ✧</button></div><div id="fps"></div>
+<div id="splash"><div class="splash-inner"><div class="splash-orb">✧</div><h1>THE EYE PORTAL</h1><div class="sub">A DREAMY ANATOMY EXPERIENCE</div><p>用指尖打开一扇通往人体的小小任意门。<br>指向眼睛 → 触碰医学名称 → 收回手关闭。</p><button class="mainbtn" id="start">开启摄像头 · ENTER THE PORTAL</button><button class="mainbtn" id="demo" style="margin-top:10px;background:rgba(255,255,255,.25)">先体验触屏模式 · DEMO</button><small class="note">首次需允许摄像头权限 · 仅在本机分析画面<br>iPhone 请使用 Safari 和 HTTPS（GitHub Pages）</small><div id="error" role="alert"></div></div></div>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/hands.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4/face_mesh.js" crossorigin="anonymous"></script>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id),video=$('camera'),canvas=$('view'),ctx=canvas.getContext('2d',{alpha:false});
+const portal=$('portal'),status=$('status'),hint=$('hint'),marker=$('eyeMarker'),fingerEl=$('finger'),manual=$('manual');
+const info={
+ cornea:{name:'Cornea',translation:'角膜 · かくまく / 角膜',description:'眼球最前方的透明组织。它帮助保护眼内结构，并承担眼睛大部分的屈光作用，让光线向视网膜聚焦。'},
+ iris:{name:'Iris',translation:'虹膜 · こうさい / 虹彩',description:'环绕瞳孔的有色组织。通过控制瞳孔大小，调节进入眼内的光量；亮处缩小，暗处扩大。'},
+ lens:{name:'Crystalline Lens',translation:'晶状体 · すいしょうたい / 水晶体',description:'位于虹膜后方的透明结构。它通过改变形状调节屈光力，帮助我们把不同距离的物体看清楚，这个过程叫调节。'},
+ retina:{name:'Retina',translation:'视网膜 · もうまく / 網膜',description:'位于眼球内壁的感光神经组织。视杆细胞和视锥细胞将光信号转为神经信号，经视神经传往大脑形成视觉。'}
+};
+let hands=null,faceMesh=null,stream=null,running=false,analyzing=false,frameId=0,opened=false,faceEyes=[],lastHand=0,lastFace=0,triggerSince=0,hoverSince=0,hoverTarget=null,armed=true,openAt=0,handEverInside=false,desiredFinger=null,smoothedFinger=null,raf=0,loopTimer=0,awaySince=0;
+const MIN_EYE_HOLD=480,MIN_LABEL_HOLD=330,NO_HAND_CLOSE=1700,OPEN_GRACE=1100;
+function setStatus(s){status.textContent=s}
+function resize(){let ratio=Math.min(devicePixelRatio||1,1.5);canvas.width=Math.round(innerWidth*ratio);canvas.height=Math.round(innerHeight*ratio);canvas.style.width=innerWidth+'px';canvas.style.height=innerHeight+'px';ctx.setTransform(ratio,0,0,ratio,0,0)}
+function projection(p){let vw=video.videoWidth||640,vh=video.videoHeight||480;let s=Math.max(innerWidth/vw,innerHeight/vh);let ox=(innerWidth-vw*s)/2,oy=(innerHeight-vh*s)/2;return{x:ox+(1-p.x)*vw*s,y:oy+p.y*vh*s}}
+function draw(){if(!running)return;let w=innerWidth,h=innerHeight;ctx.save();ctx.fillStyle='#c4bbd9';ctx.fillRect(0,0,w,h);if(video.readyState>=2){let vw=video.videoWidth,vh=video.videoHeight,s=Math.max(w/vw,h/vh),dw=vw*s,dh=vh*s;ctx.translate(w,0);ctx.scale(-1,1);ctx.drawImage(video,(w-dw)/2,(h-dh)/2,dw,dh)}ctx.restore();raf=requestAnimationFrame(draw)}
+function selectOrgan(k){if(!info[k])return;let data=info[k];$('organTitle').textContent=data.name;$('translations').textContent=data.translation;$('description').textContent=data.description;document.querySelectorAll('.hotspot').forEach(el=>el.classList.toggle('active',el.dataset.organ===k))}
+function resetInfo(){$('organTitle').textContent='Explore the eye ✦';$('translations').textContent='指尖停留在英文名称上，探索眼睛的结构';$('description').textContent='Touch a name to reveal its function. / 触碰任何标签，查看它在视觉形成中的作用。';document.querySelectorAll('.hotspot').forEach(el=>el.classList.remove('active','hover'))}
+function openPortal(){if(opened)return;opened=true;openAt=performance.now();awaySince=0;handEverInside=false;triggerSince=0;hoverTarget=null;resetInfo();portal.classList.add('open');portal.setAttribute('aria-hidden','false');manual.textContent='关闭任意门 ×';hint.innerHTML='<b>✧ TOUCH AN ANATOMY LABEL</b><br>指尖停留在标签上；收回手关闭';setStatus('解剖空间 · OPEN')}
+function closePortal(){if(!opened)return;opened=false;armed=false;portal.classList.remove('open');portal.setAttribute('aria-hidden','true');manual.textContent='触屏打开 ✧';hint.innerHTML='<b>✦ POINT TO YOUR EYE</b><br>食指指向眼睛，开启解剖空间';setStatus('任意门已关闭 · READY');hoverTarget=null;triggerSince=0}
+function eyePosition(){if(!faceEyes.length)return null;let good=faceEyes.filter(p=>p.x>-30&&p.x<innerWidth+30&&p.y>-30&&p.y<innerHeight+30);return good.length?good:null}
+function updateMarker(){let eyes=eyePosition();if(!opened&&eyes&&eyes.length){marker.style.display='block';marker.style.left=eyes[0].x+'px';marker.style.top=eyes[0].y+'px'}else marker.style.display='none'}
+function fingerAt(x,y){desiredFinger={x,y};if(!smoothedFinger)smoothedFinger={x,y};smoothedFinger.x=smoothedFinger.x*.4+x*.6;smoothedFinger.y=smoothedFinger.y*.4+y*.6;fingerEl.style.left=smoothedFinger.x+'px';fingerEl.style.top=smoothedFinger.y+'px';fingerEl.style.opacity='1'}
+function checkPortal(now,p){if(!opened)return;let hit=null;for(let el of document.querySelectorAll('.hotspot')){let r=el.getBoundingClientRect();if(p.x>=r.left-12&&p.x<=r.right+12&&p.y>=r.top-14&&p.y<=r.bottom+14){hit=el;break}}
+ if(hit!==hoverTarget){hoverTarget=hit;hoverSince=now;document.querySelectorAll('.hotspot').forEach(el=>el.classList.toggle('hover',el===hit))}else if(hit&&now-hoverSince>MIN_LABEL_HOLD){selectOrgan(hit.dataset.organ);hoverSince=now+100000}
+}
+function onHand(res){let now=performance.now();let hand=res.multiHandLandmarks&&res.multiHandLandmarks[0];if(!hand){fingerEl.style.opacity='0';triggerSince=0;hoverTarget=null;if(opened&&now-openAt>OPEN_GRACE&&now-lastHand>NO_HAND_CLOSE&&handEverInside)closePortal();return}lastHand=now;
+ let tip=projection(hand[8]),wrist=projection(hand[0]),mcp=projection(hand[5]),pinky=projection(hand[20]);fingerAt(tip.x,tip.y);
+ let extended=Math.hypot(tip.x-wrist.x,tip.y-wrist.y)>Math.hypot(mcp.x-wrist.x,mcp.y-wrist.y)*1.19;
+ let fist=Math.hypot(tip.x-wrist.x,tip.y-wrist.y)<Math.hypot(mcp.x-wrist.x,mcp.y-wrist.y)*1.15 && Math.hypot(pinky.x-wrist.x,pinky.y-wrist.y)<Math.hypot(mcp.x-wrist.x,mcp.y-wrist.y)*1.5;
+ if(opened){handEverInside=true;if(now-openAt>OPEN_GRACE&&fist){closePortal();return}let bounds=document.querySelector('.portal-shell').getBoundingClientRect();let nearPanel=tip.x>bounds.left-60&&tip.x<bounds.right+60&&tip.y>bounds.top-60&&tip.y<bounds.bottom+60;if(nearPanel){awaySince=0}else if(now-openAt>OPEN_GRACE){if(!awaySince)awaySince=now;if(now-awaySince>1100){closePortal();return}}checkPortal(now,tip);return}
+ let eyes=eyePosition(),distance=Infinity;if(eyes)for(let eye of eyes)distance=Math.min(distance,Math.hypot(eye.x-tip.x,eye.y-tip.y));
+ let within=eyes&&extended&&distance<Math.max(48,Math.min(innerWidth*.15,72));
+ if(!within){triggerSince=0;if(distance>115)armed=true;return}if(!armed)return;
+ if(!triggerSince)triggerSince=now;if(now-triggerSince>MIN_EYE_HOLD)openPortal();
+}
+function onFace(res){let lm=res.multiFaceLandmarks&&res.multiFaceLandmarks[0];if(!lm){faceEyes=[];updateMarker();return}
+ // Two eye centres from corner landmarks; centre with both corners and upper/lower eyelids.
+ let pairs=[[33,133,159,145],[362,263,386,374]];
+ faceEyes=pairs.map(ids=>{let pts=ids.map(i=>projection(lm[i]));return{x:pts.reduce((v,p)=>v+p.x,0)/pts.length,y:pts.reduce((v,p)=>v+p.y,0)/pts.length}});lastFace=performance.now();updateMarker()}
+async function analyze(){if(!running||analyzing)return;analyzing=true;try{if(video.readyState>=2){await hands.send({image:video});frameId++;if(frameId%2===0)await faceMesh.send({image:video})}}catch(e){console.warn('tracking error',e);setStatus('识别暂不可用 · 可触屏操作')}finally{analyzing=false;if(running)loopTimer=setTimeout(analyze,55)}}
+async function start(){if(running)return;$('error').textContent='';$('start').disabled=true;$('start').textContent='正在准备摄像头与模型…';
+ try{
+ if(!window.isSecureContext)throw Error('请通过 HTTPS 的 GitHub Pages 打开，不能直接使用普通 http 页面。');
+ if(!navigator.mediaDevices?.getUserMedia)throw Error('当前浏览器不支持摄像头，请使用 iPhone Safari。');
+ stream=await navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:'user',width:{ideal:640},height:{ideal:480},frameRate:{ideal:24,max:30}}});video.srcObject=stream;await video.play();resize();
+ running=true;draw();$('splash').style.opacity='0';setTimeout(()=>$('splash').style.display='none',480);setStatus('摄像头启动 · LOADING');
+ if(typeof Hands!=='function'||typeof FaceMesh!=='function')throw Error('手势识别模型没有加载成功。请检查网络，重新刷新网页；触屏模式仍可使用。');
+ hands=new Hands({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/${f}`});hands.setOptions({maxNumHands:1,modelComplexity:0,minDetectionConfidence:.62,minTrackingConfidence:.56});hands.onResults(onHand);
+ faceMesh=new FaceMesh({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4/${f}`});faceMesh.setOptions({maxNumFaces:1,refineLandmarks:false,minDetectionConfidence:.55,minTrackingConfidence:.55});faceMesh.onResults(onFace);
+ setStatus('寻找面部与手势…');analyze();
+ }catch(e){console.error(e);$('error').textContent=(e.name==='NotAllowedError'?'没有获得摄像头权限。请在 Safari 的网站设置里允许摄像头，再刷新页面。':e.name==='NotFoundError'?'未检测到可用的摄像头。':e.message||'无法启动。')+'\n也可以点「先体验触屏模式」进入演示。';$('start').disabled=false;$('start').textContent='重试摄像头 · RETRY';if(!running){setStatus('摄像头不可用');}else{setStatus('手势模型未就绪 · 触屏可用')} }
+}
+$('start').addEventListener('click',start);$('demo').addEventListener('click',()=>{$('splash').style.opacity='0';setTimeout(()=>$('splash').style.display='none',480);setStatus('触屏演示模式 · DEMO');openPortal()});$('manual').addEventListener('click',()=>opened?closePortal():openPortal());$('close').addEventListener('click',closePortal);document.querySelectorAll('.hotspot').forEach(el=>el.addEventListener('click',()=>selectOrgan(el.dataset.organ)));
+window.addEventListener('resize',resize);document.addEventListener('visibilitychange',()=>{if(document.hidden){clearTimeout(loopTimer)}else if(running&&!analyzing)analyze()});
+resize();
+})();
+</script>
+</body>
+</html>
