@@ -1,123 +1,173 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no">
-<meta name="theme-color" content="#e9e5f7">
-<title>THE EYE PORTAL — Anatomy in Motion</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#f6e5f4">
+<meta name="description" content="A sweet, gesture-controlled journey inside the human eye. English explanations with Japanese and Chinese anatomy names.">
+<title>THE EYE PORTAL · Little Anatomy Magic V1.1</title>
 <style>
-:root{--ink:#35334d;--lav:#a993ef;--ice:#a9e8ef;--pink:#f0c9e9;--glass:rgba(255,255,255,.56)}
-*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;color:#fff;background:#d0c7e1;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
-#camera,#view,#luminous{position:fixed;inset:0;width:100%;height:100%}#camera{object-fit:cover;transform:scaleX(-1);opacity:0;pointer-events:none}#view{z-index:0;background:linear-gradient(145deg,#e3d7f1,#a8c7d7)}#luminous{z-index:1;pointer-events:none;background:radial-gradient(ellipse at 50% 20%,rgba(244,238,255,.22),transparent 55%),linear-gradient(180deg,rgba(47,32,80,.19),transparent 24%,transparent 65%,rgba(54,38,84,.46))}
-#noise{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.12;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 150 150' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E")}
-.header{z-index:5;position:fixed;top:calc(env(safe-area-inset-top) + 17px);left:20px;right:20px;display:flex;align-items:flex-start;justify-content:space-between;pointer-events:none}.brand{font-size:11px;font-weight:700;letter-spacing:.25em;text-shadow:0 2px 10px #625476}.brand small{display:block;margin-top:7px;letter-spacing:.16em;font-weight:400;font-size:9px;opacity:.82}.status{max-width:160px;padding:9px 11px;border:1px solid rgba(255,255,255,.45);border-radius:99px;background:rgba(255,255,255,.16);backdrop-filter:blur(14px);font-size:10px;letter-spacing:.03em;text-align:right}
-.bottom{z-index:5;position:fixed;left:20px;right:20px;bottom:calc(env(safe-area-inset-bottom) + 23px);display:flex;align-items:center;justify-content:space-between;gap:14px}.hint{min-width:0;font-size:11px;line-height:1.7;text-shadow:0 2px 12px #342f50}.hint b{font-size:12px;letter-spacing:.05em}.pill,.ghost{border:1px solid rgba(255,255,255,.63);border-radius:999px;color:white;background:rgba(255,255,255,.2);backdrop-filter:blur(16px);padding:12px 16px;font-weight:600;font-size:12px;white-space:nowrap;cursor:pointer}.ghost{padding:8px 11px;font-size:11px}
-#eyeMarker{position:fixed;z-index:3;width:76px;height:76px;display:none;transform:translate(-50%,-50%);border:1px solid rgba(255,255,255,.8);border-radius:50%;box-shadow:0 0 0 8px rgba(255,255,255,.1),inset 0 0 25px rgba(200,235,255,.34),0 0 34px rgba(195,220,255,.7);pointer-events:none;animation:halo 2.5s ease-in-out infinite}@keyframes halo{50%{box-shadow:0 0 0 15px rgba(255,255,255,.07),inset 0 0 25px rgba(200,235,255,.34),0 0 45px rgba(195,220,255,.8)}}
-#finger{position:fixed;z-index:10;width:21px;height:21px;border:2px solid white;background:rgba(187,230,255,.26);border-radius:50%;box-shadow:0 0 0 5px rgba(255,255,255,.17),0 0 20px #b9eefa;pointer-events:none;opacity:0;transform:translate(-50%,-50%);transition:opacity .2s}
-#portal{position:fixed;inset:0;z-index:4;pointer-events:none;opacity:0;transform:scale(.8) rotateY(21deg);filter:blur(14px);transition:opacity .48s,transform .65s cubic-bezier(.18,.8,.2,1),filter .56s;display:grid;place-items:center;padding:calc(env(safe-area-inset-top) + 68px) 14px calc(env(safe-area-inset-bottom) + 92px)}#portal.open{opacity:1;transform:scale(1) rotateY(0);filter:blur(0);pointer-events:auto}
-.portal-shell{position:relative;width:min(100%,440px);max-height:100%;min-height:465px;border:1px solid rgba(255,255,255,.72);border-radius:34px;background:linear-gradient(135deg,rgba(255,255,255,.65),rgba(231,223,255,.43) 50%,rgba(202,235,245,.38));box-shadow:0 18px 100px rgba(64,49,102,.23),inset 0 1px rgba(255,255,255,.8);backdrop-filter:blur(24px) saturate(1.25);-webkit-backdrop-filter:blur(24px) saturate(1.25);overflow:hidden;color:var(--ink);padding:18px 15px 16px}.portal-shell:before{content:"";position:absolute;inset:-50%;background:conic-gradient(from 70deg,transparent,rgba(255,255,255,.22),transparent,rgba(195,225,255,.22),transparent);animation:turn 19s linear infinite;pointer-events:none}@keyframes turn{to{transform:rotate(360deg)}}
-.portal-top{position:relative;display:flex;justify-content:space-between;align-items:center;gap:8px}.eyebrow{font-size:9px;font-weight:700;letter-spacing:.25em;color:#7b739a}.portal-title{font-family:Georgia,serif;font-size:25px;font-weight:400;letter-spacing:-.025em;margin:4px 0 0}.close{position:relative;width:30px;height:30px;background:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.7);border-radius:100%;font-size:19px;color:#786e96;cursor:pointer}
-.visual{position:relative;height:235px;margin:4px auto 0;display:grid;place-items:center}.orbit{position:absolute;width:215px;height:215px;border:1px solid rgba(146,134,203,.28);border-radius:50%;box-shadow:0 0 0 21px rgba(255,255,255,.1),0 0 0 43px rgba(255,255,255,.08);animation:float 6s ease-in-out infinite}@keyframes float{50%{transform:translateY(-7px) rotate(8deg)}}
-.eyeball{width:260px;height:210px;filter:drop-shadow(0 8px 22px rgba(112,115,172,.26));overflow:visible;animation:breathe 5s ease-in-out infinite}@keyframes breathe{50%{transform:translateY(-5px) scale(1.015)}}
-.hotspot{position:absolute;z-index:2;border:1px solid rgba(143,129,193,.42);border-radius:30px;padding:8px 11px;background:rgba(255,255,255,.65);color:#5b567b;font-size:11px;letter-spacing:.015em;box-shadow:0 6px 20px rgba(124,117,170,.1);backdrop-filter:blur(7px);cursor:pointer;transition:background .2s,transform .2s,box-shadow .2s;touch-action:manipulation}.hotspot.active,.hotspot.hover{background:#fff;color:#6250ae;transform:scale(1.06);box-shadow:0 0 0 5px rgba(176,162,245,.2),0 5px 20px rgba(124,117,170,.25)}.hotspot:before{content:"";position:absolute;left:50%;bottom:-11px;height:9px;border-left:1px solid #a9a0c8}.h-cornea{top:34px;left:1%}.h-iris{top:75px;left:14%}.h-lens{top:31px;right:2%}.h-retina{top:125px;right:0%}
-.info{position:relative;padding:14px 15px;background:rgba(255,255,255,.51);border:1px solid rgba(255,255,255,.62);border-radius:20px;min-height:119px;transition:opacity .24s}.info .latin{font-family:Georgia,serif;font-size:23px;line-height:1.2}.info .translations{font-size:11px;margin:4px 0 9px;color:#807698}.info .description{font-size:12px;line-height:1.65;color:#514d69;margin:0}.portal-footer{position:relative;text-align:center;font-size:10px;letter-spacing:.04em;color:#807698;margin:14px 2px 0}.portal-footer b{color:#6b5fa8}
-#splash{position:fixed;z-index:20;inset:0;background:linear-gradient(150deg,#d9cef2 0%,#f3dfe9 53%,#c7e7ed 100%);color:#554c73;display:flex;align-items:center;justify-content:center;padding:25px;transition:opacity .45s}.splash-inner{max-width:400px;width:100%;text-align:center}.splash-orb{margin:0 auto 20px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 35% 32%,#fff 0%,#f0ddf8 27%,#b7e3f0 60%,#b8a9e4 83%);box-shadow:0 18px 60px rgba(143,120,180,.27),inset -14px -17px 25px rgba(159,145,214,.38),inset 10px 10px 20px rgba(255,255,255,.95);display:grid;place-items:center;font-size:65px;color:rgba(255,255,255,.9)}.splash-inner h1{font-family:Georgia,serif;font-weight:400;letter-spacing:.07em;font-size:31px;margin:0}.splash-inner .sub{font-size:10px;letter-spacing:.27em;margin:10px 0 30px;color:#7a6b94}.splash-inner p{font-size:13px;line-height:1.95;margin:0 auto 21px;max-width:325px}.mainbtn{display:block;width:100%;border:1px solid rgba(255,255,255,.84);background:rgba(255,255,255,.74);color:#5f5186;border-radius:100px;padding:15px;font-size:14px;font-weight:700;box-shadow:0 12px 32px rgba(124,100,174,.12);cursor:pointer}.splash-inner .note{display:block;font-size:11px;margin-top:14px;line-height:1.7;color:#8a80a1}.splash-inner #error{min-height:0;color:#9b4166;font-size:12px;line-height:1.6;margin-top:15px;white-space:pre-line}
-#fps{position:fixed;right:15px;bottom:85px;color:#fff9;font-size:9px;z-index:5;pointer-events:none;display:none}
-@media(max-height:700px){#portal{padding-top:64px;padding-bottom:65px}.portal-shell{min-height:0;padding:12px}.portal-title{font-size:21px}.visual{height:187px}.eyeball{width:218px;height:180px}.orbit{width:185px;height:185px}.h-cornea{top:25px}.h-iris{top:55px}.h-lens{top:20px}.h-retina{top:93px}.info{min-height:96px;padding:10px}.portal-footer{margin-top:8px}}
+:root{--ink:#65556f;--ink-strong:#53435f;--lilac:#c0a0eb;--berry:#ce73ad;--rose:#f5d4e5;--mint:#c2eee3;--sky:#d7eeff;--milk:#fff9fc;--focus:#ea86b7;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}body{color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Noto Sans CJK JP",Arial,sans-serif;background:linear-gradient(155deg,#d8c7e9 0%,#efcfde 52%,#bddfe8 100%);-webkit-tap-highlight-color:transparent}button{font-family:inherit}button:focus-visible{outline:2px solid #b75d9a;outline-offset:3px}
+#camera{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1);z-index:0;background:linear-gradient(135deg,#d9cae8,#bdd5e8);display:none}#camera.live{display:block}
+#atmosphere{position:fixed;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(52,31,67,.28) 0,transparent 22%,transparent 68%,rgba(70,38,76,.42)),radial-gradient(ellipse at 65% 18%,rgba(255,222,246,.18),transparent 56%)}
+#grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.16;background-image:radial-gradient(rgba(255,255,255,.7) .6px,transparent .7px);background-size:23px 23px;mask-image:linear-gradient(180deg,#0002,transparent 62%)}
+#sparkles{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden}.sparkle{position:absolute;color:#fff;opacity:.68;font-size:16px;text-shadow:0 0 14px #fff;animation:twinkle 4s ease-in-out infinite}.sparkle:nth-child(1){left:9%;top:25%}.sparkle:nth-child(2){right:12%;top:36%;animation-delay:1.6s;font-size:11px}.sparkle:nth-child(3){left:16%;top:62%;animation-delay:2.5s;font-size:12px}.sparkle:nth-child(4){right:22%;top:76%;animation-delay:.7s;font-size:10px}@keyframes twinkle{0%,100%{transform:scale(.7) rotate(-15deg);opacity:.17}50%{transform:scale(1.18) rotate(15deg);opacity:.88}}
+.header{position:fixed;top:calc(var(--safe-top) + 18px);left:17px;right:17px;z-index:7;display:flex;align-items:flex-start;justify-content:space-between;gap:8px;pointer-events:none}.brand{font-size:11px;font-weight:750;letter-spacing:.16em;line-height:1.35;text-shadow:0 1px 9px rgba(64,46,80,.5)}.brand small{display:block;font-size:9px;font-weight:450;letter-spacing:.12em;margin-top:5px;opacity:.88}.status{max-width:160px;border:1px solid rgba(255,255,255,.67);border-radius:22px;padding:8px 11px;background:rgba(255,248,255,.26);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-size:10px;line-height:1.4;text-align:center;box-shadow:0 3px 16px rgba(80,57,97,.07)}
+.bottom{position:fixed;bottom:calc(var(--safe-bottom) + 18px);left:17px;right:17px;z-index:7;display:flex;justify-content:space-between;align-items:flex-end;gap:10px}.hint{font-size:11px;line-height:1.6;text-shadow:0 2px 12px #4b3558;min-width:0}.hint b{font-size:12px;letter-spacing:.05em}.pill{flex-shrink:0;color:#fff;background:rgba(255,245,255,.2);border:1px solid #fff9;border-radius:100px;min-height:44px;padding:10px 13px;font-weight:650;font-size:11px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);cursor:pointer}
+#eyeMarker{display:none;position:fixed;z-index:3;pointer-events:none;width:66px;height:66px;left:50%;top:50%;transform:translate(-50%,-50%);border:1px solid rgba(255,245,255,.88);border-radius:50%;box-shadow:0 0 0 7px rgba(255,216,244,.12),0 0 23px #f6d5ff,inset 0 0 18px #ffffff99;animation:halo 2.4s ease-in-out infinite}#eyeMarker:before{content:'✦';position:absolute;font-size:14px;left:-6px;top:-7px;text-shadow:0 0 12px white}@keyframes halo{50%{box-shadow:0 0 0 13px rgba(255,216,244,.08),0 0 34px #f6d5ff,inset 0 0 22px #ffffffaa}}
+#finger{position:fixed;z-index:15;left:0;top:0;width:30px;height:30px;pointer-events:none;opacity:0;transform:translate(-50%,-50%);border-radius:50%;background:conic-gradient(#e48bbe calc(var(--progress,0)*1%),rgba(255,255,255,.4) 0);box-shadow:0 0 0 5px #ffffff20,0 0 16px #ffdeed;transition:opacity .18s}#finger:after{content:'✦';position:absolute;inset:4px;border-radius:50%;display:grid;place-items:center;font-size:12px;color:#a965a2;background:#fff9fbf0}
+#portal{position:fixed;inset:0;z-index:5;display:grid;place-items:center;padding:calc(var(--safe-top) + 72px) 13px calc(var(--safe-bottom) + 82px);pointer-events:none;visibility:hidden;transition:visibility .01s linear .6s}#portal.open{pointer-events:auto;visibility:visible;transition:visibility 0s}
+.portal-shell{position:relative;width:min(100%,430px);max-height:100%;overflow:hidden;display:flex;flex-direction:column;border-radius:34px;padding:15px 14px 14px;border:1px solid #ffffffdc;background:linear-gradient(146deg,rgba(255,252,255,.78),rgba(250,225,247,.63) 53%,rgba(221,243,255,.66));box-shadow:0 16px 58px rgba(93,49,108,.24),inset 0 1px #fff;backdrop-filter:blur(13px) saturate(1.15);-webkit-backdrop-filter:blur(13px) saturate(1.15);color:var(--ink);opacity:0;filter:blur(8px);transform-origin:center center;transform:perspective(700px) scaleX(.012) scaleY(.7) rotateY(66deg);transition:transform .65s cubic-bezier(.2,.88,.2,1),opacity .35s,filter .6s}
+#portal.open .portal-shell{opacity:1;filter:blur(0);transform:perspective(700px) scaleX(1) scaleY(1) rotateY(0)}.portal-shell:before{content:'';position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:radial-gradient(circle at 17% 7%,#fff8,transparent 25%),radial-gradient(circle at 90% 42%,#d5eeff40,transparent 26%)}
+.portal-top{position:relative;z-index:1;display:flex;justify-content:space-between;gap:10px;align-items:center}.eyebrow{font-size:9px;font-weight:750;letter-spacing:.17em;color:#a37ca8;white-space:nowrap}.portal-title{font-family:Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:-.035em;color:#644e72;font-size:26px;margin:3px 0 0}.heart{color:#d989b9;font-size:19px;font-family:Georgia,serif}.close{background:#fff9fcbd;width:35px;height:35px;border:1px solid white;border-radius:100%;color:#9c79a3;font-size:20px;cursor:pointer;flex:none}.sticker{position:relative;align-self:flex-start;background:#fff9f2aa;border:1px solid white;border-radius:100px;padding:5px 10px;font-size:9px;letter-spacing:.05em;color:#b07e9f;margin:9px 0 0;transform:rotate(-3deg)}
+.visual{position:relative;height:clamp(240px,33vh,300px);width:100%;flex-shrink:0;margin-top:-2px}.diagram{position:absolute;width:100%;height:100%;inset:0;overflow:visible;filter:drop-shadow(0 7px 12px #b698b044)}.orbit{position:absolute;width:min(58%,220px);aspect-ratio:1;left:50%;top:50%;transform:translate(-50%,-50%);border:1px dashed #d8b6e8a6;border-radius:50%;box-shadow:0 0 0 16px #ffffff20,0 0 0 40px #ffffff0d;pointer-events:none}.orbit:after{content:'✧';position:absolute;left:0;top:6%;color:#e49ac7;font-size:18px}
+.eye-base{transform-origin:center;animation:eye-breathe 5s ease-in-out infinite}@keyframes eye-breathe{50%{transform:translateY(-3px)}}
+.part .organ-core{transition:stroke .25s,stroke-width .25s,fill .25s,filter .3s,opacity .25s}.part.is-selected .organ-core{filter:drop-shadow(0 0 3px #fff) drop-shadow(0 0 7px #f089c5);stroke:#e47bac;stroke-width:9px;opacity:1}.part#part-retina.is-selected .organ-core{stroke:#fd5f9a;stroke-width:12px}.part#part-iris.is-selected .organ-core{stroke:#e777bb;stroke-width:13px}.part#part-lens.is-selected .organ-core{fill:#fff4cf;stroke:#e17ab0;stroke-width:6px}.part#part-cornea.is-selected .organ-core{fill:#d9faff;stroke:#ed80b4;stroke-width:6px}
+.diagram.has-selection .part:not(.is-selected){opacity:.66}.part{transition:opacity .22s}.connector{fill:none;stroke:#e1b0d1;stroke-width:1.65;stroke-dasharray:3 4;stroke-linecap:round;opacity:.42;filter:drop-shadow(0 0 1px #fff);transition:stroke .24s,stroke-width .24s,opacity .24s}.connector.is-selected{stroke:#d55d9c;stroke-width:2.8;stroke-dasharray:none;opacity:1}.node{fill:#fff;stroke:#dc94c1;stroke-width:2}.node.is-selected{fill:#f8a2c9;stroke:#fff;stroke-width:2.5;filter:drop-shadow(0 0 4px #e985bb)}
+.tag{cursor:pointer;outline:none}.tag rect{fill:#fffafde8;stroke:#fff;stroke-width:1.4;filter:drop-shadow(0 4px 5px #a977ae30);transition:fill .2s,stroke .2s}.tag .en{font-family:Georgia,serif;font-size:14px;font-weight:600;fill:#71557e}.tag .langs{font-size:9px;font-weight:500;fill:#ad88a5}.tag.is-hover rect{stroke:#d9a1d8;fill:#fff}.tag.is-selected rect{fill:#fff3f9;stroke:#df7cba;stroke-width:2.5;filter:drop-shadow(0 0 6px #f19cc499)}.tag.is-selected .en{fill:#c35895}.tag.is-selected .langs{fill:#98648f}.tag:hover rect{stroke:#c990cb}
+#focusHalo{opacity:0;pointer-events:none;transition:opacity .25s}#focusHalo.show{opacity:1}#focusHalo circle{fill:none;stroke:#ee80b5;stroke-width:1.9;transform-box:fill-box;transform-origin:center;animation:ping 2s ease-in-out infinite}#focusHalo circle:last-child{animation-delay:-.8s;opacity:.65}@keyframes ping{0%{transform:scale(.65);opacity:0}35%{opacity:1}100%{transform:scale(1.8);opacity:0}}
+.info{position:relative;flex-shrink:0;background:rgba(255,255,255,.77);border:1px solid #fff;border-radius:22px;padding:13px 15px 12px;min-height:149px;box-shadow:0 7px 19px #ad8bac14}.info-head{display:flex;justify-content:space-between;align-items:center;gap:6px}.mini-label{color:#c38ab1;font-size:9px;letter-spacing:.18em;font-weight:700}.count{font-size:10px;color:#b285ae;border:1px solid #efd3e8;background:#fffafa;border-radius:100px;padding:3px 8px}.info-title{font-family:Georgia,"Times New Roman",serif;font-size:24px;font-weight:400;color:#624d70;line-height:1.15;margin:5px 0}.translations{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 8px}.translation{color:#8f698c;font-size:11px;background:#f8edf6;border-radius:999px;padding:4px 8px;line-height:1.2}.translation strong{font-size:9px;letter-spacing:.06em;color:#b783a9}.description{font-size:12.5px;line-height:1.54;color:#5c4b64;margin:0;max-width:100%}.tiny-fact{margin-top:8px;color:#98638f;font-size:10px;line-height:1.5}.info.fresh{animation:info-in .3s ease}@keyframes info-in{from{opacity:.6;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.portal-footer{position:relative;color:#9f80a5;font-size:10px;text-align:center;margin:10px 0 1px;line-height:1.5}.portal-footer b{color:#bc6eab}
+#splash{position:fixed;inset:0;z-index:30;display:flex;justify-content:center;align-items:center;padding:25px;text-align:center;background:radial-gradient(ellipse at 20% 10%,#fff4 0,transparent 43%),linear-gradient(155deg,#e9d8f7,#f7dfed 55%,#cae8ee);color:var(--ink);transition:opacity .35s}.splash-inner{width:min(100%,390px)}.splash-orb{position:relative;margin:0 auto 23px;width:148px;height:148px;border-radius:100%;background:radial-gradient(circle at 36% 30%,#fff 0%,#fff6fb 18%,#f7d6e9 45%,#a6c9ec 80%,#b7a4ea 100%);box-shadow:0 15px 40px #a783b75c,inset 8px 10px 21px #fff,inset -9px -13px 17px #9b8bc455;display:grid;place-items:center;font-size:53px;color:white;text-shadow:0 0 12px #fff}.splash-orb:after{content:'✧';position:absolute;right:-11px;top:9px;font-size:34px;color:#fff}.splash-inner h1{font:400 31px/1.25 Georgia,serif;letter-spacing:.08em;margin:0}.sub{font-size:10px;letter-spacing:.2em;color:#a47aab;margin:9px 0 26px}.splash-inner p{font-size:13px;line-height:1.8;margin:0 auto 25px;max-width:310px}.mainbtn{display:block;width:100%;min-height:50px;padding:14px 12px;border-radius:999px;border:1px solid #fff;background:#fffafce0;color:#715680;font-size:14px;font-weight:700;box-shadow:0 10px 25px #a98cb23f;cursor:pointer}.mainbtn.secondary{margin-top:10px;background:#ffffff65;box-shadow:none;font-size:12px}.note{display:block;color:#937b9d;font-size:10px;line-height:1.8;margin-top:15px}#error{color:#a13d69;font-size:12px;line-height:1.6;margin-top:10px;white-space:pre-line}
+@media(max-height:760px){#portal{padding-top:calc(var(--safe-top) + 58px);padding-bottom:calc(var(--safe-bottom) + 66px)}.portal-shell{padding:12px 12px 10px;border-radius:26px}.portal-title{font-size:22px}.sticker{margin-top:4px}.visual{height:clamp(190px,30vh,245px)}.info{min-height:120px;padding:9px 12px}.info-title{font-size:21px}.description{font-size:11.5px;line-height:1.4}.tiny-fact{margin-top:4px}.portal-footer{margin-top:6px}.bottom{bottom:calc(var(--safe-bottom) + 9px)}}
+@media(max-height:600px){.sticker{display:none}.visual{height:190px}.portal-footer{display:none}.info{min-height:108px}.translation{font-size:10px}.info-title{font-size:20px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
-<video id="camera" muted autoplay playsinline webkit-playsinline></video><canvas id="view"></canvas><div id="luminous"></div><div id="noise"></div>
-<div class="header"><div class="brand">THE EYE PORTAL<small>ANATOMY IN MOTION · V1.0</small></div><div id="status" class="status">准备探索 · READY</div></div>
-<div id="eyeMarker"></div><div id="finger"></div>
-<main id="portal" aria-hidden="true">
- <section class="portal-shell" aria-label="眼睛解剖互动卡片">
-  <div class="portal-top"><div><div class="eyebrow">01 / OCULAR ANATOMY</div><h2 class="portal-title">Inside the Eye <span style="font-size:13px;color:#a99bd5">✧</span></h2></div><button class="close" id="close" aria-label="关闭">×</button></div>
-  <div class="visual" id="visual">
-   <div class="orbit"></div>
-   <svg class="eyeball" viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="眼球剖面示意图，展示角膜、虹膜、晶状体、视网膜与视神经">
-    <defs><radialGradient id="sclera" cx="37%" cy="30%"><stop stop-color="#fff"/><stop offset=".58" stop-color="#eaf6ff"/><stop offset="1" stop-color="#c5c0ed"/></radialGradient><radialGradient id="vitreous" cx="33%" cy="28%"><stop stop-color="#f5ffff" stop-opacity=".86"/><stop offset="1" stop-color="#9aabd9" stop-opacity=".55"/></radialGradient><linearGradient id="lensg" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".5" stop-color="#c9f0ed"/><stop offset="1" stop-color="#ac94d3"/></linearGradient><linearGradient id="nerveg" x2="0" y2="1"><stop stop-color="#d8d0f8"/><stop offset="1" stop-color="#a7c6e9"/></linearGradient></defs>
-    <path d="M242 113 C270 107 289 107 312 112 L312 151 C287 156 271 155 242 149Z" fill="url(#nerveg)" stroke="#aa99ce" stroke-width="2"/>
-    <path d="M245 121 L309 122 M247 129 L311 133 M247 138 L310 143" stroke="#fff" stroke-opacity=".65" stroke-width="2"/>
-    <circle cx="162" cy="131" r="103" fill="url(#sclera)" stroke="#f7fdff" stroke-width="4"/>
-    <circle cx="162" cy="131" r="91" fill="url(#vitreous)" stroke="#aca7d7" stroke-opacity=".75" stroke-width="2"/>
-    <path d="M162 41 A90 90 0 1 1 161 221" fill="none" stroke="#c79ec8" stroke-width="6" opacity=".85"/>
-    <path d="M162 48 A83 83 0 1 1 162 214" fill="none" stroke="#f8a9c9" stroke-width="3" opacity=".65"/>
-    <path d="M84 72 C46 79 34 108 34 131 C34 157 49 187 84 191 C67 169 64 151 64 131 C64 110 70 91 84 72Z" fill="#e5faff" fill-opacity=".88" stroke="#a0d7e6" stroke-width="3"/>
-    <path d="M88 80 Q71 106 72 131 Q72 155 88 183" fill="none" stroke="#9da2d5" stroke-width="5" opacity=".8"/>
-    <path d="M92 88 Q104 106 104 117 L104 145 Q101 162 91 174" fill="none" stroke="#8975b8" stroke-width="10" stroke-linecap="round"/>
-    <ellipse cx="115" cy="131" rx="17" ry="43" fill="url(#lensg)" fill-opacity=".87" stroke="#fff" stroke-width="3"/>
-    <path d="M110 92 Q89 83 83 60 M110 171 Q89 177 83 202" fill="none" stroke="#b5abd7" stroke-width="2"/>
-    <circle cx="165" cy="131" r="68" fill="#fff" fill-opacity=".075"/><path d="M135 73 Q176 55 209 90" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="4" stroke-linecap="round"/>
-    <circle cx="81" cy="74" r="3" fill="#fff"/><circle cx="229" cy="98" r="3" fill="#fff"/>
-   </svg>
-   <button class="hotspot h-cornea" data-organ="cornea">Cornea</button><button class="hotspot h-iris" data-organ="iris">Iris</button><button class="hotspot h-lens" data-organ="lens">Lens</button><button class="hotspot h-retina" data-organ="retina">Retina</button>
-  </div>
-  <div class="info" aria-live="polite"><div class="latin" id="organTitle">Explore the eye ✦</div><div class="translations" id="translations">指尖停留在英文名称上，探索眼睛的结构</div><p class="description" id="description">Touch a name to reveal its function. / 触碰任何标签，查看它在视觉形成中的作用。</p></div>
-  <div class="portal-footer"><b>GESTURE GUIDE</b> · 指尖悬停选择 · 收回手关闭 · 也可触屏操作</div>
- </section>
-</main>
-<div class="bottom"><div class="hint" id="hint"><b>✦ POINT TO YOUR EYE</b><br>食指指向眼睛，开启解剖空间</div><button class="pill" id="manual">触屏打开 ✧</button></div><div id="fps"></div>
-<div id="splash"><div class="splash-inner"><div class="splash-orb">✧</div><h1>THE EYE PORTAL</h1><div class="sub">A DREAMY ANATOMY EXPERIENCE</div><p>用指尖打开一扇通往人体的小小任意门。<br>指向眼睛 → 触碰医学名称 → 收回手关闭。</p><button class="mainbtn" id="start">开启摄像头 · ENTER THE PORTAL</button><button class="mainbtn" id="demo" style="margin-top:10px;background:rgba(255,255,255,.25)">先体验触屏模式 · DEMO</button><small class="note">首次需允许摄像头权限 · 仅在本机分析画面<br>iPhone 请使用 Safari 和 HTTPS（GitHub Pages）</small><div id="error" role="alert"></div></div></div>
+<video id="camera" autoplay muted playsinline webkit-playsinline></video>
+<div id="atmosphere"></div><div id="grain"></div>
+<div id="sparkles" aria-hidden="true"><span class="sparkle">✦</span><span class="sparkle">✧</span><span class="sparkle">✦</span><span class="sparkle">✧</span></div>
+<div class="header"><div class="brand">THE EYE PORTAL <span style="color:#ffe4f8">♡</span><small>LITTLE ANATOMY MAGIC · V1.1</small></div><div class="status" id="status">READY TO EXPLORE ✧</div></div>
+<div id="eyeMarker" aria-hidden="true"></div><div id="finger" aria-hidden="true"></div>
+<main id="portal" aria-hidden="true"><section class="portal-shell" aria-label="Interactive anatomy of the eye">
+ <div class="portal-top"><div><div class="eyebrow">✧ CHAPTER 01 · OCULAR ANATOMY</div><h2 class="portal-title">Peek inside the eye <span class="heart">♡</span></h2></div><button type="button" class="close" id="close" aria-label="Close anatomy portal">×</button></div>
+ <div class="sticker">✿ a tiny world behind your eyes</div>
+ <div class="visual" id="visual"><div class="orbit" aria-hidden="true"></div>
+  <svg class="diagram" id="diagram" viewBox="0 0 360 290" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="Simplified eye cross-section. Select a label or part to highlight its location.">
+   <defs>
+    <radialGradient id="sclera" cx="34%" cy="24%"><stop stop-color="#ffffff"/><stop offset=".55" stop-color="#eef7ff"/><stop offset="1" stop-color="#cbb8e9"/></radialGradient>
+    <radialGradient id="vitreous" cx="38%" cy="35%"><stop stop-color="#faffff" stop-opacity=".94"/><stop offset="1" stop-color="#b0a8e3" stop-opacity=".63"/></radialGradient>
+    <linearGradient id="lensg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".49" stop-color="#d5fff6"/><stop offset="1" stop-color="#c0a5df"/></linearGradient>
+    <linearGradient id="nerveg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#efd4f2"/><stop offset="1" stop-color="#b0d4f2"/></linearGradient>
+   </defs>
+   <!-- All lines and label connections are in this same SVG coordinate system. -->
+
+   <g class="eye-base" aria-hidden="true">
+    <path d="M257 127 C285 120 311 124 344 132 L344 167 C316 174 286 167 257 159Z" fill="url(#nerveg)" stroke="#baaad9" stroke-width="2.8"/>
+    <path d="M260 137 L338 142 M262 149 L339 153 M264 159 L338 162" stroke="#fff" stroke-width="2.4" stroke-opacity=".72"/>
+    <circle cx="178" cy="145" r="109" fill="url(#sclera)" stroke="#fff" stroke-width="5"/>
+    <circle cx="178" cy="145" r="96" fill="url(#vitreous)" stroke="#aab9dc" stroke-opacity=".68" stroke-width="3"/>
+    <path d="M178 42 A103 103 0 1 1 178 248" fill="none" stroke="#c8a9d7" stroke-width="4.5" opacity=".72"/>
+   </g>
+   <!-- Retina: curved light-sensitive lining at the BACK of the eye (right side). -->
+   <g class="part" id="part-retina" data-organ="retina" tabindex="0" role="button" aria-label="Retina, 網膜, 视网膜">
+    <path class="organ-core" d="M178 54 A91 91 0 0 1 178 236" fill="none" stroke="#e99ac4" stroke-width="6.5" stroke-linecap="round"/>
+    <path d="M178 54 A91 91 0 0 1 178 236" fill="none" stroke="transparent" stroke-width="24"/>
+   </g>
+   <!-- Cornea: clear curved surface at the FRONT (left side). -->
+   <g class="part" id="part-cornea" data-organ="cornea" tabindex="0" role="button" aria-label="Cornea, 角膜, 角膜">
+    <path class="organ-core" d="M86 80 C48 86 40 118 40 145 C40 172 51 206 86 211 C66 187 66 160 66 145 C66 124 74 97 86 80 Z" fill="#e5fbff" fill-opacity=".88" stroke="#9fdce7" stroke-width="3.6"/>
+   </g>
+   <path d="M94 89 Q82 117 83 145 Q82 171 94 198" fill="none" stroke="#a6a3d7" stroke-width="4" opacity=".67" pointer-events="none"/>
+   <!-- Iris: ring around the pupil, drawn in section as two curved edges. -->
+   <g class="part" id="part-iris" data-organ="iris" tabindex="0" role="button" aria-label="Iris, 虹彩, 虹膜">
+    <path class="organ-core" d="M100 101 Q111 112 111 128 M111 161 Q110 181 100 190" fill="none" stroke="#9d80c4" stroke-width="9" stroke-linecap="round"/>
+    <path d="M100 101 Q111 112 111 128 M111 161 Q110 181 100 190" fill="none" stroke="transparent" stroke-width="23"/>
+   </g>
+   <!-- Lens: curved biconvex structure behind the iris. -->
+   <g class="part" id="part-lens" data-organ="lens" tabindex="0" role="button" aria-label="Crystalline lens, 水晶体, 晶状体">
+    <ellipse class="organ-core" cx="137" cy="145" rx="19" ry="46" fill="url(#lensg)" fill-opacity=".96" stroke="#fff" stroke-width="3.5"/>
+   </g>
+   <g pointer-events="none" aria-hidden="true">
+    <path d="M132 102 Q102 91 94 72 M132 188 Q103 197 94 215" fill="none" stroke="#c6b2dd" stroke-width="2"/>
+    <path d="M157 80 Q202 59 239 91" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".77"/>
+    <circle cx="205" cy="116" r="63" fill="#fff" fill-opacity=".05"/><circle cx="228" cy="98" r="3" fill="#fff"/>
+   </g>
+   <g id="leaders" aria-hidden="true">
+    <path class="connector" data-link="cornea" d="M 89 74 Q 77 94 66 144"/>
+    <path class="connector" data-link="iris" d="M 97 233 Q 109 189 115 145"/>
+    <path class="connector" data-link="lens" d="M 275 77 Q 227 79 137 145"/>
+    <path class="connector" data-link="retina" d="M 270 229 Q 260 192 257 158"/>
+   </g>
+   <g id="focusHalo" aria-hidden="true"><circle cx="0" cy="0" r="16"/><circle cx="0" cy="0" r="16"/></g>
+   <g aria-hidden="true"><circle class="node" data-node="cornea" cx="66" cy="144" r="4"/><circle class="node" data-node="iris" cx="115" cy="145" r="4"/><circle class="node" data-node="lens" cx="137" cy="145" r="4"/><circle class="node" data-node="retina" cx="257" cy="158" r="4"/></g>
+   <!-- The bilingual tags sit INSIDE the SVG so their connecting lines never drift. -->
+   <g class="tag" data-organ="cornea" tabindex="0" role="button" aria-label="Select cornea"><rect x="5" y="35" width="101" height="48" rx="17"/><text class="en" x="17" y="54">Cornea</text><text class="langs" x="17" y="72">角膜 · 角膜</text></g>
+   <g class="tag" data-organ="iris" tabindex="0" role="button" aria-label="Select iris"><rect x="4" y="229" width="101" height="48" rx="17"/><text class="en" x="17" y="248">Iris</text><text class="langs" x="17" y="266">虹彩 · 虹膜</text></g>
+   <g class="tag" data-organ="lens" tabindex="0" role="button" aria-label="Select crystalline lens"><rect x="250" y="36" width="107" height="48" rx="17"/><text class="en" x="262" y="55">Lens</text><text class="langs" x="262" y="73">水晶体 · 晶状体</text></g>
+   <g class="tag" data-organ="retina" tabindex="0" role="button" aria-label="Select retina"><rect x="248" y="220" width="109" height="48" rx="17"/><text class="en" x="260" y="239">Retina</text><text class="langs" x="260" y="257">網膜 · 视网膜</text></g>
+  </svg>
+ </div>
+ <div class="info" id="info" aria-live="polite" aria-atomic="true">
+  <div class="info-head"><div class="mini-label" id="miniLabel">✦ YOUR MINI ANATOMY BOOK</div><div class="count" id="count">✧ 0 / 4</div></div>
+  <div class="info-title" id="organTitle">Pick a little label ♡</div>
+  <div class="translations" id="translations"><span class="translation">日本語 · 中文 · English</span></div>
+  <p class="description" id="description">Touch or point at a label to see where that part lives and what it does for your vision.</p>
+  <div class="tiny-fact" id="tinyFact">✿ The pink glow will show its exact place in the drawing.</div>
+ </div>
+ <div class="portal-footer"><b>✿ LITTLE GESTURE GUIDE</b> · hover to select · lower your hand to close</div>
+ </section></main>
+<div class="bottom"><div class="hint" id="hint"><b>✧ POINT TO YOUR EYE</b><br>用食指指向眼睛，打开小小任意门</div><button type="button" class="pill" id="manual">触屏打开 ♡</button></div>
+<div id="splash"><div class="splash-inner"><div class="splash-orb">♡</div><h1>THE EYE PORTAL</h1><div class="sub">✿ LITTLE ANATOMY MAGIC · V1.1 ✿</div><p>Discover the tiny world behind your eyes.<br>指眼睛开门 · 手指选器官 · 收手关门 🫧</p><button type="button" class="mainbtn" id="start">开启摄像头 · OPEN THE MAGIC ✧</button><button type="button" class="mainbtn secondary" id="demo">先用触屏体验 · TRY DEMO</button><small class="note">需要 HTTPS（GitHub Pages）和 Safari 摄像头许可<br>摄像头画面仅在手机上进行识别，不会上传到本网站的服务器</small><div id="error" role="alert"></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/hands.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4/face_mesh.js" crossorigin="anonymous"></script>
 <script>
 (()=>{'use strict';
-const $=id=>document.getElementById(id),video=$('camera'),canvas=$('view'),ctx=canvas.getContext('2d',{alpha:false});
-const portal=$('portal'),status=$('status'),hint=$('hint'),marker=$('eyeMarker'),fingerEl=$('finger'),manual=$('manual');
-const info={
- cornea:{name:'Cornea',translation:'角膜 · かくまく / 角膜',description:'眼球最前方的透明组织。它帮助保护眼内结构，并承担眼睛大部分的屈光作用，让光线向视网膜聚焦。'},
- iris:{name:'Iris',translation:'虹膜 · こうさい / 虹彩',description:'环绕瞳孔的有色组织。通过控制瞳孔大小，调节进入眼内的光量；亮处缩小，暗处扩大。'},
- lens:{name:'Crystalline Lens',translation:'晶状体 · すいしょうたい / 水晶体',description:'位于虹膜后方的透明结构。它通过改变形状调节屈光力，帮助我们把不同距离的物体看清楚，这个过程叫调节。'},
- retina:{name:'Retina',translation:'视网膜 · もうまく / 網膜',description:'位于眼球内壁的感光神经组织。视杆细胞和视锥细胞将光信号转为神经信号，经视神经传往大脑形成视觉。'}
+const $=id=>document.getElementById(id);
+const video=$('camera'),portal=$('portal'),status=$('status'),hint=$('hint'),eyeMarker=$('eyeMarker'),fingerEl=$('finger'),manual=$('manual'),diagram=$('diagram'),infoBox=$('info');
+const anatomy={
+ cornea:{name:'Cornea',jp:'角膜',zh:'角膜',description:'The cornea is the clear, curved surface at the front of your eye. It protects the eye and bends incoming light to help bring images into focus.',fact:'✿ Tiny fact: The healthy cornea has no blood vessels.',point:[66,144],order:1},
+ iris:{name:'Iris',jp:'虹彩',zh:'虹膜',description:'The iris is the colored ring surrounding your pupil. Its muscles make the pupil larger or smaller to control how much light enters your eye.',fact:'✿ Tiny fact: Your iris works like a camera aperture.',point:[115,145],order:2},
+ lens:{name:'Crystalline Lens',jp:'水晶体',zh:'晶状体',description:'Behind the iris, the flexible crystalline lens changes shape to fine-tune your focus, especially when looking at things up close.',fact:'✿ Tiny fact: The lens becomes less flexible as we age.',point:[137,145],order:3},
+ retina:{name:'Retina',jp:'網膜',zh:'视网膜',description:'The retina lines the back of your eye. Its light-sensitive cells turn light into neural signals that travel to your brain through the optic nerve.',fact:'✿ Tiny fact: Rods help in dim light; cones support color vision.',point:[257,158],order:4}
 };
-let hands=null,faceMesh=null,stream=null,running=false,analyzing=false,frameId=0,opened=false,faceEyes=[],lastHand=0,lastFace=0,triggerSince=0,hoverSince=0,hoverTarget=null,armed=true,openAt=0,handEverInside=false,desiredFinger=null,smoothedFinger=null,raf=0,loopTimer=0,awaySince=0;
-const MIN_EYE_HOLD=480,MIN_LABEL_HOLD=330,NO_HAND_CLOSE=1700,OPEN_GRACE=1100;
-function setStatus(s){status.textContent=s}
-function resize(){let ratio=Math.min(devicePixelRatio||1,1.5);canvas.width=Math.round(innerWidth*ratio);canvas.height=Math.round(innerHeight*ratio);canvas.style.width=innerWidth+'px';canvas.style.height=innerHeight+'px';ctx.setTransform(ratio,0,0,ratio,0,0)}
-function projection(p){let vw=video.videoWidth||640,vh=video.videoHeight||480;let s=Math.max(innerWidth/vw,innerHeight/vh);let ox=(innerWidth-vw*s)/2,oy=(innerHeight-vh*s)/2;return{x:ox+(1-p.x)*vw*s,y:oy+p.y*vh*s}}
-function draw(){if(!running)return;let w=innerWidth,h=innerHeight;ctx.save();ctx.fillStyle='#c4bbd9';ctx.fillRect(0,0,w,h);if(video.readyState>=2){let vw=video.videoWidth,vh=video.videoHeight,s=Math.max(w/vw,h/vh),dw=vw*s,dh=vh*s;ctx.translate(w,0);ctx.scale(-1,1);ctx.drawImage(video,(w-dw)/2,(h-dh)/2,dw,dh)}ctx.restore();raf=requestAnimationFrame(draw)}
-function selectOrgan(k){if(!info[k])return;let data=info[k];$('organTitle').textContent=data.name;$('translations').textContent=data.translation;$('description').textContent=data.description;document.querySelectorAll('.hotspot').forEach(el=>el.classList.toggle('active',el.dataset.organ===k))}
-function resetInfo(){$('organTitle').textContent='Explore the eye ✦';$('translations').textContent='指尖停留在英文名称上，探索眼睛的结构';$('description').textContent='Touch a name to reveal its function. / 触碰任何标签，查看它在视觉形成中的作用。';document.querySelectorAll('.hotspot').forEach(el=>el.classList.remove('active','hover'))}
-function openPortal(){if(opened)return;opened=true;openAt=performance.now();awaySince=0;handEverInside=false;triggerSince=0;hoverTarget=null;resetInfo();portal.classList.add('open');portal.setAttribute('aria-hidden','false');manual.textContent='关闭任意门 ×';hint.innerHTML='<b>✧ TOUCH AN ANATOMY LABEL</b><br>指尖停留在标签上；收回手关闭';setStatus('解剖空间 · OPEN')}
-function closePortal(){if(!opened)return;opened=false;armed=false;portal.classList.remove('open');portal.setAttribute('aria-hidden','true');manual.textContent='触屏打开 ✧';hint.innerHTML='<b>✦ POINT TO YOUR EYE</b><br>食指指向眼睛，开启解剖空间';setStatus('任意门已关闭 · READY');hoverTarget=null;triggerSince=0}
-function eyePosition(){if(!faceEyes.length)return null;let good=faceEyes.filter(p=>p.x>-30&&p.x<innerWidth+30&&p.y>-30&&p.y<innerHeight+30);return good.length?good:null}
-function updateMarker(){let eyes=eyePosition();if(!opened&&eyes&&eyes.length){marker.style.display='block';marker.style.left=eyes[0].x+'px';marker.style.top=eyes[0].y+'px'}else marker.style.display='none'}
-function fingerAt(x,y){desiredFinger={x,y};if(!smoothedFinger)smoothedFinger={x,y};smoothedFinger.x=smoothedFinger.x*.4+x*.6;smoothedFinger.y=smoothedFinger.y*.4+y*.6;fingerEl.style.left=smoothedFinger.x+'px';fingerEl.style.top=smoothedFinger.y+'px';fingerEl.style.opacity='1'}
-function checkPortal(now,p){if(!opened)return;let hit=null;for(let el of document.querySelectorAll('.hotspot')){let r=el.getBoundingClientRect();if(p.x>=r.left-12&&p.x<=r.right+12&&p.y>=r.top-14&&p.y<=r.bottom+14){hit=el;break}}
- if(hit!==hoverTarget){hoverTarget=hit;hoverSince=now;document.querySelectorAll('.hotspot').forEach(el=>el.classList.toggle('hover',el===hit))}else if(hit&&now-hoverSince>MIN_LABEL_HOLD){selectOrgan(hit.dataset.organ);hoverSince=now+100000}
+const tags=[...diagram.querySelectorAll('.tag')],parts=[...diagram.querySelectorAll('.part')],links=[...diagram.querySelectorAll('.connector')],nodes=[...diagram.querySelectorAll('.node')];
+let hands=null,faceMesh=null,stream=null,running=false,analyzing=false,timer=0,opened=false,faceEyes=[],lastHand=0,triggerSince=0,hoverSince=0,hoverTarget=null,armed=true,openAt=0,handSeenInPortal=false,awaySince=0,frame=0,smoothedTip=null,selected=null,manuallyOpened=false;
+const HOLD_EYE=470,HOLD_LABEL=340,CLOSE_MISSING=1450,GRACE=1000,AWAY_HOLD=1280;
+function setStatus(msg){status.textContent=msg}
+function point(p){const vw=video.videoWidth||640,vh=video.videoHeight||480;const s=Math.max(innerWidth/vw,innerHeight/vh);return{x:(innerWidth-vw*s)/2+(1-p.x)*vw*s,y:(innerHeight-vh*s)/2+p.y*vh*s}}
+function getEyes(){return faceEyes.filter(p=>p.x>-25&&p.x<innerWidth+25&&p.y>-25&&p.y<innerHeight+25)}
+function refreshEyeMarker(){const eyes=getEyes();eyeMarker.style.display=!opened&&eyes.length?'block':'none';if(eyes.length){eyeMarker.style.left=eyes[0].x+'px';eyeMarker.style.top=eyes[0].y+'px'}}
+function selectOrgan(key){const a=anatomy[key];if(!a)return;selected=key;diagram.classList.add('has-selection');parts.forEach(el=>el.classList.toggle('is-selected',el.dataset.organ===key));tags.forEach(el=>{const yes=el.dataset.organ===key;el.classList.toggle('is-selected',yes);el.setAttribute('aria-pressed',yes?'true':'false')});links.forEach(el=>el.classList.toggle('is-selected',el.dataset.link===key));nodes.forEach(el=>el.classList.toggle('is-selected',el.dataset.node===key));
+ const halo=$('focusHalo');halo.setAttribute('transform',`translate(${a.point[0]} ${a.point[1]})`);halo.classList.add('show');
+ $('organTitle').textContent=a.name;$('miniLabel').textContent='✦ NOW EXPLORING';$('count').textContent=`✧ ${a.order} / 4`;
+ $('translations').replaceChildren();for(const [label,value] of [['JP',a.jp],['中文',a.zh]]){const span=document.createElement('span');span.className='translation';const bold=document.createElement('strong');bold.textContent=label+'  ';span.append(bold,document.createTextNode(value));$('translations').append(span)}
+ $('description').textContent=a.description;$('tinyFact').textContent=a.fact;
+ infoBox.classList.remove('fresh');void infoBox.offsetWidth;infoBox.classList.add('fresh');
 }
-function onHand(res){let now=performance.now();let hand=res.multiHandLandmarks&&res.multiHandLandmarks[0];if(!hand){fingerEl.style.opacity='0';triggerSince=0;hoverTarget=null;if(opened&&now-openAt>OPEN_GRACE&&now-lastHand>NO_HAND_CLOSE&&handEverInside)closePortal();return}lastHand=now;
- let tip=projection(hand[8]),wrist=projection(hand[0]),mcp=projection(hand[5]),pinky=projection(hand[20]);fingerAt(tip.x,tip.y);
- let extended=Math.hypot(tip.x-wrist.x,tip.y-wrist.y)>Math.hypot(mcp.x-wrist.x,mcp.y-wrist.y)*1.19;
- let fist=Math.hypot(tip.x-wrist.x,tip.y-wrist.y)<Math.hypot(mcp.x-wrist.x,mcp.y-wrist.y)*1.15 && Math.hypot(pinky.x-wrist.x,pinky.y-wrist.y)<Math.hypot(mcp.x-wrist.x,mcp.y-wrist.y)*1.5;
- if(opened){handEverInside=true;if(now-openAt>OPEN_GRACE&&fist){closePortal();return}let bounds=document.querySelector('.portal-shell').getBoundingClientRect();let nearPanel=tip.x>bounds.left-60&&tip.x<bounds.right+60&&tip.y>bounds.top-60&&tip.y<bounds.bottom+60;if(nearPanel){awaySince=0}else if(now-openAt>OPEN_GRACE){if(!awaySince)awaySince=now;if(now-awaySince>1100){closePortal();return}}checkPortal(now,tip);return}
- let eyes=eyePosition(),distance=Infinity;if(eyes)for(let eye of eyes)distance=Math.min(distance,Math.hypot(eye.x-tip.x,eye.y-tip.y));
- let within=eyes&&extended&&distance<Math.max(48,Math.min(innerWidth*.15,72));
- if(!within){triggerSince=0;if(distance>115)armed=true;return}if(!armed)return;
- if(!triggerSince)triggerSince=now;if(now-triggerSince>MIN_EYE_HOLD)openPortal();
+function resetInfo(){selected=null;diagram.classList.remove('has-selection');$('focusHalo').classList.remove('show');parts.forEach(el=>el.classList.remove('is-selected'));tags.forEach(el=>{el.classList.remove('is-selected','is-hover');el.setAttribute('aria-pressed','false')});links.forEach(el=>el.classList.remove('is-selected'));nodes.forEach(el=>el.classList.remove('is-selected'));$('miniLabel').textContent='✦ YOUR MINI ANATOMY BOOK';$('count').textContent='✧ 0 / 4';$('organTitle').textContent='Pick a little label ♡';$('translations').innerHTML='<span class="translation">日本語 · 中文 · English</span>';$('description').textContent='Touch or point at a label to see where that part lives and what it does for your vision.';$('tinyFact').textContent='✿ The pink glow will show its exact place in the drawing.'}
+function openPortal(manualMode=false){if(opened)return;manuallyOpened=manualMode&&!running;opened=true;openAt=performance.now();awaySince=0;handSeenInPortal=!manualMode&&running&&performance.now()-lastHand<600;triggerSince=0;hoverTarget=null;resetInfo();portal.classList.add('open');portal.setAttribute('aria-hidden','false');manual.textContent='关闭任意门 ×';hint.innerHTML='<b>♡ DISCOVER LITTLE EYE SECRETS</b><br>手指停留在标签上，也可以直接点击';setStatus('PORTAL OPEN ✿');refreshEyeMarker()}
+function closePortal(){if(!opened)return;opened=false;armed=false;manuallyOpened=false;portal.classList.remove('open');portal.setAttribute('aria-hidden','true');manual.textContent='触屏打开 ♡';hint.innerHTML='<b>✧ POINT TO YOUR EYE</b><br>用食指指向眼睛，打开小小任意门';setStatus('READY TO EXPLORE ✧');hoverTarget=null;triggerSince=0;fingerEl.style.setProperty('--progress',0);refreshEyeMarker()}
+function showFinger(p){if(!smoothedTip)smoothedTip={...p};smoothedTip.x=smoothedTip.x*.42+p.x*.58;smoothedTip.y=smoothedTip.y*.42+p.y*.58;fingerEl.style.left=smoothedTip.x+'px';fingerEl.style.top=smoothedTip.y+'px';fingerEl.style.opacity='1'}
+function findTag(tip){let target=null,best=Infinity;for(const tag of tags){const r=tag.getBoundingClientRect();if(tip.x<r.left-10||tip.x>r.right+10||tip.y<r.top-11||tip.y>r.bottom+11)continue;const dist=Math.hypot(tip.x-(r.left+r.right)/2,tip.y-(r.top+r.bottom)/2);if(dist<best){best=dist;target=tag}}return target}
+function updateHover(now,tip){const hit=findTag(tip);if(hit!==hoverTarget){hoverTarget=hit;hoverSince=now;tags.forEach(t=>t.classList.toggle('is-hover',t===hit));fingerEl.style.setProperty('--progress',0)}else if(hit){const elapsed=now-hoverSince;const pct=Math.max(0,Math.min(100,elapsed/HOLD_LABEL*100));fingerEl.style.setProperty('--progress',pct);if(elapsed>=HOLD_LABEL&&selected!==hit.dataset.organ){selectOrgan(hit.dataset.organ);hoverSince=now-HOLD_LABEL} }else fingerEl.style.setProperty('--progress',0)}
+function onHand(result){const now=performance.now();const hand=result.multiHandLandmarks&&result.multiHandLandmarks[0];if(!hand){fingerEl.style.opacity='0';triggerSince=0;hoverTarget=null;tags.forEach(t=>t.classList.remove('is-hover'));if(opened&&!manuallyOpened&&handSeenInPortal&&now-openAt>GRACE&&now-lastHand>CLOSE_MISSING)closePortal();return}
+ lastHand=now;const tip=point(hand[8]),wrist=point(hand[0]),base=point(hand[5]),little=point(hand[20]);showFinger(tip);
+ const extended=Math.hypot(tip.x-wrist.x,tip.y-wrist.y)>Math.hypot(base.x-wrist.x,base.y-wrist.y)*1.19;
+ const fist=Math.hypot(tip.x-wrist.x,tip.y-wrist.y)<Math.hypot(base.x-wrist.x,base.y-wrist.y)*1.13&&Math.hypot(little.x-wrist.x,little.y-wrist.y)<Math.hypot(base.x-wrist.x,base.y-wrist.y)*1.5;
+ if(opened){handSeenInPortal=true;if(!manuallyOpened&&now-openAt>GRACE&&fist){closePortal();return}
+  if(!manuallyOpened&&now-openAt>GRACE){const r=document.querySelector('.portal-shell').getBoundingClientRect();const near=tip.x>=r.left-45&&tip.x<=r.right+45&&tip.y>=r.top-48&&tip.y<=r.bottom+48;if(near)awaySince=0;else {if(!awaySince)awaySince=now;if(now-awaySince>AWAY_HOLD){closePortal();return}}}updateHover(now,tip);return}
+ const eyes=getEyes();let distance=Infinity;for(const e of eyes)distance=Math.min(distance,Math.hypot(tip.x-e.x,tip.y-e.y));const within=eyes.length&&extended&&distance<Math.max(47,Math.min(innerWidth*.16,72));
+ if(!within){triggerSince=0;fingerEl.style.setProperty('--progress',0);if(distance>105)armed=true;return}if(!armed)return;if(!triggerSince)triggerSince=now;fingerEl.style.setProperty('--progress',Math.min(100,(now-triggerSince)/HOLD_EYE*100));if(now-triggerSince>HOLD_EYE)openPortal(false)
 }
-function onFace(res){let lm=res.multiFaceLandmarks&&res.multiFaceLandmarks[0];if(!lm){faceEyes=[];updateMarker();return}
- // Two eye centres from corner landmarks; centre with both corners and upper/lower eyelids.
- let pairs=[[33,133,159,145],[362,263,386,374]];
- faceEyes=pairs.map(ids=>{let pts=ids.map(i=>projection(lm[i]));return{x:pts.reduce((v,p)=>v+p.x,0)/pts.length,y:pts.reduce((v,p)=>v+p.y,0)/pts.length}});lastFace=performance.now();updateMarker()}
-async function analyze(){if(!running||analyzing)return;analyzing=true;try{if(video.readyState>=2){await hands.send({image:video});frameId++;if(frameId%2===0)await faceMesh.send({image:video})}}catch(e){console.warn('tracking error',e);setStatus('识别暂不可用 · 可触屏操作')}finally{analyzing=false;if(running)loopTimer=setTimeout(analyze,55)}}
-async function start(){if(running)return;$('error').textContent='';$('start').disabled=true;$('start').textContent='正在准备摄像头与模型…';
- try{
- if(!window.isSecureContext)throw Error('请通过 HTTPS 的 GitHub Pages 打开，不能直接使用普通 http 页面。');
- if(!navigator.mediaDevices?.getUserMedia)throw Error('当前浏览器不支持摄像头，请使用 iPhone Safari。');
- stream=await navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:'user',width:{ideal:640},height:{ideal:480},frameRate:{ideal:24,max:30}}});video.srcObject=stream;await video.play();resize();
- running=true;draw();$('splash').style.opacity='0';setTimeout(()=>$('splash').style.display='none',480);setStatus('摄像头启动 · LOADING');
- if(typeof Hands!=='function'||typeof FaceMesh!=='function')throw Error('手势识别模型没有加载成功。请检查网络，重新刷新网页；触屏模式仍可使用。');
+function onFace(result){const lm=result.multiFaceLandmarks&&result.multiFaceLandmarks[0];if(!lm){faceEyes=[];refreshEyeMarker();return}const eyes=[[33,133,159,145],[362,263,386,374]];faceEyes=eyes.map(ids=>{const p=ids.map(i=>point(lm[i]));return{x:p.reduce((a,v)=>a+v.x,0)/p.length,y:p.reduce((a,v)=>a+v.y,0)/p.length}});refreshEyeMarker()}
+async function analyze(){if(!running||analyzing||document.hidden)return;analyzing=true;try{if(video.readyState>=2&&hands&&faceMesh){await hands.send({image:video});frame++;if(frame%2===0)await faceMesh.send({image:video})}}catch(err){console.warn('Tracking error:',err);setStatus('TOUCH MODE AVAILABLE ♡')}finally{analyzing=false;if(running&&!document.hidden)timer=setTimeout(analyze,60)}}
+function hideSplash(){const el=$('splash');el.style.opacity='0';el.style.pointerEvents='none';setTimeout(()=>{el.style.display='none'},380)}
+async function start(){if(running)return;$('error').textContent='';$('start').disabled=true;$('start').textContent='Loading a little bit of magic…';try{
+ if(!window.isSecureContext)throw Error('Please open the HTTPS GitHub Pages URL.');
+ if(!navigator.mediaDevices?.getUserMedia)throw Error('Safari camera access is not supported in this context.');
+ stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:640},height:{ideal:480},frameRate:{ideal:24,max:30}},audio:false});video.srcObject=stream;await video.play();video.classList.add('live');running=true;hideSplash();setStatus('LOADING TRACKING ✦');
+ if(typeof Hands!=='function'||typeof FaceMesh!=='function')throw Error('Gesture libraries did not load. You can still tap the labels.');
  hands=new Hands({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/${f}`});hands.setOptions({maxNumHands:1,modelComplexity:0,minDetectionConfidence:.62,minTrackingConfidence:.56});hands.onResults(onHand);
  faceMesh=new FaceMesh({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4/${f}`});faceMesh.setOptions({maxNumFaces:1,refineLandmarks:false,minDetectionConfidence:.55,minTrackingConfidence:.55});faceMesh.onResults(onFace);
- setStatus('寻找面部与手势…');analyze();
- }catch(e){console.error(e);$('error').textContent=(e.name==='NotAllowedError'?'没有获得摄像头权限。请在 Safari 的网站设置里允许摄像头，再刷新页面。':e.name==='NotFoundError'?'未检测到可用的摄像头。':e.message||'无法启动。')+'\n也可以点「先体验触屏模式」进入演示。';$('start').disabled=false;$('start').textContent='重试摄像头 · RETRY';if(!running){setStatus('摄像头不可用');}else{setStatus('手势模型未就绪 · 触屏可用')} }
-}
-$('start').addEventListener('click',start);$('demo').addEventListener('click',()=>{$('splash').style.opacity='0';setTimeout(()=>$('splash').style.display='none',480);setStatus('触屏演示模式 · DEMO');openPortal()});$('manual').addEventListener('click',()=>opened?closePortal():openPortal());$('close').addEventListener('click',closePortal);document.querySelectorAll('.hotspot').forEach(el=>el.addEventListener('click',()=>selectOrgan(el.dataset.organ)));
-window.addEventListener('resize',resize);document.addEventListener('visibilitychange',()=>{if(document.hidden){clearTimeout(loopTimer)}else if(running&&!analyzing)analyze()});
-resize();
+ setStatus('POINT TO YOUR EYE ✧');analyze();
+ }catch(err){console.error(err);$('error').textContent=(err.name==='NotAllowedError'?'Camera permission denied. Enable Camera in Safari website settings and refresh.':err.name==='NotFoundError'?'No front camera was found.':(err.message||'Camera or tracking is unavailable.'))+'\nYou may use the touch demo instead.';$('start').disabled=false;$('start').textContent='Retry camera ✦';setStatus(running?'TOUCH MODE AVAILABLE ♡':'CAMERA NOT READY');if(running){const overlay=$('splash');overlay.style.display='none'}}}
+function enableDemo(){hideSplash();setStatus('TOUCH DEMO ♡');openPortal(true)}
+$('start').addEventListener('click',start);$('demo').addEventListener('click',enableDemo);manual.addEventListener('click',()=>opened?closePortal():openPortal(true));$('close').addEventListener('click',closePortal);
+for(const el of [...tags,...parts]){el.addEventListener('click',e=>{e.stopPropagation();selectOrgan(el.dataset.organ)});el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selectOrgan(el.dataset.organ)}})}
+document.addEventListener('visibilitychange',()=>{if(document.hidden){clearTimeout(timer);fingerEl.style.opacity='0'}else if(running&&!analyzing)analyze()});
 })();
 </script>
 </body>
