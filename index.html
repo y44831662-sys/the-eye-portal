@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#f8e6f2">
 <meta name="description" content="Yiyang’s Anatomyverse: a magical, gesture-controlled anatomy universe with English, Japanese and Chinese explanations.">
-<title>YIYANG’S ANATOMYVERSE ♡ · V3.4</title>
+<title>YIYANG’S ANATOMYVERSE ♡ · V3.5</title>
 <style>
 :root{--ink:#574967;--soft:#896f91;--berry:#c85c9f;--pink:#f7c7de;--lilac:#c9b6ef;--white:#fffafc;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans CJK JP",Arial,sans-serif;color:#fff;background:linear-gradient(145deg,#e5d3ee,#f5d7e6 50%,#cce9f4);-webkit-tap-highlight-color:transparent}button{font-family:inherit;cursor:pointer;touch-action:manipulation}button:focus-visible,[role=button]:focus-visible{outline:3px solid #d174b8;outline-offset:3px}
@@ -170,18 +170,33 @@
 @keyframes star-pulse{50%{opacity:.35;transform:scale(.78)}}
 @media(max-height:720px){.scanner-art{width:min(43vh,195px);height:min(43vh,195px);margin-bottom:15px}.splash-inner p{margin-bottom:15px}.splash-inner .sub{margin:7px 0 11px}.note{margin-top:10px}}
 @media(prefers-reduced-motion:reduce){.scanner-art *{animation:none!important}}
+
+/* V3.5: deliberate, one-level-at-a-time anatomy exploration */
+.depth-actions{display:flex;gap:8px;flex-wrap:wrap;margin:9px 0 3px}
+.depth-btn{border:1px solid #eacde9;border-radius:18px;padding:9px 13px;background:linear-gradient(125deg,#fce6f6,#ede6ff);color:#78568b;font-weight:700;font-size:12px;cursor:pointer;box-shadow:0 4px 14px #c8a3d02c}
+.depth-btn.secondary{background:#ffffffb8}
+.depth-btn[hidden],.depth-view[hidden]{display:none!important}
+.depth-view{position:absolute;inset:4px 8px 5px;z-index:4;border-radius:20px;background:linear-gradient(160deg,#fff9ffec,#f3e9ffef);display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 7px;overflow:hidden}
+.depth-crumb{font-size:10px;color:#89699d;letter-spacing:.045em;text-align:center;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+#depthArt{width:min(100%,340px);height:42%;flex-shrink:0;filter:drop-shadow(0 5px 9px #aa83c022)}
+.depth-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;width:100%;flex:1;min-height:0;align-content:center}
+.deep-choice{min-height:39px;display:flex;align-items:center;justify-content:space-between;text-align:left;gap:4px;padding:5px 9px;border:1px solid #e8c9eb;border-radius:13px;background:#ffffffda;color:#79518d;font-size:10px;cursor:pointer;line-height:1.3}
+.deep-choice strong{display:block;font-size:11px}.deep-choice small{display:block;font-size:9px;opacity:.8}
+.deep-choice.active,.deep-choice.is-hover{background:#f6d8f0;border-color:#cb88ca;box-shadow:0 0 0 2px #f6d4ed}
+.deep-choice .arrow{font-size:13px}
+@media(max-width:390px){.deep-choice{padding:4px 6px}.deep-choice strong{font-size:10px}.depth-view{inset:3px}}
 </style>
 </head>
 <body>
 <video id="camera" autoplay muted playsinline webkit-playsinline></video>
 <div id="atmo"></div><div id="sparkles" aria-hidden="true"><span class="spark">✦</span><span class="spark">✧</span><span class="spark">✧</span><span class="spark">✦</span></div>
-<div class="head"><div class="brand">YIYANG’S ANATOMYVERSE ♡<small>MAGIC MIRROR · V3.4</small></div><div class="status" id="status">READY TO EXPLORE ✧</div></div>
+<div class="head"><div class="brand">YIYANG’S ANATOMYVERSE ♡<small>MAGIC MIRROR · V3.5</small></div><div class="status" id="status">READY TO EXPLORE ✧</div></div>
 <div id="eyeMarker" aria-hidden="true"></div><div id="finger" aria-hidden="true"><div class="finger-ring"></div><div class="heart-orbit"><span>♡</span></div><div class="finger-center">✧</div></div>
 <main id="portal" aria-hidden="true"><section class="shell" id="shell" aria-label="Interactive human anatomy">
  <div class="top"><div><div class="eyebrow">✿ CHAPTER 01 · OCULAR ANATOMY</div><h2 class="title">Peek inside the eye <span class="heart">♡</span></h2></div><button class="close" type="button" id="close" aria-label="Close portal">×</button></div>
  <div class="sticker">✧ discover the little wonders of vision</div>
  <div class="pages" aria-label="Choose anatomy area"><button type="button" class="page active" data-page="front" data-hoverable="1">♡ FRONT · 5</button><button type="button" class="page" data-page="back" data-hoverable="1">✦ BACK · 5</button></div>
- <div class="visual" id="visual" aria-label="Flip your anatomy book"><div class="paper-corner" aria-hidden="true">✿</div><div class="orbit" aria-hidden="true"></div>
+ <div class="visual" id="visual" aria-label="Flip your anatomy book"><div class="paper-corner" aria-hidden="true">✿</div><div id="depthView" class="depth-view" hidden><div class="depth-crumb" id="depthCrumb"></div><svg id="depthArt" viewBox="0 0 360 160" aria-label="Magnified simplified anatomical schematic"></svg><div class="depth-choices" id="depthChoices"></div></div><div class="orbit" aria-hidden="true"></div>
   <svg id="diagram" class="diagram" viewBox="0 0 360 290" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="Simplified anatomy diagram; tap a label to highlight the anatomical location.">
    <defs>
     <radialGradient id="scleraG" cx="31%" cy="26%"><stop stop-color="#fff"/><stop offset=".57" stop-color="#eff8ff"/><stop offset="1" stop-color="#c9b4ea"/></radialGradient>
@@ -212,7 +227,7 @@
  <div class="translations" id="translations"><span class="translation">EN · 日本語 · 中文</span></div>
  <div class="langbar"><span class="lang-title">EXPLANATION</span><button type="button" class="lang active" data-lang="en" data-hoverable="1">EN</button><button type="button" class="lang" data-lang="ja" data-hoverable="1">日本語</button><button type="button" class="lang" data-lang="zh" data-hoverable="1">中文</button></div>
  <p class="description" id="description">Point to a label to explore anatomy. The matching structure will glow!</p>
- <p class="tiny" id="tinyFact">✿ Point and hold briefly, or just tap the screen.</p></div>
+ <div id="depthActions" class="depth-actions"><button type="button" id="exploreDeeper" class="depth-btn" hidden>Explore deeper ♡</button><button type="button" id="depthBack" class="depth-btn secondary" hidden>← Back one layer</button></div><p class="tiny" id="tinyFact">✿ Point and hold briefly, or just tap the screen.</p></div>
  <div class="footer"><b>✧ PAGE MAGIC</b> · touch FRONT / BACK · open palm to vanish</div>
  </section></main>
 <div class="bottom"><div class="hint" id="hint"><b>✦ POINT TO DISCOVER</b><br>指向身体的一处，发现隐藏的秘密 ♡</div><button type="button" class="manual" id="manual">触屏打开 ♡</button></div>
@@ -222,7 +237,7 @@
  <div class="scanner-orbit"><span>♡</span></div>
  <div class="scanner-core">✧</div>
  <i class="scanner-star star-a">✦</i><i class="scanner-star star-b">✧</i><i class="scanner-star star-c">✦</i>
- </div><h1>YIYANG’S ANATOMYVERSE</h1><div class="sub">✿ MAGIC MIRROR · V3.4 ✿</div><p>A universe beneath your skin.<br><span class="intro-whisper">Point to discover ♡</span></p><button type="button" class="mainbtn" id="start">开启摄像头 · OPEN THE MAGIC ✧</button><button type="button" class="mainbtn secondary" id="demo">先用触屏体验 · TRY DEMO</button><small class="note">需要 HTTPS（GitHub Pages）及摄像头授权。<br>摄像头视频在设备上处理，网页没有上传视频的功能。<br>解剖图为简化示意，并非按比例绘制。</small><div id="error" role="alert"></div></div></div>
+ </div><h1>YIYANG’S ANATOMYVERSE</h1><div class="sub">✿ MAGIC MIRROR · V3.5 ✿</div><p>A universe beneath your skin.<br><span class="intro-whisper">Point to discover ♡</span></p><button type="button" class="mainbtn" id="start">开启摄像头 · OPEN THE MAGIC ✧</button><button type="button" class="mainbtn secondary" id="demo">先用触屏体验 · TRY DEMO</button><small class="note">需要 HTTPS（GitHub Pages）及摄像头授权。<br>摄像头视频在设备上处理，网页没有上传视频的功能。<br>解剖图为简化示意，并非按比例绘制。</small><div id="error" role="alert"></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/hands.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4/face_mesh.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5/pose.js" crossorigin="anonymous"></script>
@@ -302,6 +317,7 @@ function buildDataset(which){
  return {anatomy:a,placements:pl,labelDest:ld,svg:art};
 }
 function changePortal(which){
+ exitDepth();
  if(!['eye','nose','mouth','chest'].includes(which))return;
  currentPortal=which;const data=buildDataset(which);
  anatomy=data.anatomy;placements=data.placements;labelDest=data.labelDest;
@@ -347,7 +363,7 @@ function clearHover(){
  if(hoverTarget){hoverTarget.classList.remove('is-hover');const bar=hoverTarget.querySelector?.('.dwell-bar');if(bar)bar.setAttribute('width','0')}
  hoverTarget=null;hoverCommitted=null;hoverSince=0;
 }
-function rebuildHoverables(){clearHover();hoverables=[...activeTags,...document.querySelectorAll('.page,.lang')]}
+function rebuildHoverables(){clearHover();hoverables=[...(depthPath.length?[]:activeTags),...document.querySelectorAll('.page,.lang'),...document.querySelectorAll('.deep-choice,.depth-btn:not([hidden])')]}
 function updateHighlights(){const all=diagram.querySelectorAll('.part');diagram.classList.toggle('has-selection',!!chosen);for(const el of all){el.classList.toggle('is-selected',el.dataset.organ===chosen);el.setAttribute('aria-pressed',el.dataset.organ===chosen?'true':'false')}
  for(const el of activeTags){const is=el.dataset.organ===chosen;el.classList.toggle('is-selected',is);el.setAttribute('aria-pressed',is?'true':'false')}
  for(const el of leaders.querySelectorAll('.connector'))el.classList.toggle('is-selected',el.dataset.link===chosen);
@@ -356,8 +372,8 @@ function translate(){const a=anatomy[chosen];if(!a){$('miniLabel').textContent='
  $('miniLabel').textContent='✦ NOW EXPLORING';$('count').textContent=`${a.order} / ${Object.keys(anatomy).length}`;$('organTitle').textContent=a.en;
  $('translations').replaceChildren();for(const [prefix,value] of [['JP',a.ja],['中文',a.zh]]){const e=document.createElement('span');e.className='translation';const b=document.createElement('strong');b.textContent=prefix+'  ';e.append(b,document.createTextNode(value));$('translations').append(e)}
  $('description').textContent=a.blurb[lang];$('tinyFact').textContent=a.fact[lang]}
-function select(key){if(!anatomy[key])return;chosen=key;updateHighlights();translate()}
-function setPage(next){if(!placements[next]||next===section)return;section=next;chosen=null;for(const b of document.querySelectorAll('.page')){const yes=b.dataset.page===next;b.classList.toggle('active',yes);b.setAttribute('aria-pressed',yes?'true':'false')}renderLabels();translate()}
+function select(key){if(!anatomy[key])return;chosen=key;updateHighlights();translate();syncDepthActions()}
+function setPage(next){if(!placements[next]||next===section)return;exitDepth();section=next;chosen=null;for(const b of document.querySelectorAll('.page')){const yes=b.dataset.page===next;b.classList.toggle('active',yes);b.setAttribute('aria-pressed',yes?'true':'false')}renderLabels();translate()}
 // Flip an illustrated paper leaf, swap its labels midway and keep buttons as a fallback.
 function flipBook(next){
  if(!placements[next]||next===section||bookFlipping||!opened)return false;
@@ -370,8 +386,8 @@ function flipBook(next){
  setStatus(next==='back'?'BACK PAGE ✦':'FRONT PAGE ♡');
  return true;
 }
-function setLang(next){if(!['en','ja','zh'].includes(next))return;lang=next;for(const b of document.querySelectorAll('.lang')){const yes=b.dataset.lang===next;b.classList.toggle('active',yes);b.setAttribute('aria-pressed',yes?'true':'false')}translate()}
-function reset(){chosen=null;setPage('front');updateHighlights();translate()}
+function setLang(next){if(!['en','ja','zh'].includes(next))return;lang=next;for(const b of document.querySelectorAll('.lang')){const yes=b.dataset.lang===next;b.classList.toggle('active',yes);b.setAttribute('aria-pressed',yes?'true':'false')}translate();if(depthPath.length){const old=deepSelected;renderDepth();if(old)chooseDeep(old)}else syncDepthActions()}
+function reset(){exitDepth();chosen=null;setPage('front');updateHighlights();translate()}
 function openPortal(manualMode=false,which=currentPortal){
  if(which!==currentPortal)changePortal(which);
  if(opened)return;
@@ -382,7 +398,7 @@ function openPortal(manualMode=false,which=currentPortal){
  setStatus('READING MODE ✿');marker.style.display='none';
 }
 function closePortal(){
- if(!opened)return;
+ if(!opened)return;exitDepth();
  opened=false;armed=false;rearmAt=performance.now()+380;retreatStartY=null;manuallyOpened=false;seenHand=false;exitSince=0;fistSince=0;palmSince=0;palmLastSeen=0;handHistory=[];fingerTarget=null;finger.style.opacity='0';
  portal.classList.remove('open','vanishing');portal.setAttribute('aria-hidden','true');palmClosing=false;palmProgress=0;document.documentElement.style.setProperty('--palm-progress','0%');
  manual.textContent='触屏打开 ♡';
@@ -428,7 +444,7 @@ function findHover(pt){
  let best=null,min=Infinity;
  for(const el of hoverables){
   const r=el.getBoundingClientRect();if(!r.width||!r.height)continue;
-  const extra=el.classList.contains('tag')?25:15;
+  const extra=el.classList.contains('tag')?25:el.classList.contains('deep-choice')?9:15;
   if(!inTarget(pt,el,extra))continue;
   const dist=Math.hypot(pt.x-(r.left+r.right)/2,pt.y-(r.top+r.bottom)/2);
   if(dist<min){min=dist;best=el}
@@ -444,7 +460,10 @@ function hover(now,pt){
  if(elapsed<HOLD_LABEL)return;
  // Latch per target: do not repeatedly mutate the DOM or flash while a finger remains still.
  hoverCommitted=hit;selectProtectionUntil=now+850;finger.style.setProperty('--progress','100');
- if(hit.dataset.organ){if(chosen!==hit.dataset.organ)select(hit.dataset.organ)}
+ if(hit.dataset.deepKey){chooseDeep(hit.dataset.deepKey)}
+ else if(hit.dataset.depthAction==='deeper')goDeeper();
+ else if(hit.dataset.depthAction==='back')goBackDepth();
+ else if(hit.dataset.organ){if(chosen!==hit.dataset.organ)select(hit.dataset.organ)}
  else if(hit.dataset.page)setPage(hit.dataset.page);
  else if(hit.dataset.lang)setLang(hit.dataset.lang);
 }
@@ -591,6 +610,55 @@ async function start(){if(running)return;const startButton=$('start');$('error')
  setStatus('POINT TO DISCOVER ✧');analyze();
  }catch(err){console.warn(err);$('error').textContent=(err.name==='NotAllowedError'?'Camera permission denied. Enable Camera in Safari website settings.':err.name==='NotFoundError'?'No camera found.':(err.message||'Camera unavailable.'))+'\nYou can try the touch demo instead.';startButton.disabled=false;startButton.textContent='Retry camera ✧';setStatus('TOUCH MODE AVAILABLE ♡');if(running)$('splash').style.display='none'}}
 function demo(){hideSplash();setStatus('TOUCH DEMO ♡');openPortal(true)}
+
+// A separate drill-down layer: original gesture thresholds, labels and Palm-to-Vanish are untouched.
+const depthTrees={
+ eye:{
+ cornea:{children:{epithelium:{en:'Epithelium',ja:'角膜上皮',zh:'角膜上皮',children:{surface:{en:'Superficial cells',ja:'表層細胞',zh:'表层细胞'},wing:{en:'Wing cells',ja:'翼細胞',zh:'翼状细胞'},basal:{en:'Basal cells',ja:'基底細胞',zh:'基底细胞'}}},bowman:{en:"Bowman's layer",ja:'ボーマン膜',zh:'前弹力层'},stroma:{en:'Stroma',ja:'実質',zh:'角膜基质',children:{lamellae:{en:'Collagen lamellae',ja:'コラーゲン層板',zh:'胶原板层'},keratocyte:{en:'Keratocytes',ja:'角膜実質細胞',zh:'角膜基质细胞'}}},descemet:{en:"Descemet's membrane",ja:'デスメ膜',zh:'后弹力层'},endothelium:{en:'Endothelium',ja:'角膜内皮',zh:'角膜内皮',children:{cells:{en:'Endothelial cells',ja:'角膜内皮細胞',zh:'角膜内皮细胞'},pump:{en:'Endothelial pump',ja:'内皮ポンプ機能',zh:'内皮泵功能'}}}}},
+ retina:{children:{rpe:{en:'Retinal pigment epithelium',ja:'網膜色素上皮',zh:'视网膜色素上皮'},photoreceptors:{en:'Photoreceptors',ja:'視細胞',zh:'感光细胞',children:{rods:{en:'Rods',ja:'杆体細胞',zh:'视杆细胞'},cones:{en:'Cones',ja:'錐体細胞',zh:'视锥细胞'}}},bipolar:{en:'Bipolar cells',ja:'双極細胞',zh:'双极细胞'},ganglion:{en:'Ganglion cell layer',ja:'神経節細胞層',zh:'神经节细胞层'},rnfl:{en:'Nerve fiber layer',ja:'神経線維層',zh:'神经纤维层'}}},
+ lens:{children:{capsule:{en:'Lens capsule',ja:'水晶体嚢',zh:'晶状体囊膜'},epithelium:{en:'Lens epithelium',ja:'水晶体上皮',zh:'晶状体上皮'},cortex:{en:'Lens cortex',ja:'水晶体皮質',zh:'晶状体皮质'},nucleus:{en:'Lens nucleus',ja:'水晶体核',zh:'晶状体核'}}},
+ iris:{children:{stroma:{en:'Iris stroma',ja:'虹彩実質',zh:'虹膜基质'},sphincter:{en:'Sphincter pupillae',ja:'瞳孔括約筋',zh:'瞳孔括约肌'},dilator:{en:'Dilator pupillae',ja:'瞳孔散大筋',zh:'瞳孔开大肌'},pigment:{en:'Pigment epithelium',ja:'色素上皮',zh:'色素上皮'}}},
+ ciliary:{children:{muscle:{en:'Ciliary muscle',ja:'毛様体筋',zh:'睫状肌'},process:{en:'Ciliary processes',ja:'毛様体突起',zh:'睫状突'},zonule:{en:'Zonular fibers',ja:'チン小帯',zh:'悬韧带'}}},
+ macula:{children:{fovea:{en:'Fovea',ja:'中心窩',zh:'中央凹'},parafovea:{en:'Parafovea',ja:'傍中心窩',zh:'旁中心凹'},photoreceptors:{en:'Cone-rich region',ja:'錐体密集領域',zh:'视锥密集区'}}},
+ sclera:{children:{episclera:{en:'Episclera',ja:'上強膜',zh:'巩膜表层'},stroma:{en:'Scleral stroma',ja:'強膜実質',zh:'巩膜基质'}}},
+ vitreous:{children:{cortex:{en:'Vitreous cortex',ja:'硝子体皮質',zh:'玻璃体皮质'},core:{en:'Vitreous core',ja:'硝子体中心部',zh:'玻璃体核心'}}},
+ optic:{children:{axons:{en:'Ganglion cell axons',ja:'神経節細胞軸索',zh:'神经节细胞轴突'},sheath:{en:'Optic nerve sheath',ja:'視神経鞘',zh:'视神经鞘'}}},
+ pupil:{children:{margin:{en:'Pupillary margin',ja:'瞳孔縁',zh:'瞳孔缘'},reflex:{en:'Pupillary light reflex',ja:'対光反射',zh:'瞳孔对光反射'}}}
+ },
+ nose:{nasal:{children:{vestibule:{en:'Nasal vestibule',ja:'鼻前庭',zh:'鼻前庭'},respiratory:{en:'Respiratory mucosa',ja:'呼吸部粘膜',zh:'呼吸区黏膜',children:{ciliated:{en:'Ciliated epithelium',ja:'線毛上皮',zh:'纤毛上皮'},goblet:{en:'Goblet cells',ja:'杯細胞',zh:'杯状细胞'}}},olfactory:{en:'Olfactory mucosa',ja:'嗅粘膜',zh:'嗅黏膜',children:{receptor:{en:'Olfactory receptor neurons',ja:'嗅細胞',zh:'嗅觉受体神经元'},support:{en:'Supporting cells',ja:'支持細胞',zh:'支持细胞'}}}}},septum:{children:{cartilage:{en:'Septal cartilage',ja:'鼻中隔軟骨',zh:'鼻中隔软骨'},vomer:{en:'Vomer',ja:'鋤骨',zh:'犁骨'},ethmoid:{en:'Ethmoid plate',ja:'篩骨垂直板',zh:'筛骨垂直板'}}},turbinates:{children:{superior:{en:'Superior turbinate',ja:'上鼻甲',zh:'上鼻甲'},middle:{en:'Middle turbinate',ja:'中鼻甲',zh:'中鼻甲'},inferior:{en:'Inferior turbinate',ja:'下鼻甲',zh:'下鼻甲'}}},sinuses:{children:{frontal:{en:'Frontal sinus',ja:'前頭洞',zh:'额窦'},maxillary:{en:'Maxillary sinus',ja:'上顎洞',zh:'上颌窦'},ethmoid:{en:'Ethmoid air cells',ja:'篩骨洞',zh:'筛窦'},sphenoid:{en:'Sphenoid sinus',ja:'蝶形骨洞',zh:'蝶窦'}}}},
+ mouth:{tongue:{children:{papillae:{en:'Lingual papillae',ja:'舌乳頭',zh:'舌乳头',children:{fungiform:{en:'Fungiform',ja:'茸状乳頭',zh:'菌状乳头'},filiform:{en:'Filiform',ja:'糸状乳頭',zh:'丝状乳头'},vallate:{en:'Circumvallate',ja:'有郭乳頭',zh:'轮廓乳头'},foliate:{en:'Foliate',ja:'葉状乳頭',zh:'叶状乳头'}}},muscles:{en:'Tongue muscles',ja:'舌筋',zh:'舌肌',children:{intrinsic:{en:'Intrinsic muscles',ja:'内舌筋',zh:'舌内肌'},extrinsic:{en:'Extrinsic muscles',ja:'外舌筋',zh:'舌外肌'}}}}},teeth:{children:{enamel:{en:'Enamel',ja:'エナメル質',zh:'牙釉质'},dentin:{en:'Dentin',ja:'象牙質',zh:'牙本质'},pulp:{en:'Dental pulp',ja:'歯髄',zh:'牙髓'},cementum:{en:'Cementum',ja:'セメント質',zh:'牙骨质'}}},salivary:{children:{parotid:{en:'Parotid gland',ja:'耳下腺',zh:'腮腺'},submandibular:{en:'Submandibular gland',ja:'顎下腺',zh:'下颌下腺'},sublingual:{en:'Sublingual gland',ja:'舌下腺',zh:'舌下腺'}}},palate:{children:{hard:{en:'Hard palate',ja:'硬口蓋',zh:'硬腭'},soft:{en:'Soft palate',ja:'軟口蓋',zh:'软腭'},uvula:{en:'Uvula',ja:'口蓋垂',zh:'悬雍垂'}}}},
+ chest:{heart:{children:{chambers:{en:'Heart chambers',ja:'心腔',zh:'心腔',children:{ra:{en:'Right atrium',ja:'右心房',zh:'右心房'},rv:{en:'Right ventricle',ja:'右心室',zh:'右心室'},la:{en:'Left atrium',ja:'左心房',zh:'左心房'},lv:{en:'Left ventricle',ja:'左心室',zh:'左心室'}}},wall:{en:'Heart wall',ja:'心壁',zh:'心壁',children:{endo:{en:'Endocardium',ja:'心内膜',zh:'心内膜'},myo:{en:'Myocardium',ja:'心筋層',zh:'心肌层'},epi:{en:'Epicardium',ja:'心外膜',zh:'心外膜'}}},valves:{en:'Heart valves',ja:'心臓弁',zh:'心脏瓣膜',children:{mitral:{en:'Mitral valve',ja:'僧帽弁',zh:'二尖瓣'},tricuspid:{en:'Tricuspid valve',ja:'三尖弁',zh:'三尖瓣'},aortic:{en:'Aortic valve',ja:'大動脈弁',zh:'主动脉瓣'},pulmonary:{en:'Pulmonary valve',ja:'肺動脈弁',zh:'肺动脉瓣'}}}}},lungs:{children:{lobes:{en:'Lung lobes',ja:'肺葉',zh:'肺叶'},bronchi:{en:'Bronchial tree',ja:'気管支樹',zh:'支气管树',children:{bronchioles:{en:'Bronchioles',ja:'細気管支',zh:'细支气管'},alveoli:{en:'Alveoli',ja:'肺胞',zh:'肺泡',children:{type1:{en:'Type I pneumocytes',ja:'I型肺胞上皮細胞',zh:'I型肺泡上皮细胞'},type2:{en:'Type II pneumocytes',ja:'II型肺胞上皮細胞',zh:'II型肺泡上皮细胞'}}}}},pleura:{en:'Pleura',ja:'胸膜',zh:'胸膜'}}},trachea:{children:{cartilage:{en:'Cartilage rings',ja:'気管軟骨',zh:'气管软骨环'},mucosa:{en:'Tracheal mucosa',ja:'気管粘膜',zh:'气管黏膜'}}},diaphragm:{children:{muscle:{en:'Diaphragm muscle',ja:'横隔膜筋',zh:'膈肌肌纤维'},tendon:{en:'Central tendon',ja:'腱中心',zh:'中心腱'}}},aorta:{children:{intima:{en:'Tunica intima',ja:'内膜',zh:'内膜'},media:{en:'Tunica media',ja:'中膜',zh:'中膜'},adventitia:{en:'Tunica adventitia',ja:'外膜',zh:'外膜'}}}}
+};
+// Match the existing V3.4 top-level structure identifiers.
+depthTrees.nose.turbinate=depthTrees.nose.turbinates;delete depthTrees.nose.turbinates;
+depthTrees.nose.sinus=depthTrees.nose.sinuses;delete depthTrees.nose.sinuses;
+depthTrees.mouth.hardpalate=depthTrees.mouth.palate;delete depthTrees.mouth.palate;
+depthTrees.mouth.softpalate={children:{uvula:{en:'Uvula',ja:'口蓋垂',zh:'悬雍垂'},muscle:{en:'Soft palate muscles',ja:'軟口蓋筋',zh:'软腭肌'}}};
+// The lacrimal apparatus is accessed from the eye's ciliary/ocular surface exploration as a separate branch.
+depthTrees.eye.cornea.children.tears={en:'Tear film & lacrimal system',ja:'涙液・涙器',zh:'泪膜与泪器',children:{tearfilm:{en:'Tear film',ja:'涙液層',zh:'泪膜',children:{lipid:{en:'Lipid layer',ja:'脂質層',zh:'脂质层'},aqueous:{en:'Aqueous component',ja:'水層',zh:'水液成分'},mucin:{en:'Mucin component',ja:'ムチン成分',zh:'黏蛋白成分'}}},gland:{en:'Lacrimal gland',ja:'涙腺',zh:'泪腺',children:{orbital:{en:'Orbital lobe',ja:'眼窩部',zh:'眶部'},palpebral:{en:'Palpebral lobe',ja:'眼瞼部',zh:'睑部'}}},drainage:{en:'Lacrimal drainage',ja:'涙道',zh:'泪液引流系统',children:{puncta:{en:'Lacrimal puncta',ja:'涙点',zh:'泪点'},canaliculi:{en:'Canaliculi',ja:'涙小管',zh:'泪小管'},sac:{en:'Lacrimal sac',ja:'涙嚢',zh:'泪囊'},duct:{en:'Nasolacrimal duct',ja:'鼻涙管',zh:'鼻泪管'}}}}};
+let depthPath=[],deepSelected=null;
+const depthView=$('depthView'),depthArt=$('depthArt'),depthChoices=$('depthChoices'),depthCrumb=$('depthCrumb'),depthExplore=$('exploreDeeper'),depthBack=$('depthBack');
+depthExplore.dataset.depthAction='deeper';depthBack.dataset.depthAction='back';
+function depthNode(){let node={children:depthTrees[currentPortal]||{}};for(const k of depthPath){node=node.children?.[k];if(!node)return null}return node}
+function syncDepthActions(){const node=depthNode();const key=depthPath.length?deepSelected:chosen;const child=depthPath.length?node?.children?.[key]:depthTrees[currentPortal]?.[key];depthExplore.hidden=!child?.children;depthBack.hidden=!depthPath.length;depthExplore.textContent=lang==='zh'?'深入探索 ↗':lang==='ja'?'さらに探検 ↗':'Explore deeper ↗';depthBack.textContent=lang==='zh'?'← 返回上一层':lang==='ja'?'← 前の階層へ':'← Back one layer';rebuildHoverables()}
+function drawDepthArt(){
+ const node=depthNode(),names=Object.entries(node?.children||{});let shapes='';
+ // Every level changes to a focused, magnified diagram. Schematic, not histology or to scale.
+ const isLayers=depthPath.includes('cornea')||depthPath.includes('retina')||depthPath.includes('wall')||depthPath.includes('teeth');
+ if(isLayers){const h=Math.min(25,116/Math.max(names.length,1));names.forEach(([k,v],i)=>{const y=18+i*h;shapes+=`<rect data-detail-index="${i}" x="56" y="${y}" width="248" height="${h-2}" rx="6" fill="${['#f8d5e9','#e9d9f6','#ccecf3','#dfc6ee','#f6e6b8'][i%5]}" stroke="#c9a6d6"/><text x="180" y="${y+h*.68}" font-size="10" fill="#745481" text-anchor="middle">${v.en.replace(/&/g,'&amp;')}</text>`})}
+ else{names.forEach(([k,v],i)=>{const n=names.length,angle=2*Math.PI*i/n-Math.PI/2,x=180+Math.cos(angle)*92,y=80+Math.sin(angle)*46;shapes+=`<path d="M180 80 L${x} ${y}" stroke="#c9a4d9" stroke-width="3"/><ellipse data-detail-index="${i}" cx="${x}" cy="${y}" rx="${Math.min(41,120/n+19)}" ry="19" fill="${['#f4cbe4','#d6d4f6','#c5eaf0','#efd5ef'][i%4]}" stroke="#b89acb" stroke-width="2"/><text x="${x}" y="${y+3}" font-size="10" fill="#775787" text-anchor="middle">${i+1}</text>`})}
+ depthArt.innerHTML=`<defs><radialGradient id="depthGlow"><stop stop-color="#fff"/><stop offset="1" stop-color="#edd9f6"/></radialGradient></defs><ellipse cx="180" cy="80" rx="152" ry="70" fill="url(#depthGlow)" opacity=".8"/>${shapes}`;
+}
+function renderDepth(){const node=depthNode();if(!node||!depthPath.length){exitDepth();return}depthView.hidden=false;diagram.style.visibility='hidden';depthCrumb.textContent=depthPath.map((k,i)=>{let n={children:depthTrees[currentPortal]};for(const step of depthPath.slice(0,i+1))n=n.children[step];return n?.en||anatomy[k]?.en||k}).join('  ›  ');depthChoices.replaceChildren();deepSelected=null;
+ for(const [k,v] of Object.entries(node.children||{})){const b=document.createElement('button');b.type='button';b.className='deep-choice';b.dataset.deepKey=k;b.innerHTML=`<span><strong></strong><small></small></span><span class="arrow">${v.children?'↗':'♡'}</span>`;b.querySelector('strong').textContent=v.en;b.querySelector('small').textContent=v.ja+' · '+v.zh;b.addEventListener('click',()=>chooseDeep(k));depthChoices.append(b)}
+ drawDepthArt();$('miniLabel').textContent='✦ ANATOMY ZOOM · LEVEL '+(depthPath.length+1);$('organTitle').textContent=node.en||anatomy[depthPath[0]]?.en||'Anatomy zoom';$('translations').textContent=(node.ja||'')+' · '+(node.zh||'');$('description').textContent=lang==='zh'?'这是局部放大的简化解剖示意图。选择一个结构，高亮并查看名称；点击「深入探索」才会进入下一层。':lang==='ja'?'局所を拡大した模式図です。構造を選択してから「さらに探検」で次の階層に進みます。':'A magnified schematic of this region. Select a structure, then choose Explore deeper to enter the next layer.';$('tinyFact').textContent='✿ Simplified anatomy illustration · not to scale';syncDepthActions();}
+function chooseDeep(key){const node=depthNode()?.children?.[key];if(!node)return;deepSelected=key;const ix=Object.keys(depthNode()?.children||{}).indexOf(key);depthArt.querySelectorAll('[data-detail-index]').forEach(e=>{e.setAttribute('stroke',Number(e.dataset.detailIndex)===ix?'#ed4f9d':'#b89acb');e.setAttribute('stroke-width',Number(e.dataset.detailIndex)===ix?'5':'2')});depthChoices.querySelectorAll('.deep-choice').forEach(b=>b.classList.toggle('active',b.dataset.deepKey===key));$('organTitle').textContent=node.en;$('translations').textContent=node.ja+' · '+node.zh;$('description').textContent=lang==='zh'?`${node.zh}：当前选中的解剖结构。${node.children?'可继续深入探索其内部组成。':'已到达本分支的最深层。'}`:lang==='ja'?`${node.ja}：選択した解剖構造です。${node.children?'さらに細かい構造へ進めます。':'この枝の最深層です。'}`:`${node.en}: selected anatomical structure. ${node.children?'Explore deeper to see its components.':'This is the deepest level in this branch.'}`;syncDepthActions()}
+function goDeeper(){const key=depthPath.length?deepSelected:chosen;const node=depthPath.length?depthNode()?.children?.[key]:depthTrees[currentPortal]?.[key];if(!node?.children)return;depthPath.push(key);renderDepth();selectProtectionUntil=performance.now()+1000}
+function goBackDepth(){if(!depthPath.length)return;depthPath.pop();if(depthPath.length)renderDepth();else exitDepth();selectProtectionUntil=performance.now()+1000}
+function exitDepth(){depthPath=[];deepSelected=null;depthView.hidden=true;diagram.style.visibility='visible';if(typeof chosen!=='undefined'&&typeof anatomy!=='undefined')translate();syncDepthActions()}
+depthExplore.addEventListener('click',goDeeper);depthBack.addEventListener('click',goBackDepth);
+
+
 for(const b of document.querySelectorAll('.page'))b.addEventListener('click',()=>opened?flipBook(b.dataset.page):setPage(b.dataset.page));
 for(const b of document.querySelectorAll('.lang'))b.addEventListener('click',()=>setLang(b.dataset.lang));
 bindParts();
@@ -602,7 +670,7 @@ watchdog=setInterval(()=>{
  // No watchdog auto-close: keep portal open until user taps × or bottom close button.
 },120);
 document.addEventListener('visibilitychange',()=>{if(document.hidden){clearTimeout(analysisTimer);clearHover();moveFinger(null,false)}else if(running&&!busy)analyze()});
-renderLabels();translate();
+renderLabels();translate();syncDepthActions();
 })();
 </script>
 </body>
