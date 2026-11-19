@@ -61,7 +61,7 @@
 #part-macula.is-selected .organ-core{fill:#f02f92;stroke:#fff;stroke-width:3;filter:drop-shadow(0 0 8px #f93c99)}
 .page{min-height:39px;font-size:12px;touch-action:manipulation}
 
-/* V1.8: more room for readable text, without covering the whole camera. */
+/* V1.9: more room for readable text, without covering the whole camera. */
 #portal .shell{min-height:0;max-height:100%;height:min(710px,100%)}
 #portal .visual{height:clamp(155px,24dvh,225px);flex-shrink:1;min-height:140px}
 #portal .info{min-height:155px;flex:1 1 220px;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y}
@@ -73,6 +73,41 @@
  #portal .sticker{display:none}
  #portal .pages{margin-top:5px}
  #portal .title{font-size:21px}
+}
+
+/* V1.9: anatomy-first compact floating atlas */
+#portal{padding:calc(var(--safe-top) + 66px) 14px calc(var(--safe-bottom) + 90px)}
+#portal .shell{
+ height:auto!important;max-height:min(73dvh,620px)!important;
+ width:min(100%,405px);padding:10px 11px 11px;
+ background:linear-gradient(150deg,#fff7fbb4,#f6e9f5a2 60%,#e3f2f9a9);
+}
+#portal .top{min-height:29px}
+#portal .title{font-size:20px;margin:1px 0}
+#portal .eyebrow{font-size:8px}
+#portal .sticker{display:none}
+#portal .pages{margin:5px auto 4px;min-height:33px;padding:2px}
+#portal .page{min-height:30px;font-size:11px}
+#portal .visual{height:clamp(205px,32dvh,300px)!important;min-height:205px!important;flex:0 0 auto}
+#portal .info{
+ flex:0 1 auto!important;min-height:0!important;
+ max-height:clamp(122px,21dvh,180px)!important;
+ padding:8px 10px;overflow-y:auto;
+ background:#fffafad2;
+}
+#portal .info-head{display:none}
+#portal .organ-title{font-size:19px;margin:0 0 3px}
+#portal .translations{gap:3px}
+#portal .translation{font-size:9px;padding:2px 6px}
+#portal .langbar{margin:4px 0;gap:4px}
+#portal .lang{min-height:27px;padding:3px 9px}
+#portal .description{font-size:11.5px;line-height:1.42}
+#portal .tiny{font-size:9.5px;margin:4px 0 0}
+#portal .footer{display:none}
+@media(max-height:700px){
+ #portal .shell{max-height:75dvh!important}
+ #portal .visual{height:clamp(185px,30dvh,235px)!important;min-height:185px!important}
+ #portal .info{max-height:clamp(112px,19dvh,150px)!important}
 }
 </style>
 </head>
@@ -204,7 +239,7 @@ function openPortal(manualMode=false){
  manuallyOpened=manualMode;opened=true;retreatStartY=null;openAt=performance.now();seenHand=!manualMode&&performance.now()-lastHand<700;handHistory=[];lastFlip=-5000;
  exitSince=0;fistSince=0;eyeSince=0;lastEyeNear=0;clearHover();reset();
  portal.classList.add('open');portal.setAttribute('aria-hidden','false');manual.textContent='关闭任意门 ×';
- hint.innerHTML='<b>♡ LITTLE ANATOMY BOOK</b><br>轻点 FRONT / BACK 翻页 · 握拳关闭';
+ hint.innerHTML='<b>♡ LITTLE ANATOMY BOOK</b><br>轻点 FRONT / BACK 翻页 · 握拳关闭（或点 ×）';
  setStatus('PORTAL OPEN ✿');marker.style.display='none';
 }
 function closePortal(){
@@ -305,15 +340,19 @@ function onHand(r){
   if(bookFlipping){return}
   if(now-openAt<=GRACE){if(!openPalm)hover(now,pt);return}
   // Close only after a deliberate sustained fist; ignore brief tracking loss.
-  const curlPairs=[[8,6,5],[12,10,9],[16,14,13],[20,18,17]];
-  const curled=curlPairs.filter(([t,p,m]) =>
-    d(t,m)<d(p,m)*1.65 && d(t,0)<d(p,0)*1.14
+  // Compare fingertips to palm center, not to individual PIP joints.
+  // This tolerates sideways and slightly tilted fists in a selfie camera.
+  const palmCenter={x:(hand[0].x+hand[5].x+hand[9].x+hand[13].x+hand[17].x)/5,
+                    y:(hand[0].y+hand[5].y+hand[9].y+hand[13].y+hand[17].y)/5};
+  const palmSpan=Math.max(.001,d(0,9));
+  const curled=[8,12,16,20].filter(i =>
+    Math.hypot(hand[i].x-palmCenter.x,hand[i].y-palmCenter.y)<palmSpan*1.14
   ).length;
-  const closedFist=curled===4 && countExtended<=1;
+  const closedFist=curled>=3 && countExtended<=1;
   if(closedFist){
     if(!fistSince)fistSince=now;
-    const progress=Math.min(1,(now-fistSince)/520);
-    setStatus('HOLD FIST TO CLOSE '+Math.round(progress*100)+'% ✊');
+    const progress=Math.min(1,(now-fistSince)/420);
+    setStatus('FIST TO CLOSE '+Math.round(progress*100)+'% ✊');
     clearHover();
     finger.style.setProperty('--progress',String(progress*100));
     if(progress>=1){closePortal();return;}
