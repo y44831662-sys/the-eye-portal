@@ -190,7 +190,7 @@ function openPortal(manualMode=false){
  manuallyOpened=manualMode;opened=true;retreatStartY=null;openAt=performance.now();seenHand=!manualMode&&performance.now()-lastHand<700;handHistory=[];lastFlip=-5000;
  exitSince=0;fistSince=0;eyeSince=0;lastEyeNear=0;clearHover();reset();
  portal.classList.add('open');portal.setAttribute('aria-hidden','false');manual.textContent='关闭任意门 ×';
- hint.innerHTML='<b>♡ WAVE TO FLIP THE BOOK</b><br>轻点 FRONT / BACK 翻页 · 收手关闭';
+ hint.innerHTML='<b>♡ WAVE TO FLIP THE BOOK</b><br>轻点 FRONT / BACK 翻页 · 点击 × 关闭';
  setStatus('PORTAL OPEN ✿');marker.style.display='none';
 }
 function closePortal(){
@@ -266,7 +266,7 @@ function onHand(r){
   eyeSince=0;clearHover();smoothed=null;fistSince=0;exitSince=0;handHistory=[];
   moveFinger(null,false);
   if(!opened&&faceEyes.length&&now-openAt>2500)setStatus('SHOW YOUR HAND ✧');
-  if(opened&&!manuallyOpened&&now-openAt>GRACE&&now-lastHand>CLOSE_MISSING)closePortal();
+  // Keep the book open during brief tracking loss.
   return;
  }
  lastHand=now;
@@ -290,13 +290,8 @@ function onHand(r){
   moveFinger(pt,!openPalm);
   if(bookFlipping){return}
   if(now-openAt<=GRACE){if(!openPalm)hover(now,pt);return}
-  if(fist){if(!fistSince)fistSince=now;if(now-fistSince>=FIST_HOLD){closePortal();return}}
-  else fistSince=0;
-  // Lower/retract hand to close; sideways palm movement never triggers this pathway.
-  const leavingLow=(wrist.y>innerHeight*.77&&tip.y>innerHeight*.81)||(wrist.y>innerHeight*.84);
-  const retreat=(leavingLow || (wrist.y-retreatStartY>Math.max(60,innerHeight*.095)))&&!bookFlipping;
-  if(retreat){if(!exitSince)exitSince=now;if(now-exitSince>=EXIT_HOLD){closePortal();return}}
-  else {exitSince=0;if(wrist.y<retreatStartY)retreatStartY=wrist.y;}
+  // V1.7: No automatic closing while reading or changing explanation language.
+  // False fist, retreat and tracking-loss events previously closed the book.
   if(!openPalm)hover(now,pt);else {clearHover();finger.style.setProperty('--progress','0')}
   return;
  }
@@ -347,7 +342,7 @@ document.addEventListener('pointerup',e=>{
 $('start').addEventListener('click',start);$('demo').addEventListener('click',demo);manual.addEventListener('click',()=>opened?closePortal():openPortal(true));$('close').addEventListener('click',closePortal);
 // Independent safety check: even if inference stalls when a hand exits, the door closes.
 watchdog=setInterval(()=>{
- if(!document.hidden&&opened&&!manuallyOpened&&performance.now()-openAt>GRACE&&performance.now()-lastHand>CLOSE_MISSING+120)closePortal();
+ // No watchdog auto-close: keep portal open until user taps × or bottom close button.
 },120);
 document.addEventListener('visibilitychange',()=>{if(document.hidden){clearTimeout(analysisTimer);clearHover();moveFinger(null,false)}else if(running&&!busy)analyze()});
 renderLabels();translate();
