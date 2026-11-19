@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#f8e6f2">
-<meta name="description" content="The Eye Portal: A pastel, gesture-controlled interactive anatomy with English, Japanese and Chinese explanations.">
-<title>THE HUMAN PORTAL · Magic Mirror × Anatomy Scanner V3.2</title>
+<meta name="description" content="Yiyang’s Anatomyverse: a magical, gesture-controlled anatomy universe with English, Japanese and Chinese explanations.">
+<title>YIYANG’S ANATOMYVERSE ♡ · V3.3</title>
 <style>
 :root{--ink:#574967;--soft:#896f91;--berry:#c85c9f;--pink:#f7c7de;--lilac:#c9b6ef;--white:#fffafc;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans CJK JP",Arial,sans-serif;color:#fff;background:linear-gradient(145deg,#e5d3ee,#f5d7e6 50%,#cce9f4);-webkit-tap-highlight-color:transparent}button{font-family:inherit;cursor:pointer;touch-action:manipulation}button:focus-visible,[role=button]:focus-visible{outline:3px solid #d174b8;outline-offset:3px}
@@ -175,7 +175,7 @@
 <body>
 <video id="camera" autoplay muted playsinline webkit-playsinline></video>
 <div id="atmo"></div><div id="sparkles" aria-hidden="true"><span class="spark">✦</span><span class="spark">✧</span><span class="spark">✧</span><span class="spark">✦</span></div>
-<div class="head"><div class="brand">THE HUMAN PORTAL ♡<small>MAGIC MIRROR · V3.2</small></div><div class="status" id="status">READY TO EXPLORE ✧</div></div>
+<div class="head"><div class="brand">YIYANG’S ANATOMYVERSE ♡<small>MAGIC MIRROR · V3.3</small></div><div class="status" id="status">READY TO EXPLORE ✧</div></div>
 <div id="eyeMarker" aria-hidden="true"></div><div id="finger" aria-hidden="true"><div class="finger-ring"></div><div class="heart-orbit"><span>♡</span></div><div class="finger-center">✧</div></div>
 <main id="portal" aria-hidden="true"><section class="shell" id="shell" aria-label="Interactive human anatomy">
  <div class="top"><div><div class="eyebrow">✿ CHAPTER 01 · OCULAR ANATOMY</div><h2 class="title">Peek inside the eye <span class="heart">♡</span></h2></div><button class="close" type="button" id="close" aria-label="Close portal">×</button></div>
@@ -222,7 +222,7 @@
  <div class="scanner-orbit"><span>♡</span></div>
  <div class="scanner-core">✧</div>
  <i class="scanner-star star-a">✦</i><i class="scanner-star star-b">✧</i><i class="scanner-star star-c">✦</i>
- </div><h1>THE HUMAN PORTAL</h1><div class="sub">✿ MAGIC MIRROR · V3.2 ✿</div><p>A universe beneath your skin.<br><span class="intro-whisper">Point to discover ♡</span></p><button type="button" class="mainbtn" id="start">开启摄像头 · OPEN THE MAGIC ✧</button><button type="button" class="mainbtn secondary" id="demo">先用触屏体验 · TRY DEMO</button><small class="note">需要 HTTPS（GitHub Pages）及摄像头授权。<br>摄像头视频在设备上处理，网页没有上传视频的功能。<br>解剖图为简化示意，并非按比例绘制。</small><div id="error" role="alert"></div></div></div>
+ </div><h1>YIYANG’S ANATOMYVERSE</h1><div class="sub">✿ MAGIC MIRROR · V3.3 ✿</div><p>A universe beneath your skin.<br><span class="intro-whisper">Point to discover ♡</span></p><button type="button" class="mainbtn" id="start">开启摄像头 · OPEN THE MAGIC ✧</button><button type="button" class="mainbtn secondary" id="demo">先用触屏体验 · TRY DEMO</button><small class="note">需要 HTTPS（GitHub Pages）及摄像头授权。<br>摄像头视频在设备上处理，网页没有上传视频的功能。<br>解剖图为简化示意，并非按比例绘制。</small><div id="error" role="alert"></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/hands.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4/face_mesh.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5/pose.js" crossorigin="anonymous"></script>
@@ -325,7 +325,7 @@ let palmSince=0,palmLastSeen=0,palmClosing=false,palmProgress=0,selectProtection
 let rearmAt=0,bookFlipping=false,flipTimer=0,lastFlip=-5000,handHistory=[],fingerTarget=null,fingerDraw=null,hadCursor=false,retreatStartY=null;
 // Milliseconds; grace prevents the opening hand from immediately triggering closure.
 // Dwell is deliberately short; palm-swipe and close have their own stronger safeguards.
-const HOLD_EYE=365,HOLD_LABEL=400,CLOSE_MISSING=480,EXIT_HOLD=270,FIST_HOLD=360,GRACE=750;
+const HOLD_EYE=265,HOLD_LABEL=400,CLOSE_MISSING=480,EXIT_HOLD=270,FIST_HOLD=360,GRACE=750;
 const capture=document.createElement('canvas'),ctx=capture.getContext('2d',{alpha:false,willReadFrequently:false});capture.width=384;capture.height=288;
 const setStatus=s=>{if(status.textContent!==s)status.textContent=s};
 const makeSvg=(tag,attrs={})=>{const el=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))el.setAttribute(k,v);return el};
@@ -383,7 +383,7 @@ function openPortal(manualMode=false,which=currentPortal){
 }
 function closePortal(){
  if(!opened)return;
- opened=false;armed=false;rearmAt=performance.now()+320;retreatStartY=null;manuallyOpened=false;seenHand=false;exitSince=0;fistSince=0;palmSince=0;palmLastSeen=0;handHistory=[];fingerTarget=null;finger.style.opacity='0';
+ opened=false;armed=false;rearmAt=performance.now()+380;retreatStartY=null;manuallyOpened=false;seenHand=false;exitSince=0;fistSince=0;palmSince=0;palmLastSeen=0;handHistory=[];fingerTarget=null;finger.style.opacity='0';
  portal.classList.remove('open','vanishing');portal.setAttribute('aria-hidden','true');palmClosing=false;palmProgress=0;document.documentElement.style.setProperty('--palm-progress','0%');
  manual.textContent='触屏打开 ♡';
  hint.innerHTML='<b>✦ POINT TO DISCOVER</b><br>伸出食指，指向身体的一处，看看会发生什么 ♡';
@@ -451,7 +451,7 @@ function hover(now,pt){
 function onHand(r){
  const now=performance.now(),hand=r.multiHandLandmarks?.[0];
  if(!hand){
-  if(now-openingLastSeen>180){eyeSince=0;openingTarget=null}clearHover();smoothed=null;fistSince=0;palmSince=0;palmLastSeen=0;exitSince=0;handHistory=[];
+  if(now-openingLastSeen>320){eyeSince=0;openingTarget=null}clearHover();smoothed=null;fistSince=0;palmSince=0;palmLastSeen=0;exitSince=0;handHistory=[];
   moveFinger(null,false);
   if(!opened&&faceEyes.length&&now-openAt>2500)setStatus('SHOW YOUR HAND ✧');
   // Keep the book open during brief tracking loss.
@@ -526,11 +526,15 @@ function onHand(r){
  ...(faceNose?[{p:faceNose,kind:'nose',r:Math.max(52,innerWidth*.14)}]:[]),
  ...(faceMouth?[{p:faceMouth,kind:'mouth',r:Math.max(55,innerWidth*.145)}]:[]),
  ...(bodyChest?[{p:bodyChest,kind:'chest',r:Math.max(78,innerWidth*.22)}]:[])];
- const pointing=isExtended[0] && countExtended<=2 && d(8,0)>d(5,0)*1.30;
+ // Opening: a clearly leading index finger is enough. Other fingers may be
+ // misclassified in low light, so do not reject an otherwise valid pointer.
+ // An open palm is excluded to preserve the closing gesture's meaning.
+ const indexLead=d(8,0)>d(5,0)*1.13 && d(8,5)>d(6,5)*1.13;
+ const pointing=indexLead && !openPalm;
  for(const c of candidates){const val=len(pt,c.p)/c.r;if(val<distance){distance=val;target=c}}
  const locked=candidates.find(c=>c.kind===openingTarget);
- if(locked&&pointing&&len(pt,locked.p)/locked.r<1.22){target=locked;distance=len(pt,locked.p)/locked.r}
- const near=pointing&&target&&distance<1.12;
+ if(locked&&pointing&&len(pt,locked.p)/locked.r<1.36){target=locked;distance=len(pt,locked.p)/locked.r}
+ const near=pointing&&target&&distance<1.20;
  moveFinger(pt,!!near);
  if(near){
   if(openingTarget!==target.kind){openingTarget=target.kind;eyeSince=now}
@@ -540,9 +544,9 @@ function onHand(r){
   finger.style.setProperty('--progress',String(Math.min(100,100*dwell/HOLD_EYE)));
   if(armed&&dwell>=HOLD_EYE)openPortal(false,target.kind);
  }else{
-  setStatus(pointing?'POINT A LITTLE CLOSER ✧':'SHOW ONE FINGER ✧');
+  setStatus(pointing?(target?'MOVE TOWARD A BODY PART ✧':'SEARCHING FOR YOU ✧'):'SHOW ONE FINGER ✧');
   finger.style.setProperty('--progress','0');
-  if(now-openingLastSeen>180){eyeSince=0;openingTarget=null}
+  if(now-openingLastSeen>320){eyeSince=0;openingTarget=null}
   if(distance>1.65)armed=true;
  }
 }
