@@ -61,7 +61,7 @@
 #part-macula.is-selected .organ-core{fill:#f02f92;stroke:#fff;stroke-width:3;filter:drop-shadow(0 0 8px #f93c99)}
 .page{min-height:39px;font-size:12px;touch-action:manipulation}
 
-/* V2.0: more room for readable text, without covering the whole camera. */
+/* V2.1: more room for readable text, without covering the whole camera. */
 #portal .shell{min-height:0;max-height:100%;height:min(710px,100%)}
 #portal .visual{height:clamp(155px,24dvh,225px);flex-shrink:1;min-height:140px}
 #portal .info{min-height:155px;flex:1 1 220px;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y}
@@ -75,7 +75,7 @@
  #portal .title{font-size:21px}
 }
 
-/* V2.0: anatomy-first compact floating atlas */
+/* V2.1: anatomy-first compact floating atlas */
 #portal{padding:calc(var(--safe-top) + 66px) 14px calc(var(--safe-bottom) + 90px)}
 #portal .shell{
  height:auto!important;max-height:min(73dvh,620px)!important;
@@ -110,7 +110,7 @@
  #portal .info{max-height:clamp(112px,19dvh,150px)!important}
 }
 
-/* V2.0 stable touch-first reading: anatomy remains the main visual */
+/* V2.1 stable touch-first reading: anatomy remains the main visual */
 #portal .close{width:38px;height:38px;min-width:38px;min-height:38px;touch-action:manipulation;z-index:10}
 #portal .lang{min-height:36px;min-width:44px;font-size:11px;touch-action:manipulation}
 #portal .tag{touch-action:manipulation}
@@ -193,7 +193,7 @@ let hands=null,faceMesh=null,stream=null,running=false,busy=false,analysisTimer=
 let rearmAt=0,bookFlipping=false,flipTimer=0,lastFlip=-5000,handHistory=[],fingerTarget=null,fingerDraw=null,hadCursor=false,retreatStartY=null;
 // Milliseconds; grace prevents the opening hand from immediately triggering closure.
 // Dwell is deliberately short; palm-swipe and close have their own stronger safeguards.
-const HOLD_EYE=270,HOLD_LABEL=240,CLOSE_MISSING=480,EXIT_HOLD=270,FIST_HOLD=360,GRACE=750;
+const HOLD_EYE=650,HOLD_LABEL=240,CLOSE_MISSING=480,EXIT_HOLD=270,FIST_HOLD=360,GRACE=750;
 const capture=document.createElement('canvas'),ctx=capture.getContext('2d',{alpha:false,willReadFrequently:false});capture.width=384;capture.height=288;
 const setStatus=s=>{if(status.textContent!==s)status.textContent=s};
 const makeSvg=(tag,attrs={})=>{const el=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))el.setAttribute(k,v);return el};
@@ -245,7 +245,7 @@ function openPortal(manualMode=false){
  manuallyOpened=manualMode;opened=true;retreatStartY=null;openAt=performance.now();seenHand=!manualMode&&performance.now()-lastHand<700;handHistory=[];lastFlip=-5000;
  exitSince=0;fistSince=0;eyeSince=0;lastEyeNear=0;clearHover();reset();
  portal.classList.add('open');portal.setAttribute('aria-hidden','false');manual.textContent='关闭任意门 ×';
- hint.innerHTML='<b>♡ LITTLE ANATOMY BOOK</b><br>轻点标签与语言切换 · 点击 × 关闭';
+ hint.innerHTML='<b>♡ LITTLE ANATOMY BOOK</b><br>轻点标签与语言 · 握拳保持关闭 👊';
  setStatus('READING MODE ✿');marker.style.display='none';
 }
 function closePortal(){
@@ -253,7 +253,7 @@ function closePortal(){
  opened=false;armed=false;rearmAt=performance.now()+320;retreatStartY=null;manuallyOpened=false;seenHand=false;exitSince=0;fistSince=0;handHistory=[];fingerTarget=null;finger.style.opacity='0';
  portal.classList.remove('open');portal.setAttribute('aria-hidden','true');
  manual.textContent='触屏打开 ♡';
- hint.innerHTML='<b>✦ POINT TO YOUR EYE</b><br>食指在眼睛附近稍停即可打开';
+ hint.innerHTML='<b>✦ POINT TO YOUR EYE</b><br>伸出食指指向眼睛并保持约 0.7 秒';
  setStatus('READY TO EXPLORE ✧');clearHover();eyeSince=0;smoothed=null;refreshMarker();
 }
 function videoPoint(p){const vw=video.videoWidth||640,vh=video.videoHeight||480;const scale=Math.max(innerWidth/vw,innerHeight/vh);return{x:(innerWidth-vw*scale)/2+(1-p.x)*vw*scale,y:(innerHeight-vh*scale)/2+p.y*vh*scale}}
@@ -342,13 +342,24 @@ function onHand(r){
   if(retreatStartY===null)retreatStartY=wrist.y;
   // Swipe detection removed; page changes use the FRONT/BACK buttons.
   handHistory=[];
-  moveFinger(pt,!openPalm);
-  if(bookFlipping){return}
-  if(now-openAt<=GRACE){if(!openPalm)hover(now,pt);return}
-  // Reading mode: never close from camera-inferred gestures.
-  // All anatomy and language controls are touch-first; tracking cannot dismiss the book.
-  fistSince=0;
-  moveFinger(pt,false);
+  // Fist-only close: require curled fingers for 850 ms; no missing-hand/retreat close.
+  const palmScale=Math.max(.01,d(0,9));
+  const palmCenter={x:(hand[0].x+hand[5].x+hand[9].x+hand[13].x+hand[17].x)/5,
+                    y:(hand[0].y+hand[5].y+hand[9].y+hand[13].y+hand[17].y)/5};
+  const curlCount=[8,12,16,20].filter(i =>
+    Math.hypot(hand[i].x-palmCenter.x,hand[i].y-palmCenter.y)<palmScale*1.05).length;
+  const fistPose=curlCount>=3 && countExtended<=1;
+  moveFinger(null,false);
+  if(now-openAt<1100){fistSince=0;return}
+  if(fistPose){
+    if(!fistSince)fistSince=now;
+    const pct=Math.min(100,Math.round((now-fistSince)/850*100));
+    setStatus('👊 FIST TO CLOSE '+pct+'%');
+    if(pct>=100){closePortal();return}
+  }else{
+    fistSince=0;
+    setStatus('READING MODE ✿');
+  }
   return;
  }
  if(!armed&&now>=rearmAt)armed=true;
@@ -356,9 +367,9 @@ function onHand(r){
  for(const e of faceEyes){const val=len(tip,e);if(val<distance){distance=val;eyePos=e}}
  // The marker used to show the correct eye while the extension test silently failed.
  // Now accept a finger near that marker, with a basic wrist-vs-tip proximity check.
- const radius=Math.max(82,Math.min(innerWidth*.25,108));
- const pointing=!!eyePos;
- const nearEye=pointing&&distance<radius+(eyeSince?17:0);
+ const radius=Math.max(48,Math.min(innerWidth*.145,66));
+ const pointing=!!eyePos && isExtended[0] && countExtended<=2 && d(8,0)>d(5,0)*1.45;
+ const nearEye=pointing&&distance<radius;
  moveFinger(pt,!!nearEye);
  if(nearEye){
   setStatus('HOLD AT YOUR EYE ♡');
@@ -370,7 +381,7 @@ function onHand(r){
  }else{
   setStatus('HAND DETECTED ✧');
   finger.style.setProperty('--progress','0');
-  if(now-lastEyeNear>280)eyeSince=0;
+  if(now-lastEyeNear>110)eyeSince=0;
   if(distance>radius+38)armed=true;
  }
 }
@@ -389,12 +400,7 @@ function demo(){hideSplash();setStatus('TOUCH DEMO ♡');openPortal(true)}
 for(const b of document.querySelectorAll('.page'))b.addEventListener('click',()=>opened?flipBook(b.dataset.page):setPage(b.dataset.page));
 for(const b of document.querySelectorAll('.lang'))b.addEventListener('click',()=>setLang(b.dataset.lang));
 for(const p of diagram.querySelectorAll('.part')){p.addEventListener('click',()=>{if(anatomy[p.dataset.organ].p!==section)setPage(anatomy[p.dataset.organ].p);select(p.dataset.organ)});p.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();if(anatomy[p.dataset.organ].p!==section)setPage(anatomy[p.dataset.organ].p);select(p.dataset.organ)}})}
-// A tap on the tiny eye marker is a recovery path if the hand is cropped out by Safari's camera.
-document.addEventListener('pointerup',e=>{
- if(opened||!running||e.target.closest('button')||!faceEyes.length)return;
- const target=faceEyes.some(v=>Math.hypot(e.clientX-v.x,e.clientY-v.y)<58);
- if(target)openPortal(true);
-});
+// Eye-marker taps do not auto-open. Use the explicit touch-open button instead.
 $('start').addEventListener('click',start);$('demo').addEventListener('click',demo);manual.addEventListener('click',()=>opened?closePortal():openPortal(true));$('close').addEventListener('click',closePortal);
 // Independent safety check: even if inference stalls when a hand exits, the door closes.
 watchdog=setInterval(()=>{
