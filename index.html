@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#f8e6f2">
 <meta name="description" content="Yiyang’s Anatomyverse: a magical, gesture-controlled anatomy universe with English, Japanese and Chinese explanations.">
-<title>YIYANG’S ANATOMYVERSE ♡ · V3.14</title>
+<title>YIYANG’S ANATOMYVERSE ♡ · V3.15</title>
 <style>
 :root{--ink:#574967;--soft:#896f91;--berry:#c85c9f;--pink:#f7c7de;--lilac:#c9b6ef;--white:#fffafc;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans CJK JP",Arial,sans-serif;color:#fff;background:linear-gradient(145deg,#e5d3ee,#f5d7e6 50%,#cce9f4);-webkit-tap-highlight-color:transparent}button{font-family:inherit;cursor:pointer;touch-action:manipulation}button:focus-visible,[role=button]:focus-visible{outline:3px solid #d174b8;outline-offset:3px}
@@ -171,7 +171,7 @@
 @media(max-height:720px){.scanner-art{width:min(43vh,195px);height:min(43vh,195px);margin-bottom:15px}.splash-inner p{margin-bottom:15px}.splash-inner .sub{margin:7px 0 11px}.note{margin-top:10px}}
 @media(prefers-reduced-motion:reduce){.scanner-art *{animation:none!important}}
 
-/* V3.14: deliberate, one-level-at-a-time anatomy exploration */
+/* V3.15: deliberate, one-level-at-a-time anatomy exploration */
 .depth-actions{display:flex;gap:8px;flex-wrap:wrap;margin:9px 0 3px}
 .depth-btn{border:1px solid #eacde9;border-radius:18px;padding:9px 13px;background:linear-gradient(125deg,#fce6f6,#ede6ff);color:#78568b;font-weight:700;font-size:12px;cursor:pointer;box-shadow:0 4px 14px #c8a3d02c}
 .depth-btn.secondary{background:#ffffffb8}
@@ -185,7 +185,7 @@
 .deep-choice.active,.deep-choice.is-hover{background:#f6d8f0;border-color:#cb88ca;box-shadow:0 0 0 2px #f6d4ed}
 .deep-choice .arrow{font-size:13px}
 @media(max-width:390px){.deep-choice{padding:4px 6px}.deep-choice strong{font-size:10px}.depth-view{inset:3px}}
-/* V3.14: permanent reserved action strip, never overlay labels or anatomy */
+/* V3.15: permanent reserved action strip, never overlay labels or anatomy */
 #portal #depthActions{position:relative;z-index:8;display:flex;align-items:center;justify-content:center;gap:7px;min-height:0;margin:0;padding:0 4px;opacity:1;pointer-events:auto;flex:0 0 auto}
 #portal #depthActions:not(.has-action){display:none}
 #portal #depthActions .depth-btn{min-height:46px;max-width:96%;padding:8px 20px;border:1.5px solid #f9ecff;border-radius:24px;background:linear-gradient(115deg,#f8d2ed,#e5d9ff);color:#73457f;box-shadow:0 3px 12px #b36abf45;font-size:12px;white-space:nowrap;touch-action:manipulation}
@@ -201,12 +201,12 @@
 #portal .deep-choice small{font-size:10px}
 @media(max-width:390px){#portal .deep-choice{min-height:46px;padding:6px 8px}#portal .deep-choice strong{font-size:11px}}
 @media(prefers-reduced-motion:reduce){#portal #depthActions #exploreDeeper{animation:none!important}}
-/* V3.14: tiny card enlargement only; gesture logic unchanged. */
+/* V3.15: tiny card enlargement only; gesture logic unchanged. */
 #portal{padding-left:9px;padding-right:9px}
 #portal .shell{width:min(100%,417px);max-height:min(77dvh,650px)!important}
 #portal .visual{height:clamp(220px,35.5dvh,325px)!important}
 @media(max-height:700px){#portal .shell{max-height:min(78dvh,650px)!important}#portal .visual{height:clamp(195px,31.5dvh,260px)!important}}
-/* V3.14: compact, expandable clinical content within the existing explanation panel. */
+/* V3.15: compact, expandable clinical content within the existing explanation panel. */
 .clinical-note{margin:7px 0 0;padding:7px 11px;border:1px solid rgba(198,133,191,.35);border-radius:13px;background:rgba(255,244,252,.46);font-size:12px;color:#76517f}
 .clinical-note summary{cursor:pointer;font-weight:700;list-style:none}
 .clinical-note summary::-webkit-details-marker{display:none}
@@ -216,7 +216,7 @@
 .medical-sources a{display:block;color:#875a94;padding:3px 0;text-decoration:underline}
 .medical-sources div{padding:7px 0}
 
-/* V3.14: one Explore click, immediately visible anatomy choices and explanation. */
+/* V3.15: one Explore click, immediately visible anatomy choices and explanation. */
 #portal #depthArt{display:none!important}
 #portal .depth-view{inset:4px 5px;gap:5px;padding:8px 8px 6px;align-items:stretch}
 #portal .depth-crumb{flex:0 0 auto;min-height:18px;font-size:11px;font-weight:700}
@@ -232,12 +232,26 @@
 #portal .info{flex:0 1 auto;min-height:145px;max-height:30dvh;overflow-y:auto;-webkit-overflow-scrolling:touch}
 #portal #description{overflow-wrap:anywhere}
 @media(max-width:390px){#portal .deep-choice{min-height:54px;padding:7px 7px}#portal .deep-choice strong{font-size:11px}}
+
+/* V3.15: diagram-first, single-step visual anatomy. */
+#portal #depthArt{display:block!important;width:100%;height:auto!important;max-height:none!important;flex:1 1 auto;min-height:0;filter:drop-shadow(0 3px 7px #c9a8d52b)}
+#portal .depth-view{inset:4px 5px;padding:7px 8px;gap:4px;display:flex;flex-direction:column;align-items:stretch;overflow:hidden}
+#portal .depth-group-tabs{display:flex;gap:5px;overflow-x:auto;overflow-y:hidden;flex:0 0 auto;min-height:28px;padding:1px 2px 3px;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+#portal .depth-group-tab{flex:0 0 auto;border:1px solid #d8b7df;border-radius:14px;background:#fffafd;color:#865f95;padding:5px 10px;font-size:10px;font-weight:700;white-space:nowrap}
+#portal .depth-group-tab.selected{background:#efcde8;border-color:#cb89c2;color:#794378}
+#portal .depth-choices{display:flex;flex-direction:row;gap:6px;overflow-x:auto;overflow-y:hidden;flex:0 0 auto;min-height:54px;max-height:63px;padding:3px 4px 7px;scrollbar-width:thin;align-items:stretch;-webkit-overflow-scrolling:touch}
+#portal .deep-choice{flex:0 0 130px;min-width:130px;min-height:46px;padding:5px 7px;border-radius:12px}
+#portal .deep-choice strong{font-size:10px;line-height:1.2}
+#portal .deep-choice small{font-size:8px;line-height:1.2}
+#portal .visual{min-height:235px!important}
+#portal .info{min-height:138px;max-height:28dvh;overflow-y:auto}
+@media(max-height:700px){#portal .visual{min-height:205px!important}#portal .depth-choices{max-height:55px}}
 </style>
 </head>
 <body>
 <video id="camera" autoplay muted playsinline webkit-playsinline></video>
 <div id="atmo"></div><div id="sparkles" aria-hidden="true"><span class="spark">✦</span><span class="spark">✧</span><span class="spark">✧</span><span class="spark">✦</span></div>
-<div class="head"><div class="brand">YIYANG’S ANATOMYVERSE ♡<small>MAGIC MIRROR · V3.14</small></div><div class="status" id="status">READY TO EXPLORE ✧</div></div>
+<div class="head"><div class="brand">YIYANG’S ANATOMYVERSE ♡<small>MAGIC MIRROR · V3.15</small></div><div class="status" id="status">READY TO EXPLORE ✧</div></div>
 <div id="eyeMarker" aria-hidden="true"></div><div id="finger" aria-hidden="true"><div class="finger-ring"></div><div class="heart-orbit"><span>♡</span></div><div class="finger-center">✧</div></div>
 <main id="portal" aria-hidden="true"><section class="shell" id="shell" aria-label="Interactive human anatomy">
  <div class="top"><div><div class="eyebrow">✿ CHAPTER 01 · OCULAR ANATOMY</div><h2 class="title">Peek inside the eye <span class="heart">♡</span></h2></div><button class="close" type="button" id="close" aria-label="Close portal">×</button></div>
@@ -284,7 +298,7 @@
  <div class="scanner-orbit"><span>♡</span></div>
  <div class="scanner-core">✧</div>
  <i class="scanner-star star-a">✦</i><i class="scanner-star star-b">✧</i><i class="scanner-star star-c">✦</i>
- </div><h1>YIYANG’S ANATOMYVERSE</h1><div class="sub">✿ MAGIC MIRROR · V3.14 ✿</div><p>A universe beneath your skin.<br><span class="intro-whisper">Point to discover ♡</span></p><button type="button" class="mainbtn" id="start">开启摄像头 · OPEN THE MAGIC ✧</button><button type="button" class="mainbtn secondary" id="demo">先用触屏体验 · TRY DEMO</button><small class="note">需要 HTTPS（GitHub Pages）及摄像头授权。<br>摄像头视频在设备上处理，网页没有上传视频的功能。<br>解剖图为教学示意，并非按比例绘制；细胞类型不等于组织层。</small>
+ </div><h1>YIYANG’S ANATOMYVERSE</h1><div class="sub">✿ MAGIC MIRROR · V3.15 ✿</div><p>A universe beneath your skin.<br><span class="intro-whisper">Point to discover ♡</span></p><button type="button" class="mainbtn" id="start">开启摄像头 · OPEN THE MAGIC ✧</button><button type="button" class="mainbtn secondary" id="demo">先用触屏体验 · TRY DEMO</button><small class="note">需要 HTTPS（GitHub Pages）及摄像头授权。<br>摄像头视频在设备上处理，网页没有上传视频的功能。<br>解剖图为教学示意，并非按比例绘制；细胞类型不等于组织层。</small>
 <details class="medical-sources"><summary>♡ 医学资料与分类说明 / References</summary>
 <div>视网膜采用经典十层组织学分类，分组只是导航，不代表额外的组织层。角膜采用经典五层。泪膜与泪器不属于角膜层。部分器官的示意图仅表示结构关系，不代表真实空间位置。</div>
 <a href="https://www.ncbi.nlm.nih.gov/books/NBK544343/" target="_blank" rel="noopener">Retinal histology — NCBI Bookshelf</a>
@@ -703,31 +717,76 @@ function syncDepthActions(){
  depthBack.textContent=lang==='zh'?'← 返回器官图':lang==='ja'?'← 解剖図へ戻る':'← Back to anatomy';
  rebuildHoverables();
 }
-function drawDepthArt(){depthArt.innerHTML=''}
-function renderDepth(){
- if($('clinicalNote'))$('clinicalNote').remove();
- const node=depthNode();if(!node||!depthPath.length){exitDepth();return}
- depthView.hidden=false;diagram.style.visibility='hidden';
- depthCrumb.textContent=(anatomy[depthPath[0]]?.en||depthPath[0])+' · '+(lang==='zh'?'结构索引':lang==='ja'?'構造一覧':'Anatomy index');
- depthChoices.replaceChildren();deepSelected=null;
- const rows=flattenChapter(node);
- for(const entry of rows){
-  if(entry.heading){const h=document.createElement('div');h.className='deep-heading';h.textContent=entry.heading;depthChoices.append(h);continue}
-  const v=entry.node,b=document.createElement('button');b.type='button';b.className='deep-choice';b.dataset.deepKey=entry.id;
-  b.innerHTML='<span><strong></strong><small></small></span><span class="arrow">♡</span>';
-  b.querySelector('strong').textContent=v.en;b.querySelector('small').textContent=v.ja+' · '+v.zh;
-  b.addEventListener('click',()=>chooseDeep(entry.id));depthChoices.append(b)
+let visualGroups=[],activeGroup=0;
+function chapterGroups(root){
+ const groups=[];
+ function gather(n,keys,out){for(const [key,child] of Object.entries(n?.children||{})){if(child.children)gather(child,[...keys,key],out);else out.push({id:[...keys,key].join('::'),node:child})}}
+ function visit(n,keys){for(const [key,child] of Object.entries(n?.children||{})){if(child.children){const leaves=[];gather(child,[...keys,key],leaves);if(leaves.length>0){if(leaves.length<=12)groups.push({name:child.en,items:leaves});else visit(child,[...keys,key])}}else groups.push({name:child.en,items:[{id:[...keys,key].join('::'),node:child}]})}}
+ visit(root,[]);
+ // Avoid orphan one-item tabs: join adjacent small groups when possible.
+ const merged=[];for(const g of groups){const prev=merged[merged.length-1];if(prev&&prev.items.length<4&&g.items.length<4&&prev.items.length+g.items.length<=7){prev.items.push(...g.items);prev.name=prev.name+' / '+g.name}else merged.push(g)}
+ return merged;
+}
+function drawDepthArt(){
+ const group=visualGroups[activeGroup];if(!group)return;
+ const items=group.items,n=items.length;
+ const cornea=currentPortal==='eye'&&depthPath[0]==='cornea';
+ const retina=currentPortal==='eye'&&depthPath[0]==='retina';
+ const layered=cornea||retina||/layer|membrane|wall|epithel|tissue/i.test(group.name);
+ const colors=['#f5c4e1','#e2c9f1','#bce9e8','#d9c8ee','#f4dba8','#e8b8d9','#c4dbe9','#e9cbe5','#b8e1d8','#ead5b8','#d9d1f0','#f4c6d3'];
+ const ns='http://www.w3.org/2000/svg';depthArt.replaceChildren();
+ function el(tag,attrs,parent=depthArt){const e=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs||{}))e.setAttribute(k,String(v));parent.append(e);return e}
+ const defs=el('defs');const grad=el('linearGradient',{id:'layerGlow',x1:'0',y1:'0',x2:'1',y2:'1'},defs);el('stop',{offset:'0%','stop-color':'#fff7fd'},grad);el('stop',{offset:'100%','stop-color':'#e8dcf6'},grad);
+ if(layered){
+  const top=12,usable=212,gap=2,h=(usable-(n-1)*gap)/n;
+  items.forEach((entry,i)=>{
+   const y=top+i*(h+gap),g=el('g',{'data-anatomy-id':entry.id,role:'button',tabindex:'0','aria-label':entry.node.en,style:'cursor:pointer'});
+   el('rect',{x:20,y,width:320,height:h,rx:Math.min(8,h/3),fill:colors[i%colors.length],stroke:'#bda5d3','stroke-width':1.2,'fill-opacity':'.87'},g);
+   const label=entry.node.en.length>33?entry.node.en.slice(0,31)+'…':entry.node.en;
+   const t=el('text',{x:180,y:y+h/2+Math.min(5,h/4),'text-anchor':'middle','font-size':n>=10?9:n>=7?11:13,'font-weight':'600',fill:'#655175','pointer-events':'none'},g);t.textContent=label;
+   g.addEventListener('click',()=>chooseDeep(entry.id));g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();chooseDeep(entry.id)}})
+  });
+ }else{
+  el('ellipse',{cx:180,cy:116,rx:139,ry:91,fill:'url(#layerGlow)',stroke:'#d6b5de','stroke-width':2});
+  items.forEach((entry,i)=>{
+   const a=-Math.PI/2+2*Math.PI*i/n,x=180+Math.cos(a)*105,y=116+Math.sin(a)*70;
+   const g=el('g',{'data-anatomy-id':entry.id,role:'button',tabindex:'0','aria-label':entry.node.en,style:'cursor:pointer'});
+   el('line',{x1:180,y1:116,x2:x,y2:y,stroke:'#c4a4d6','stroke-width':2},g);
+   el('circle',{cx:x,cy:y,r:n>8?19:25,fill:colors[i%colors.length],stroke:'#c59dce','stroke-width':1.5},g);
+   const t=el('text',{x,y:y+4,'text-anchor':'middle','font-size':11,'font-weight':'700',fill:'#604b71','pointer-events':'none'},g);t.textContent=String(i+1);
+   g.addEventListener('click',()=>chooseDeep(entry.id));g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();chooseDeep(entry.id)}})
+  });
+  const c=el('text',{x:180,y:119,'text-anchor':'middle','font-size':12,fill:'#836698','font-weight':'700'});c.textContent=depthPath[0]==='heart'?'Heart':depthPath[0]==='lung'?'Lung':depthPath[0]==='nose'?'Nose':depthPath[0]==='mouth'?'Mouth':'✧ Anatomy ✧';
  }
- $('miniLabel').textContent='✦ ANATOMY INDEX · '+rows.filter(x=>x.id).length+' STRUCTURES';
- $('organTitle').textContent=anatomy[depthPath[0]]?.en||'Anatomy';
- $('translations').textContent='';
- $('description').textContent=lang==='zh'?'点选任意结构，立即阅读解释。列表可上下滑动。':lang==='ja'?'構造を選ぶとすぐに説明が表示されます。上下にスクロールできます。':'Choose a structure to read its explanation. Scroll for more.';
- $('tinyFact').textContent=lang==='zh'?'✿ 结构分类索引 · 非真实组织切片':lang==='ja'?'✿ 構造分類 · 実際の組織切片ではありません':'✿ Structure index · not a tissue section';
- syncDepthActions()
+ highlightDiagram();
+}
+function highlightDiagram(){depthArt.querySelectorAll('[data-anatomy-id]').forEach(g=>{const active=g.getAttribute('data-anatomy-id')===deepSelected;g.querySelectorAll('rect,circle').forEach(shape=>{shape.setAttribute('stroke',active?'#d04b9c':'#bda5d3');shape.setAttribute('stroke-width',active?'3.5':'1.2')});g.setAttribute('opacity',deepSelected&&!active?'0.62':'1')})}
+function renderVisualGroup(){
+ const group=visualGroups[activeGroup];if(!group)return;
+ depthChoices.replaceChildren();
+ for(const entry of group.items){const b=document.createElement('button');b.type='button';b.className='deep-choice';b.dataset.deepKey=entry.id;
+ b.innerHTML='<span><strong></strong><small></small></span><span class="arrow">♡</span>';
+ b.querySelector('strong').textContent=entry.node.en;b.querySelector('small').textContent=entry.node.ja+' · '+entry.node.zh;
+ b.addEventListener('click',()=>chooseDeep(entry.id));depthChoices.append(b)}
+ drawDepthArt();
+ const tabs=$('depthGroupTabs');tabs.replaceChildren();
+ visualGroups.forEach((g,i)=>{const b=document.createElement('button');b.type='button';b.className='depth-group-tab'+(i===activeGroup?' selected':'');b.textContent=g.name;b.addEventListener('click',()=>{activeGroup=i;deepSelected=null;renderVisualGroup();chooseDeep(visualGroups[i].items[0].id)});tabs.append(b)});
+}
+function renderDepth(){
+ if($('clinicalNote'))$('clinicalNote').remove();const node=depthNode();if(!node||!depthPath.length){exitDepth();return}
+ depthView.hidden=false;diagram.style.visibility='hidden';depthCrumb.textContent=(anatomy[depthPath[0]]?.en||depthPath[0])+' · '+(lang==='zh'?'可视化解剖':lang==='ja'?'解剖図':'Visual anatomy');
+ flattenChapter(node);visualGroups=chapterGroups(node);activeGroup=0;deepSelected=null;
+ let tabs=$('depthGroupTabs');if(!tabs){tabs=document.createElement('div');tabs.id='depthGroupTabs';tabs.className='depth-group-tabs';depthArt.insertAdjacentElement('beforebegin',tabs)}
+ renderVisualGroup();$('miniLabel').textContent='✦ VISUAL ANATOMY';
+ $('organTitle').textContent=anatomy[depthPath[0]]?.en||'Anatomy';$('translations').textContent='';
+ $('description').textContent=lang==='zh'?'点击图中彩色结构，查看功能与三语名称。':lang==='ja'?'図の色付き構造をタップすると説明が表示されます。':'Tap a colored structure to see its explanation.';
+ $('tinyFact').textContent=lang==='zh'?'✿ 教学示意 · 不按比例':lang==='ja'?'✿ 模式図 · 縮尺通りではありません':'✿ Educational schematic · not to scale';
+ if(visualGroups.length&&visualGroups[0].items.length)chooseDeep(visualGroups[0].items[0].id);
+ syncDepthActions();
 }
 function chooseDeep(key){
  const node=flatIndex.get(key);if(!node)return;deepSelected=key;
- depthChoices.querySelectorAll('.deep-choice').forEach(b=>b.classList.toggle('active',b.dataset.deepKey===key));
+ depthChoices.querySelectorAll('.deep-choice').forEach(b=>b.classList.toggle('active',b.dataset.deepKey===key));highlightDiagram();
  $('organTitle').textContent=node.en;$('translations').textContent=node.ja+' · '+node.zh;
  const info=medicalNotes[node.en],clinical=info?.clinical?.[lang];
  $('description').textContent=info?.[lang]||'';
@@ -738,7 +797,7 @@ function chooseDeep(key){
 }
 function goDeeper(){if(depthPath.length)return;const node=depthTrees[currentPortal]?.[chosen];if(!node?.children)return;depthPath=[chosen];renderDepth();selectProtectionUntil=performance.now()+650}
 function goBackDepth(){if(!depthPath.length)return;exitDepth();selectProtectionUntil=performance.now()+650}
-function exitDepth(){if($('clinicalNote'))$('clinicalNote').remove();depthPath=[];deepSelected=null;flatIndex.clear();depthView.hidden=true;diagram.style.visibility='visible';if(typeof chosen!=='undefined'&&typeof anatomy!=='undefined')translate();syncDepthActions()}
+function exitDepth(){if($('clinicalNote'))$('clinicalNote').remove();depthPath=[];deepSelected=null;flatIndex.clear();visualGroups=[];depthView.hidden=true;diagram.style.visibility='visible';if(typeof chosen!=='undefined'&&typeof anatomy!=='undefined')translate();syncDepthActions()}
 depthExplore.addEventListener('click',goDeeper);depthBack.addEventListener('click',goBackDepth);
 
 
