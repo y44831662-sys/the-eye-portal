@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#f8e6f2">
 <meta name="description" content="Yiyang’s Anatomyverse: a magical, gesture-controlled anatomy universe with English, Japanese and Chinese explanations.">
-<title>YIYANG’S ANATOMYVERSE ♡ · V3.9</title>
+<title>YIYANG’S ANATOMYVERSE ♡ · V3.10</title>
 <style>
 :root{--ink:#574967;--soft:#896f91;--berry:#c85c9f;--pink:#f7c7de;--lilac:#c9b6ef;--white:#fffafc;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans CJK JP",Arial,sans-serif;color:#fff;background:linear-gradient(145deg,#e5d3ee,#f5d7e6 50%,#cce9f4);-webkit-tap-highlight-color:transparent}button{font-family:inherit;cursor:pointer;touch-action:manipulation}button:focus-visible,[role=button]:focus-visible{outline:3px solid #d174b8;outline-offset:3px}
@@ -171,7 +171,7 @@
 @media(max-height:720px){.scanner-art{width:min(43vh,195px);height:min(43vh,195px);margin-bottom:15px}.splash-inner p{margin-bottom:15px}.splash-inner .sub{margin:7px 0 11px}.note{margin-top:10px}}
 @media(prefers-reduced-motion:reduce){.scanner-art *{animation:none!important}}
 
-/* V3.9: deliberate, one-level-at-a-time anatomy exploration */
+/* V3.10: deliberate, one-level-at-a-time anatomy exploration */
 .depth-actions{display:flex;gap:8px;flex-wrap:wrap;margin:9px 0 3px}
 .depth-btn{border:1px solid #eacde9;border-radius:18px;padding:9px 13px;background:linear-gradient(125deg,#fce6f6,#ede6ff);color:#78568b;font-weight:700;font-size:12px;cursor:pointer;box-shadow:0 4px 14px #c8a3d02c}
 .depth-btn.secondary{background:#ffffffb8}
@@ -185,7 +185,7 @@
 .deep-choice.active,.deep-choice.is-hover{background:#f6d8f0;border-color:#cb88ca;box-shadow:0 0 0 2px #f6d4ed}
 .deep-choice .arrow{font-size:13px}
 @media(max-width:390px){.deep-choice{padding:4px 6px}.deep-choice strong{font-size:10px}.depth-view{inset:3px}}
-/* V3.9: permanent reserved action strip, never overlay labels or anatomy */
+/* V3.10: permanent reserved action strip, never overlay labels or anatomy */
 #portal #depthActions{position:relative;z-index:8;display:flex;align-items:center;justify-content:center;gap:7px;min-height:0;margin:0;padding:0 4px;opacity:1;pointer-events:auto;flex:0 0 auto}
 #portal #depthActions:not(.has-action){display:none}
 #portal #depthActions .depth-btn{min-height:46px;max-width:96%;padding:8px 20px;border:1.5px solid #f9ecff;border-radius:24px;background:linear-gradient(115deg,#f8d2ed,#e5d9ff);color:#73457f;box-shadow:0 3px 12px #b36abf45;font-size:12px;white-space:nowrap;touch-action:manipulation}
@@ -201,7 +201,7 @@
 #portal .deep-choice small{font-size:10px}
 @media(max-width:390px){#portal .deep-choice{min-height:46px;padding:6px 8px}#portal .deep-choice strong{font-size:11px}}
 @media(prefers-reduced-motion:reduce){#portal #depthActions #exploreDeeper{animation:none!important}}
-/* V3.9: tiny card enlargement only; gesture logic unchanged. */
+/* V3.10: tiny card enlargement only; gesture logic unchanged. */
 #portal{padding-left:9px;padding-right:9px}
 #portal .shell{width:min(100%,417px);max-height:min(77dvh,650px)!important}
 #portal .visual{height:clamp(220px,35.5dvh,325px)!important}
@@ -211,7 +211,7 @@
 <body>
 <video id="camera" autoplay muted playsinline webkit-playsinline></video>
 <div id="atmo"></div><div id="sparkles" aria-hidden="true"><span class="spark">✦</span><span class="spark">✧</span><span class="spark">✧</span><span class="spark">✦</span></div>
-<div class="head"><div class="brand">YIYANG’S ANATOMYVERSE ♡<small>MAGIC MIRROR · V3.9</small></div><div class="status" id="status">READY TO EXPLORE ✧</div></div>
+<div class="head"><div class="brand">YIYANG’S ANATOMYVERSE ♡<small>MAGIC MIRROR · V3.10</small></div><div class="status" id="status">READY TO EXPLORE ✧</div></div>
 <div id="eyeMarker" aria-hidden="true"></div><div id="finger" aria-hidden="true"><div class="finger-ring"></div><div class="heart-orbit"><span>♡</span></div><div class="finger-center">✧</div></div>
 <main id="portal" aria-hidden="true"><section class="shell" id="shell" aria-label="Interactive human anatomy">
  <div class="top"><div><div class="eyebrow">✿ CHAPTER 01 · OCULAR ANATOMY</div><h2 class="title">Peek inside the eye <span class="heart">♡</span></h2></div><button class="close" type="button" id="close" aria-label="Close portal">×</button></div>
@@ -258,7 +258,7 @@
  <div class="scanner-orbit"><span>♡</span></div>
  <div class="scanner-core">✧</div>
  <i class="scanner-star star-a">✦</i><i class="scanner-star star-b">✧</i><i class="scanner-star star-c">✦</i>
- </div><h1>YIYANG’S ANATOMYVERSE</h1><div class="sub">✿ MAGIC MIRROR · V3.9 ✿</div><p>A universe beneath your skin.<br><span class="intro-whisper">Point to discover ♡</span></p><button type="button" class="mainbtn" id="start">开启摄像头 · OPEN THE MAGIC ✧</button><button type="button" class="mainbtn secondary" id="demo">先用触屏体验 · TRY DEMO</button><small class="note">需要 HTTPS（GitHub Pages）及摄像头授权。<br>摄像头视频在设备上处理，网页没有上传视频的功能。<br>解剖图为简化示意，并非按比例绘制。</small><div id="error" role="alert"></div></div></div>
+ </div><h1>YIYANG’S ANATOMYVERSE</h1><div class="sub">✿ MAGIC MIRROR · V3.10 ✿</div><p>A universe beneath your skin.<br><span class="intro-whisper">Point to discover ♡</span></p><button type="button" class="mainbtn" id="start">开启摄像头 · OPEN THE MAGIC ✧</button><button type="button" class="mainbtn secondary" id="demo">先用触屏体验 · TRY DEMO</button><small class="note">需要 HTTPS（GitHub Pages）及摄像头授权。<br>摄像头视频在设备上处理，网页没有上传视频的功能。<br>解剖图为简化示意，并非按比例绘制。</small><div id="error" role="alert"></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/hands.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4/face_mesh.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5/pose.js" crossorigin="anonymous"></script>
@@ -284,9 +284,9 @@ let anatomy={
 // Two compact groups are far easier to aim at than ten tiny labels on an iPhone.
 let placements={
  front:{cornea:[5,32],iris:[5,221],pupil:[248,29],lens:[248,99],ciliary:[244,221]},
- back:{retina:[5,32],vitreous:[5,221],macula:[248,29],optic:[248,99],sclera:[248,221]}
+ back:{retina:[5,32],vitreous:[5,221],macula:[248,29],optic:[248,161],sclera:[248,231]}
 };
-let labelDest={front:{cornea:[61,81],iris:[61,221],pupil:[300,77],lens:[300,147],ciliary:[298,221]},back:{retina:[61,80],vitreous:[61,221],macula:[300,77],optic:[300,147],sclera:[300,221]}};
+let labelDest={front:{cornea:[61,81],iris:[61,221],pupil:[300,77],lens:[300,147],ciliary:[298,221]},back:{retina:[61,80],vitreous:[61,221],macula:[300,77],optic:[300,183],sclera:[300,231]}};
 let currentPortal='eye',poseModel=null,bodyChest=null,lastPoseScan=0,bodyTarget=null;
 
 const eyeDataset={anatomy,placements,labelDest,svg:diagram.innerHTML};
