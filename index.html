@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#f8e6f2">
 <meta name="description" content="Yiyang’s Anatomyverse: a magical, gesture-controlled anatomy universe with English, Japanese and Chinese explanations.">
-<title>YIYANG’S ANATOMYVERSE ♡ · V3.15</title>
+<title>YIYANG’S ANATOMYVERSE ♡ · V3.16</title>
 <style>
 :root{--ink:#574967;--soft:#896f91;--berry:#c85c9f;--pink:#f7c7de;--lilac:#c9b6ef;--white:#fffafc;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans CJK JP",Arial,sans-serif;color:#fff;background:linear-gradient(145deg,#e5d3ee,#f5d7e6 50%,#cce9f4);-webkit-tap-highlight-color:transparent}button{font-family:inherit;cursor:pointer;touch-action:manipulation}button:focus-visible,[role=button]:focus-visible{outline:3px solid #d174b8;outline-offset:3px}
@@ -171,7 +171,7 @@
 @media(max-height:720px){.scanner-art{width:min(43vh,195px);height:min(43vh,195px);margin-bottom:15px}.splash-inner p{margin-bottom:15px}.splash-inner .sub{margin:7px 0 11px}.note{margin-top:10px}}
 @media(prefers-reduced-motion:reduce){.scanner-art *{animation:none!important}}
 
-/* V3.15: deliberate, one-level-at-a-time anatomy exploration */
+/* V3.16: deliberate, one-level-at-a-time anatomy exploration */
 .depth-actions{display:flex;gap:8px;flex-wrap:wrap;margin:9px 0 3px}
 .depth-btn{border:1px solid #eacde9;border-radius:18px;padding:9px 13px;background:linear-gradient(125deg,#fce6f6,#ede6ff);color:#78568b;font-weight:700;font-size:12px;cursor:pointer;box-shadow:0 4px 14px #c8a3d02c}
 .depth-btn.secondary{background:#ffffffb8}
@@ -185,7 +185,7 @@
 .deep-choice.active,.deep-choice.is-hover{background:#f6d8f0;border-color:#cb88ca;box-shadow:0 0 0 2px #f6d4ed}
 .deep-choice .arrow{font-size:13px}
 @media(max-width:390px){.deep-choice{padding:4px 6px}.deep-choice strong{font-size:10px}.depth-view{inset:3px}}
-/* V3.15: permanent reserved action strip, never overlay labels or anatomy */
+/* V3.16: permanent reserved action strip, never overlay labels or anatomy */
 #portal #depthActions{position:relative;z-index:8;display:flex;align-items:center;justify-content:center;gap:7px;min-height:0;margin:0;padding:0 4px;opacity:1;pointer-events:auto;flex:0 0 auto}
 #portal #depthActions:not(.has-action){display:none}
 #portal #depthActions .depth-btn{min-height:46px;max-width:96%;padding:8px 20px;border:1.5px solid #f9ecff;border-radius:24px;background:linear-gradient(115deg,#f8d2ed,#e5d9ff);color:#73457f;box-shadow:0 3px 12px #b36abf45;font-size:12px;white-space:nowrap;touch-action:manipulation}
@@ -201,12 +201,12 @@
 #portal .deep-choice small{font-size:10px}
 @media(max-width:390px){#portal .deep-choice{min-height:46px;padding:6px 8px}#portal .deep-choice strong{font-size:11px}}
 @media(prefers-reduced-motion:reduce){#portal #depthActions #exploreDeeper{animation:none!important}}
-/* V3.15: tiny card enlargement only; gesture logic unchanged. */
+/* V3.16: tiny card enlargement only; gesture logic unchanged. */
 #portal{padding-left:9px;padding-right:9px}
 #portal .shell{width:min(100%,417px);max-height:min(77dvh,650px)!important}
 #portal .visual{height:clamp(220px,35.5dvh,325px)!important}
 @media(max-height:700px){#portal .shell{max-height:min(78dvh,650px)!important}#portal .visual{height:clamp(195px,31.5dvh,260px)!important}}
-/* V3.15: compact, expandable clinical content within the existing explanation panel. */
+/* V3.16: compact, expandable clinical content within the existing explanation panel. */
 .clinical-note{margin:7px 0 0;padding:7px 11px;border:1px solid rgba(198,133,191,.35);border-radius:13px;background:rgba(255,244,252,.46);font-size:12px;color:#76517f}
 .clinical-note summary{cursor:pointer;font-weight:700;list-style:none}
 .clinical-note summary::-webkit-details-marker{display:none}
@@ -216,7 +216,7 @@
 .medical-sources a{display:block;color:#875a94;padding:3px 0;text-decoration:underline}
 .medical-sources div{padding:7px 0}
 
-/* V3.15: one Explore click, immediately visible anatomy choices and explanation. */
+/* V3.16: one Explore click, immediately visible anatomy choices and explanation. */
 #portal #depthArt{display:none!important}
 #portal .depth-view{inset:4px 5px;gap:5px;padding:8px 8px 6px;align-items:stretch}
 #portal .depth-crumb{flex:0 0 auto;min-height:18px;font-size:11px;font-weight:700}
@@ -233,7 +233,7 @@
 #portal #description{overflow-wrap:anywhere}
 @media(max-width:390px){#portal .deep-choice{min-height:54px;padding:7px 7px}#portal .deep-choice strong{font-size:11px}}
 
-/* V3.15: diagram-first, single-step visual anatomy. */
+/* V3.16: diagram-first, single-step visual anatomy. */
 #portal #depthArt{display:block!important;width:100%;height:auto!important;max-height:none!important;flex:1 1 auto;min-height:0;filter:drop-shadow(0 3px 7px #c9a8d52b)}
 #portal .depth-view{inset:4px 5px;padding:7px 8px;gap:4px;display:flex;flex-direction:column;align-items:stretch;overflow:hidden}
 #portal .depth-group-tabs{display:flex;gap:5px;overflow-x:auto;overflow-y:hidden;flex:0 0 auto;min-height:28px;padding:1px 2px 3px;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
@@ -246,12 +246,27 @@
 #portal .visual{min-height:235px!important}
 #portal .info{min-height:138px;max-height:28dvh;overflow-y:auto}
 @media(max-height:700px){#portal .visual{min-height:205px!important}#portal .depth-choices{max-height:55px}}
+
+/* V3.16 — lightweight, scrollable guide; hidden unless explicitly opened. */
+.guide-launch{display:block;margin:11px auto 12px;background:transparent;border:1px solid rgba(157,102,160,.38);border-radius:30px;padding:11px 20px;color:#865b94;font-size:13px;font-weight:700;cursor:pointer}
+.guide-corner{position:absolute;right:12px;top:70px;z-index:8;width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,.8);background:rgba(255,240,253,.78);color:#81548f;font-size:19px;font-weight:700;cursor:pointer;box-shadow:0 3px 14px rgba(90,55,98,.12)}
+.guide-overlay[hidden]{display:none!important}
+.guide-overlay{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(48,31,60,.53);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px)}
+.guide-panel{position:relative;width:min(100%,450px);max-height:min(83dvh,720px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:26px 21px 20px;border:1.5px solid rgba(255,255,255,.85);border-radius:28px;background:linear-gradient(145deg,rgba(255,249,255,.98),rgba(246,230,251,.97) 56%,rgba(229,242,253,.98));color:#765280;box-shadow:0 24px 75px rgba(34,15,50,.3)}
+.guide-kicker{text-align:center;letter-spacing:2px;font-size:10px;font-weight:800;color:#a97bb2}
+.guide-panel h2{text-align:center;font-family:Georgia,serif;font-size:30px;font-weight:500;margin:9px 0 2px;color:#694579}
+.guide-sub{text-align:center;margin:0 0 19px;color:#a480af;font-size:12px;letter-spacing:1px}
+.guide-x{position:absolute;right:13px;top:12px;border:0;background:rgba(255,255,255,.75);border-radius:50%;width:35px;height:35px;font-size:25px;color:#865b94;cursor:pointer}
+.guide-steps{display:grid;gap:10px}.guide-step{display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,.55);border:1px solid rgba(220,187,224,.55);border-radius:15px;padding:11px}
+.guide-step>span{flex:0 0 31px;font-size:23px;text-align:center}.guide-step strong{display:block;font-size:13px;color:#765080}.guide-step p{margin:4px 0 0;font-size:12px;line-height:1.55;color:#806d8c}
+.guide-done{display:block;width:100%;margin-top:17px;border:1px solid #e6c3e5;background:linear-gradient(100deg,#f8d8ee,#eee1ff);border-radius:30px;padding:13px;color:#754f82;font-weight:800;font-size:14px;cursor:pointer}
+@media(max-height:650px){.guide-panel{max-height:88dvh}.guide-step{padding:8px}}
 </style>
 </head>
 <body>
 <video id="camera" autoplay muted playsinline webkit-playsinline></video>
 <div id="atmo"></div><div id="sparkles" aria-hidden="true"><span class="spark">✦</span><span class="spark">✧</span><span class="spark">✧</span><span class="spark">✦</span></div>
-<div class="head"><div class="brand">YIYANG’S ANATOMYVERSE ♡<small>MAGIC MIRROR · V3.15</small></div><div class="status" id="status">READY TO EXPLORE ✧</div></div>
+<div class="head"><div class="brand">YIYANG’S ANATOMYVERSE ♡<small>MAGIC MIRROR · V3.16</small></div><div class="status" id="status">READY TO EXPLORE ✧</div><button type="button" class="guide-corner" id="guideLive" aria-label="How to play" title="How to Play">?</button></div>
 <div id="eyeMarker" aria-hidden="true"></div><div id="finger" aria-hidden="true"><div class="finger-ring"></div><div class="heart-orbit"><span>♡</span></div><div class="finger-center">✧</div></div>
 <main id="portal" aria-hidden="true"><section class="shell" id="shell" aria-label="Interactive human anatomy">
  <div class="top"><div><div class="eyebrow">✿ CHAPTER 01 · OCULAR ANATOMY</div><h2 class="title">Peek inside the eye <span class="heart">♡</span></h2></div><button class="close" type="button" id="close" aria-label="Close portal">×</button></div>
@@ -298,7 +313,7 @@
  <div class="scanner-orbit"><span>♡</span></div>
  <div class="scanner-core">✧</div>
  <i class="scanner-star star-a">✦</i><i class="scanner-star star-b">✧</i><i class="scanner-star star-c">✦</i>
- </div><h1>YIYANG’S ANATOMYVERSE</h1><div class="sub">✿ MAGIC MIRROR · V3.15 ✿</div><p>A universe beneath your skin.<br><span class="intro-whisper">Point to discover ♡</span></p><button type="button" class="mainbtn" id="start">开启摄像头 · OPEN THE MAGIC ✧</button><button type="button" class="mainbtn secondary" id="demo">先用触屏体验 · TRY DEMO</button><small class="note">需要 HTTPS（GitHub Pages）及摄像头授权。<br>摄像头视频在设备上处理，网页没有上传视频的功能。<br>解剖图为教学示意，并非按比例绘制；细胞类型不等于组织层。</small>
+ </div><h1>YIYANG’S ANATOMYVERSE</h1><div class="sub">✿ MAGIC MIRROR · V3.16 ✿</div><p>A universe beneath your skin.<br><span class="intro-whisper">Point to discover ♡</span></p><button type="button" class="mainbtn" id="start">开启摄像头 · OPEN THE MAGIC ✧</button><button type="button" class="mainbtn secondary" id="demo">先用触屏体验 · TRY DEMO</button><button type="button" class="guide-launch" id="guideIntro">♡ How to Play · 使用指南</button><small class="note">需要 HTTPS（GitHub Pages）及摄像头授权。<br>摄像头视频在设备上处理，网页没有上传视频的功能。<br>解剖图为教学示意，并非按比例绘制；细胞类型不等于组织层。</small>
 <details class="medical-sources"><summary>♡ 医学资料与分类说明 / References</summary>
 <div>视网膜采用经典十层组织学分类，分组只是导航，不代表额外的组织层。角膜采用经典五层。泪膜与泪器不属于角膜层。部分器官的示意图仅表示结构关系，不代表真实空间位置。</div>
 <a href="https://www.ncbi.nlm.nih.gov/books/NBK544343/" target="_blank" rel="noopener">Retinal histology — NCBI Bookshelf</a>
@@ -309,12 +324,24 @@
 <a href="https://www.ncbi.nlm.nih.gov/books/NBK534789/" target="_blank" rel="noopener">Lung histology — NCBI Bookshelf</a>
 <a href="https://www.ncbi.nlm.nih.gov/books/NBK482452/" target="_blank" rel="noopener">Heart anatomy — NCBI Bookshelf</a>
 </details><div id="error" role="alert"></div></div></div>
+<div id="guideOverlay" class="guide-overlay" hidden role="presentation"><section class="guide-panel" role="dialog" aria-modal="true" aria-labelledby="guideTitle"><button type="button" class="guide-x" id="guideClose" aria-label="关闭使用指南">×</button><div class="guide-kicker">✧ YIYANG'S ANATOMYVERSE ✧</div><h2 id="guideTitle">How to Play ♡</h2><p class="guide-sub">Point · Discover · Explore</p><div class="guide-steps"><div class="guide-step"><span>📷</span><div><strong>01 · Open the Magic</strong><p>允许摄像头权限，面对镜头。也可以点击 TRY DEMO 使用触屏体验。</p></div></div><div class="guide-step"><span>☝️</span><div><strong>02 · Point to Discover</strong><p>伸出食指，指向自己的眼睛、鼻子、嘴巴或胸部，发现对应的解剖任意门。</p></div></div><div class="guide-step"><span>✧</span><div><strong>03 · Explore Anatomy</strong><p>将屏幕上的指尖光标停留在医学标签上，或直接触屏点击。点击 Explore 查看更细的解剖图。</p></div></div><div class="guide-step"><span>🌐</span><div><strong>04 · Choose Your Language</strong><p>切换 EN / 日本語 / 中文，查看不同语言的医学解释。</p></div></div><div class="guide-step"><span>🖐️</span><div><strong>05 · Palm to Vanish</strong><p>张开五指并保持片刻关闭任意门；也可以点击卡片右上角的 ×。</p></div></div></div><button type="button" class="guide-done" id="guideDone">Got it · 开始探索 ♡</button></section></div>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/hands.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4/face_mesh.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5/pose.js" crossorigin="anonymous"></script>
 <script>
 (()=>{'use strict';
 const $=id=>document.getElementById(id);
+const guideOverlay=$('guideOverlay');
+let guideLastFocus=null;
+function openGuide(){guideLastFocus=document.activeElement;guideOverlay.hidden=false;$('guideClose').focus()}
+function closeGuide(){guideOverlay.hidden=true;if(guideLastFocus&&guideLastFocus.focus)guideLastFocus.focus()}
+$('guideIntro').addEventListener('click',openGuide);
+$('guideLive').addEventListener('click',openGuide);
+$('guideClose').addEventListener('click',closeGuide);
+$('guideDone').addEventListener('click',closeGuide);
+guideOverlay.addEventListener('click',e=>{if(e.target===guideOverlay)closeGuide()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!guideOverlay.hidden)closeGuide()});
+
 const video=$('camera'),portal=$('portal'),diagram=$('diagram'),finger=$('finger'),visual=$('visual'),marker=$('eyeMarker'),manual=$('manual'),status=$('status'),hint=$('hint');
 let labels=$('labels'),leaders=$('leaders');
 const NS='http://www.w3.org/2000/svg';
